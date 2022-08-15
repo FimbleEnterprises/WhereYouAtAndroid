@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/weber/AndroidStudioProjects/WhereYouAtMVVM/app/src/main/res/layout/activity_main.xml" value="0.5421875" />
+        <entry key="..\:/Users/weber/AndroidStudioProjects/WhereYouAtMVVM/app/src/main/res/layout/activity_signin.xml" value="0.3015625" />
+        <entry key="..\:/Users/weber/AndroidStudioProjects/WhereYouAtMVVM/app/src/main/res/layout/activity_signup.xml" value="0.3015625" />
+        <entry key="..\:/Users/weber/AndroidStudioProjects/WhereYouAtMVVM/app/src/main/res/layout/fragment_map.xml" value="0.5421875" />
+        <entry key="..\:/Users/weber/AndroidStudioProjects/WhereYouAtMVVM/app/src/main/res/layout/fragment_start.xml" value="0.5421875" />
       </map>
     </option>
   </component>

@@ -7,7 +7,7 @@ data class MemberLocationsApiResponse(
     @SerializedName("GenericValue")
     val value: Any,
     @SerializedName("MemberLocations")
-    val memberLocations: List<MemberLocation>,
+    val locUpdates: List<LocUpdate>,
     @SerializedName("Operation")
     val operation: String,
     @SerializedName("WasSuccessful")

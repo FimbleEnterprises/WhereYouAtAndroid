@@ -2,7 +2,7 @@ package com.fimbleenterprises.whereyouat.di
 
 import android.app.Application
 import com.fimbleenterprises.whereyouat.data.TripRepository
-import com.fimbleenterprises.whereyouat.viewmodel.MainViewModelFactory
+import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

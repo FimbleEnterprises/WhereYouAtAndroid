@@ -1,16 +1,16 @@
 package com.fimbleenterprises.whereyouat.data.local
 
-import com.fimbleenterprises.whereyouat.model.MemberLocation
+import com.fimbleenterprises.whereyouat.model.LocUpdate
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    suspend fun saveMemberLocationsToDB(memberLocations:List<MemberLocation>): List<Long>
-    suspend fun saveMemberLocationToDB(memberLocation: MemberLocation):Long
-    fun getSavedMemberLocationsFromDB(): Flow<List<MemberLocation>>
-    fun getSavedMemberLocationFromDB(memberid:Long): Flow<MemberLocation>
+    suspend fun saveMemberLocationsToDB(locUpdates:List<LocUpdate>): List<Long>
+    suspend fun saveMemberLocationToDB(locUpdate: LocUpdate):Long
+    fun getSavedMemberLocationsFromDB(): Flow<List<LocUpdate>>
+    fun getSavedMemberLocationFromDB(memberid:Long): Flow<LocUpdate>
     suspend fun deleteSavedMemberLocations():Int
-    suspend fun deleteSavedMemberLocation(memberLocation: MemberLocation):Int
-    suspend fun updateMemberLocation(memberLocation:MemberLocation):Int
+    suspend fun deleteSavedMemberLocation(locUpdate: LocUpdate):Int
+    suspend fun updateMemberLocation(locUpdate:LocUpdate):Int
 
 }

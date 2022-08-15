@@ -1,10 +1,7 @@
 package com.fimbleenterprises.whereyouat.data.remote
 
-import com.fimbleenterprises.whereyouat.model.ApiRequest
-import com.fimbleenterprises.whereyouat.model.Argument
-import com.fimbleenterprises.whereyouat.model.BaseApiResponse
-import com.fimbleenterprises.whereyouat.model.MemberLocationsApiResponse
-import com.google.gson.Gson
+import android.util.Log
+import com.fimbleenterprises.whereyouat.model.*
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -21,5 +18,13 @@ class RemoteDataSourceImpl @Inject constructor(private val tripsServiceApi: Trip
         return tripsServiceApi.createTrip(apiRequest)
     }
 
+    override suspend fun uploadMyLocation(locUpdate: LocUpdate): Response<BaseApiResponse> {
+        val apiRequest = ApiRequest(ApiRequest.UPDATE_TRIP)
+        apiRequest.arguments.add(Argument("locupdate", locUpdate))
+        Log.i(TAG, "-=RemoteDataSourceImpl:uploadMyLocation ${locUpdate.tripcode} =-")
+        return tripsServiceApi.uploadLocation(apiRequest)
+    }
 
+    init { Log.i(TAG, "Initialized:RemoteDataSourceImpl") }
+    companion object { private const val TAG = "FIMTOWN|RemoteDataSourceImpl" }
 }

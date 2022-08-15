@@ -15,11 +15,17 @@ import retrofit2.http.Query
 interface TripsServiceApi {
 
     @GET(Constants.GET_TRIP_UPDATES_URL)
-    suspend fun getMemberLocations(@Query("tripcode") tripcode: String): Response<MemberLocationsApiResponse>
+    suspend fun getMemberLocations(
+        @Query("tripcode") tripcode: String
+    ): Response<MemberLocationsApiResponse>
 
-    // as we are making a post request to post a data
-    // so we are annotating it with post
-    // and along with that we are passing a parameter as users
     @POST("api/Trips")
-    suspend fun  createTrip(@Body request: ApiRequest): Response<BaseApiResponse>
+    suspend fun  createTrip(
+        @Body request: ApiRequest
+    ): Response<BaseApiResponse>
+
+    @POST("api/Trips")
+    suspend fun uploadLocation(
+        @Body request: ApiRequest
+    ): Response<BaseApiResponse>
 }

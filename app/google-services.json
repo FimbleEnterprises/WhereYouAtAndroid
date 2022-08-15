@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "395090168070",
+    "project_id": "whereyouat-717cb",
+    "storage_bucket": "whereyouat-717cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395090168070:android:6f9b1c3d0063612dd3b687",
+        "android_client_info": {
+          "package_name": "com.fimbleenterprises.whereyouat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395090168070-civpso6vjma6kr9ojvbhlnllfctr3nqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fimbleenterprises.whereyouat",
+            "certificate_hash": "db5484fe0b53757127d237b3e38b2a92ff463ef5"
+          }
+        },
+        {
+          "client_id": "395090168070-do30ptc94oc81tu57cco7a8pp33lnagk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBorrcrQRWTIYdjtn4FsFZa2AilMNiaNKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395090168070-do30ptc94oc81tu57cco7a8pp33lnagk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

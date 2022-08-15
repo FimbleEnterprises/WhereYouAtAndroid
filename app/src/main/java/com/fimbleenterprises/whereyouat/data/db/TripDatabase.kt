@@ -4,12 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.fimbleenterprises.sportsdb.data.db.Converters
-import com.fimbleenterprises.whereyouat.model.MemberLocation
+import com.fimbleenterprises.whereyouat.model.LocUpdate
 
 // This annotation is what gets Room to actually create and maintain a single table in the database.
 @Database(
-    entities = [MemberLocation::class],
-    version =  1,
+    entities = [LocUpdate::class],
+    version =  2,
     exportSchema = false
 )
 // OPTIONAL

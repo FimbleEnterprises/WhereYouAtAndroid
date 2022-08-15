@@ -1,4 +1,4 @@
-package com.fimbleenterprises.whereyouat.viewmodel
+package com.fimbleenterprises.whereyouat.presentation.viewmodel
 
 import android.app.Application
 import android.util.Log

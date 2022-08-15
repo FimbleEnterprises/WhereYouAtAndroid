@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+     <item android:state_checked="true" >
+	<!-- #EF6100 = Orange
+		 #0026FF = Blue   -->
+    <shape>
+        <gradient 
+            android:startColor="#0026FF" 
+            android:endColor="#0026FF" 
+            android:angle="90" />
+       <stroke 
+            android:width="1dp" 
+            android:color="#00FFFFFF" />
+        <corners 
+            android:radius="3dp" />
+    </shape>
+
+</item>
+     
+<item android:state_checked="false" >
+
+    <shape>
+        <gradient 
+            android:startColor="#00ECECEC" 
+            android:endColor="#00FFFFFF" 
+            android:angle="90" />
+       <stroke 
+            android:width="1dp" 
+            android:color="#00FFFFFF" />
+        <corners 
+            android:radius="3dp" />
+    </shape>
+
+</item>
+
+<item android:state_enabled="false" >
+    <shape>
+        <gradient 
+            android:startColor="#D8D8D8" 
+            android:endColor="#D8D8D8"  
+            android:angle="90"/>
+        <stroke 
+            android:width="1dp" 
+            android:color="#000000" />
+        <corners 
+            android:radius="3dp" />
+        
+    </shape>
+</item>
+
+</selector>
