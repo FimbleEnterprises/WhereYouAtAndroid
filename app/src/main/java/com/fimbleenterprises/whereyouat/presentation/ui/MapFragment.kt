@@ -191,7 +191,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         // Updates button states if new while in use location is added to SharedPreferences.
         if (key == SharedPreferenceUtil.KEY_FOREGROUND_ENABLED) {
-
+            Log.i(TAG, "-=MapFragment:onSharedPreferenceChanged  =-")
         }
     }
 
