@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
  * This interface is what Room will use to actually perform CRUD operations in the db.
  */
 @Dao // This annotation turns this interface into a magical mechanism to actually perform CRUD operations in the Room db.
-interface TripDao {
+interface MemberLocationsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMemberLocation(locUpdate: LocUpdate):Long

@@ -1,44 +1,78 @@
 package com.fimbleenterprises.whereyouat.data.local
 
-import com.fimbleenterprises.whereyouat.data.db.TripDao
+import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
+import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
 import com.fimbleenterprises.whereyouat.model.LocUpdate
+import com.fimbleenterprises.whereyouat.model.MyLocation
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * This class does the heavy lifting by interacting with the Room DB.
  */
-class LocalDataSourceImpl
-    @Inject constructor(
-        private val tripDao: TripDao
-    )
+@Singleton
+class LocalDataSourceImpl(
+    private val memberLocationsDao: MemberLocationsDao,
+    private val myLocationDao: MyLocationDao
+)
 : LocalDataSource {
+
+    // -----------------------------------------------------------
+    //                       MEMBER LOCATIONS
+    // -----------------------------------------------------------
     override suspend fun saveMemberLocationsToDB(locUpdates: List<LocUpdate>): List<Long> {
-        return tripDao.insertMemberLocations(locUpdates)
+        return memberLocationsDao.insertMemberLocations(locUpdates)
     }
 
     override suspend fun saveMemberLocationToDB(locUpdate: LocUpdate): Long {
-        return tripDao.insertMemberLocation(locUpdate)
+        return memberLocationsDao.insertMemberLocation(locUpdate)
     }
 
     override fun getSavedMemberLocationsFromDB(): Flow<List<LocUpdate>> {
-        return tripDao.getAllMemberLocations()
+        return memberLocationsDao.getAllMemberLocations()
     }
 
     override fun getSavedMemberLocationFromDB(memberid: Long): Flow<LocUpdate> {
-        return tripDao.getMemberLocation(memberid)
+        return memberLocationsDao.getMemberLocation(memberid)
     }
 
     override suspend fun deleteSavedMemberLocations(): Int {
-        return tripDao.deleteAll()
+        return memberLocationsDao.deleteAll()
     }
 
     override suspend fun deleteSavedMemberLocation(locUpdate: LocUpdate): Int {
-        return tripDao.deleteMemberLocation(locUpdate)
+        return memberLocationsDao.deleteMemberLocation(locUpdate)
     }
 
     override suspend fun updateMemberLocation(locUpdate: LocUpdate): Int {
-        return tripDao.updateMemberLocation(locUpdate)
+        return memberLocationsDao.updateMemberLocation(locUpdate)
+    }
+
+    // -----------------------------------------------------------
+    //                       MY LOCATIONS
+    // -----------------------------------------------------------
+    override suspend fun saveMyLocationToDB(myLocation: MyLocation): Long {
+        return myLocationDao.insertMyLocation(myLocation)
+    }
+
+    override fun getSavedMyLocationFromDB(memberid: Long): Flow<MyLocation> {
+        return myLocationDao.getMyLocation(memberid)
+    }
+
+    override suspend fun deleteSavedMyLocation(myLocation: MyLocation): Int {
+        return myLocationDao.deleteMyLocation(myLocation)
+    }
+
+    override suspend fun deleteSavedMyLocation(rowid: Int): Int {
+        return myLocationDao.deleteMyLocation(rowid)
+    }
+
+    override suspend fun deleteAll(): Int {
+        return myLocationDao.deleteAll()
+    }
+
+    override suspend fun updateMyLocation(myLocation: MyLocation): Int {
+        return myLocationDao.updateMyLocation(myLocation)
     }
 
 

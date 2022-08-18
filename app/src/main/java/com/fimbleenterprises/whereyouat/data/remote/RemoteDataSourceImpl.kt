@@ -4,8 +4,10 @@ import android.util.Log
 import com.fimbleenterprises.whereyouat.model.*
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class RemoteDataSourceImpl @Inject constructor(private val tripsServiceApi: TripsServiceApi):
+@Singleton
+class RemoteDataSourceImpl(private val tripsServiceApi: TripsServiceApi):
     RemoteDataSource {
 
     override suspend fun getMemberLocations(tripcode: String): Response<MemberLocationsApiResponse> {
@@ -21,7 +23,6 @@ class RemoteDataSourceImpl @Inject constructor(private val tripsServiceApi: Trip
     override suspend fun uploadMyLocation(locUpdate: LocUpdate): Response<BaseApiResponse> {
         val apiRequest = ApiRequest(ApiRequest.UPDATE_TRIP)
         apiRequest.arguments.add(Argument("locupdate", locUpdate))
-        Log.i(TAG, "-=RemoteDataSourceImpl:uploadMyLocation ${locUpdate.tripcode} =-")
         return tripsServiceApi.uploadLocation(apiRequest)
     }
 

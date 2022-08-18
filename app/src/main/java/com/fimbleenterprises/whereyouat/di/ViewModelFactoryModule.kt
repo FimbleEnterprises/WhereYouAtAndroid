@@ -1,7 +1,7 @@
 package com.fimbleenterprises.whereyouat.di
 
 import android.app.Application
-import com.fimbleenterprises.whereyouat.data.TripRepository
+import com.fimbleenterprises.whereyouat.data.usecases.*
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -16,9 +16,18 @@ object ViewModelFactoryModule {
     @Provides
     fun provideViewModelFactory(
         application: Application,
-        tripRepository: TripRepository
+        createTripWithApiUseCase: CreateTripWithApiUseCase,
+        deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
+        getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
+        getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
     ): MainViewModelFactory {
-        return MainViewModelFactory(application, tripRepository)
+        return MainViewModelFactory(
+            application,
+            createTripWithApiUseCase,
+            deleteAllMemberLocsFromDbUseCase,
+            getMemberLocsFromDbUseCase,
+            getMyLocFromDbUseCase
+        )
     }
 
 }

@@ -9,15 +9,11 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.fimbleenterprises.whereyouat.MainActivity
 import com.fimbleenterprises.whereyouat.R
+import com.fimbleenterprises.whereyouat.WhereYouAt.AppPreferences
 import com.fimbleenterprises.whereyouat.databinding.FragmentStartBinding
 import com.fimbleenterprises.whereyouat.utils.Resource
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class StartFragment : Fragment() {
 
     private lateinit var binding: FragmentStartBinding
@@ -45,13 +41,13 @@ class StartFragment : Fragment() {
         binding.btnJoin.setOnClickListener {
             startObservingJoinTripLiveData()
             binding.progressBar.visibility = View.VISIBLE
-            viewmodel.setTripCode("IBASJ")
-            fetchTripUpdates("IBASJ")
+            AppPreferences.tripcode = "IBASJ"
+            // Navigate to the map
+            findNavController().navigate(
+                R.id.mapFragment
+            )
+            findNavController().clearBackStack(R.id.mapFragment)
         }
-    }
-
-    private fun fetchTripUpdates(tripcode: String) {
-        viewmodel.getMemberLocations(tripcode)
     }
 
     private fun startObservingCreateTripLiveData() {
@@ -94,17 +90,18 @@ class StartFragment : Fragment() {
             when (response) {
                 is Resource.Success -> {
                     response.data?.let {
-                        Toast.makeText(context,
-                            "Found ${it.locUpdates.size} members!",
-                            Toast.LENGTH_SHORT).show()
+                        when (it.wasSuccessful) {
+                            true -> {
+                                Toast.makeText(context,
+                                    "Found ${it.locUpdates.size} members!", Toast.LENGTH_SHORT).show()
+                            }
+                            false -> {
+                                // throw Exception("FIX THIS SHIT!")
+                                Toast.makeText(context, it.value.toString(), Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                     binding.progressBar.visibility = View.GONE
-
-                    // Navigate to the map
-                    findNavController().navigate(
-                        R.id.mapFragment
-                    )
-                    findNavController().clearBackStack(R.id.mapFragment)
                 }
 
                 is Resource.Error -> {

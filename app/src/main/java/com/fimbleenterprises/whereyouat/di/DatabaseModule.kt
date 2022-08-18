@@ -3,8 +3,9 @@ package com.fimbleenterprises.whereyouat.di
 import android.app.Application
 import android.util.Log
 import androidx.room.Room
-import com.fimbleenterprises.whereyouat.data.db.TripDao
-import com.fimbleenterprises.whereyouat.data.db.TripDatabase
+import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
+import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
+import com.fimbleenterprises.whereyouat.data.db.WhereYouAtDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,22 +19,28 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideTripDb(app:Application): TripDatabase {
-        return Room.databaseBuilder(app, TripDatabase::class.java, "teams_db")
+    fun provideTripDb(app:Application): WhereYouAtDatabase {
+        return Room.databaseBuilder(app, WhereYouAtDatabase::class.java, "where_you_at_main")
             .fallbackToDestructiveMigration()
-            .setQueryCallback(
+            /*.setQueryCallback(
                 fun(sqlQuery: String, bindArgs: MutableList<Any>) {
                     println("SQL Query: $sqlQuery SQL Args: $bindArgs")
                 }, Executors.newSingleThreadExecutor()
-            )
+            )*/
             .allowMainThreadQueries()
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideTeamsDAO(tripDatabase: TripDatabase): TripDao {
-        return tripDatabase.getTripDao()
+    fun provideTripsDAO(whereYouAtDatabase: WhereYouAtDatabase): MemberLocationsDao {
+        return whereYouAtDatabase.getTripDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMyLocationsDAO(whereYouAtDatabase: WhereYouAtDatabase): MyLocationDao {
+        return whereYouAtDatabase.getMyLocationDao()
     }
 
 

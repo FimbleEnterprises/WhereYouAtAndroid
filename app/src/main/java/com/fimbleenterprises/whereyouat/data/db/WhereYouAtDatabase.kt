@@ -5,11 +5,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.fimbleenterprises.sportsdb.data.db.Converters
 import com.fimbleenterprises.whereyouat.model.LocUpdate
+import com.fimbleenterprises.whereyouat.model.MyLocation
 
 // This annotation is what gets Room to actually create and maintain a single table in the database.
 @Database(
-    entities = [LocUpdate::class],
-    version =  2,
+    entities = [LocUpdate::class, MyLocation::class],
+    version =  1,
     exportSchema = false
 )
 // OPTIONAL
@@ -23,7 +24,7 @@ import com.fimbleenterprises.whereyouat.model.LocUpdate
  * the magic interfaces you created (naming convention: <some_name>DAO etc.) that these functions
  * must implement.  Shit's confusing for sure but pretty cool and gets cooler the more you learn it.
  */
-abstract class TripDatabase : RoomDatabase() {
-    // This function will get
-    abstract fun getTripDao() : TripDao
+abstract class WhereYouAtDatabase : RoomDatabase() {
+    abstract fun getTripDao() : MemberLocationsDao
+    abstract fun getMyLocationDao() : MyLocationDao
 }

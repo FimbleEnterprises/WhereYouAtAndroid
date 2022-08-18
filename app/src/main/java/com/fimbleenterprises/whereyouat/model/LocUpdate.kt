@@ -13,6 +13,8 @@ data class LocUpdate(
     @PrimaryKey(autoGenerate = false)
     @SerializedName("Memberid")
     val memberid: Long,
+    @SerializedName("MemberName")
+    val memberName: String?,
     @SerializedName("Createdon")
     val createdon: Long,
     @SerializedName("Elevation")
@@ -26,5 +28,9 @@ data class LocUpdate(
 ) {
     fun toJson(): String {
         return Gson().toJson(this)
+    }
+
+    override fun toString(): String {
+        return "ID:${this.memberid} Lat/Lng:${lat}/${lon} Name: ${this.memberName} Tripcode: ${this.tripcode} "
     }
 }

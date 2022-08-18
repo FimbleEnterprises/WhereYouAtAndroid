@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.fimbleenterprises.whereyouat.data.TripRepository
+import com.fimbleenterprises.whereyouat.data.usecases.*
 import javax.inject.Singleton
 
 /**
@@ -19,12 +19,18 @@ import javax.inject.Singleton
 @Suppress("UNCHECKED_CAST")
 class MainViewModelFactory(
     private val app:Application,
-    private val tripRepository: TripRepository
+    private val createTripWithApiUseCase: CreateTripWithApiUseCase,
+    private val deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
+    private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
+    private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase
 ):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(
-            tripRepository,
+            createTripWithApiUseCase,
+            deleteAllMemberLocsFromDbUseCase,
+            getMemberLocsFromDbUseCase,
+            getMyLocFromDbUseCase,
             app
         ) as T
     }
