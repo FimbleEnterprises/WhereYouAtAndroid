@@ -1,8 +1,10 @@
 package com.fimbleenterprises.whereyouat.model
 
+import android.location.Location
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.fimbleenterprises.whereyouat.WhereYouAt
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "my_location")
@@ -29,5 +31,16 @@ data class MyLocation(
             lon,
             WhereYouAt.AppPreferences.tripcode
         )
+    }
+
+    fun toLatLng() : LatLng {
+        return LatLng(lat, lon)
+    }
+
+    fun toLocation(): Location {
+        val location = Location("GPS")
+        location.latitude = this.lat
+        location.longitude = this.lon
+        return location
     }
 }

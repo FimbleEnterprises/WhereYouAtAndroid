@@ -1,7 +1,9 @@
 package com.fimbleenterprises.whereyouat.presentation.ui
 
 import android.content.*
+import android.graphics.Color
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
@@ -13,19 +15,18 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fimbleenterprises.whereyouat.MainActivity
 import com.fimbleenterprises.whereyouat.R
-import com.fimbleenterprises.whereyouat.WhereYouAt
 import com.fimbleenterprises.whereyouat.databinding.FragmentMapBinding
+import com.fimbleenterprises.whereyouat.model.MarkerPoly
 import com.fimbleenterprises.whereyouat.model.MemberMarker
+import com.fimbleenterprises.whereyouat.model.MemberMarkers
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
-import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService
 import com.fimbleenterprises.whereyouat.service.SharedPreferenceUtil
+import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService
 import com.fimbleenterprises.whereyouat.service.toText
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.GoogleMap.CancelableCallback
 import com.google.android.gms.maps.model.*
-import java.lang.reflect.Member
+
 
 class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -33,8 +34,14 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private lateinit var viewmodel: MainViewModel
     private lateinit var map: GoogleMap
 
-    private lateinit var myMapMarker: Marker
-    private val memberMarkers = ArrayList<MemberMarker>()
+    /**
+     * A container to represent us on the map
+     */
+    private lateinit var myMapMarker: MemberMarker
+    /**
+     * A container to represent our fellows on the map.
+     */
+    private val memberMarkers = MemberMarkers()
 
     // Listens for location broadcasts from ForegroundOnlyLocationService.
     private lateinit var foregroundOnlyBroadcastReceiver: ForegroundOnlyBroadcastReceiver
@@ -78,7 +85,6 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         viewmodel = (activity as MainActivity).mainViewModel
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-
         binding.btnPushUpdate.setOnClickListener {
             // viewmodel.getMemberLocationsFromApi()
         }
@@ -86,7 +92,13 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             viewmodel.removeAllSavedLocs()
             Toast.makeText(context, "Cleared all entries.", Toast.LENGTH_SHORT).show()
         }
+        binding.fabCenterTrip.setOnClickListener {
+            moveCameraToShowMarkers()
+        }
         tripUsersLocationManagementService?.subscribeToLocationUpdates()
+        binding.fabCenterMe.setOnClickListener {
+            centerCameraOnMe()
+        }
     }
 
     override fun onStart() {
@@ -124,24 +136,42 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     private fun startObservingMemberLocations() {
-        viewmodel.memberLocations.observe(viewLifecycleOwner) {
-            // map.clear()
-            memberMarkers.forEach { memberMarker ->
-                memberMarker.marker.remove()
-            }
-            memberMarkers.clear()
+        viewmodel.memberLocations.observe(viewLifecycleOwner) { memberList ->
 
-            it.forEach { loc ->
-                val position = LatLng(loc.lat, loc.lon)
+            memberList.forEach { member ->
+                // Build a map marker for this member
+                val position = LatLng(member.lat, member.lon)
                 val markerOptions = MarkerOptions()
                     .position(position)
-                    .title(loc.memberid.toString())
-                memberMarkers.add(
-                    MemberMarker(
-                        map.addMarker(markerOptions)!!,
-                        loc
-                    )
-                )
+                    .title(member.memberid.toString())
+
+                // See if we already have a marker for this member
+                when (val existingMember = memberMarkers.find(member)) {
+                    // Add this member to the list and put them on the map.
+                    null -> {
+                        memberMarkers.add(
+                            MemberMarker(
+                                map.addMarker(markerOptions)!!,
+                                member,
+                                null
+                            )
+                        )
+                    } // Otherwise just update their location property and move their existing map marker.
+                    else -> {
+                        existingMember.locUpdate = member
+                        existingMember.marker.position = position
+                        // If the user has a poly line, we need to remove and redraw it
+                        /*if (existingMember.polyline != null) {
+                            existingMember.polyline?.remove()
+                            existingMember.polyline = null
+                            // Get our location from the viewmodel and draw a line to them.
+                            viewmodel.myLocation.value?.let {
+                                drawPolyFromTo(it.toLatLng(), existingMember.marker.position)
+                            }
+                        }*/
+                    }
+                }
+
                 /*map.moveCamera(CameraUpdateFactory.newLatLng(marker))
                 map.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(LatLng(marker.latitude, marker.longitude), 16f)))*/
             }
@@ -152,6 +182,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         viewmodel.myLocation.observe(viewLifecycleOwner) {
             if (it != null) {
                 val position = LatLng(it.lat, it.lon)
+
+                // If this is the first time we have appeared on the map we move the camera.
                 if (!this::myMapMarker.isInitialized) {
                     Log.i(TAG, "-=MapFragment:startObservingMyLocation  =-")
                     map.moveCamera(
@@ -161,15 +193,102 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                             )
                         )
                     )
+
+                    // Create our marker
                     val markerOptions = MarkerOptions()
                         .position(position)
                         .title("Me")
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_map_icon))
-                    myMapMarker = map.addMarker(markerOptions)!!
+
+                    // Create a MemberMarker object to hold our location
+                    myMapMarker = MemberMarker(
+                        map.addMarker(markerOptions)!!,
+                        it.toLocUpdate(),
+                        null
+                    )
+                } // !this::myMapMarker.isInitialized
+
+                // Update our marker's position on the map.
+                myMapMarker.marker.position = position
+
+                // Update all polylines
+                memberMarkers.forEach { memberMarker ->
+                    if (memberMarker.polyline != null) {
+                        memberMarker.polyline?.remove()
+                        memberMarker.polyline = drawPolyFromTo(it.toLatLng(), memberMarker.locUpdate.toLatLng())
+                    }
                 }
-                myMapMarker.position = position
             }
         }
+    }
+
+    /** Moves the camera to a position such that both the start and end map markers are viewable on screen.  */
+    private fun moveCameraToShowMarkers() {
+        Log.d(TAG, "Moving the camera to get all the markers in view")
+        val cu: CameraUpdate
+
+        // Create a new LatLngBounds.Builder object
+        val builder = LatLngBounds.Builder()
+        viewmodel.memberLocations.value?.forEach {
+            builder.include(it.toLatLng())
+        }
+
+        // TODO CRASH HERE IF YOU PRESS BUTTON EARLY.  MAP NOT READY?
+
+        cu = CameraUpdateFactory.newLatLngBounds(builder.build(), 100)
+        map.animateCamera(cu, 300, null)
+    }
+
+    private fun centerCameraOnMe() {
+        val location = viewmodel.myLocation.value?.toLocation() ?: return
+        val currentPlace = CameraPosition.Builder()
+            .target(LatLng(location.latitude, location.longitude))
+            .bearing(0f).tilt(90f).zoom(12f).build()
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(currentPlace),
+            1000,
+            object : CancelableCallback {
+                override fun onFinish() {
+                    Log.i(TAG, "onFinish ")
+                }
+
+                override fun onCancel() {
+                    Log.i(TAG, "onCancel ")
+                }
+            })
+    }
+
+    /** Launches an intent that lets the user select a navigation app which after selection gets handed the parking spot's lat/lng values.  */
+    fun startNavigation(spot: LatLng) {
+        Toast.makeText(context, "Starting navigation...", Toast.LENGTH_SHORT).show()
+        val myLocation = viewmodel.myLocation.value
+        val myLat = myLocation?.lat
+        val myLng = myLocation?.lon
+        val placeLat = spot.latitude
+        val placeLng = spot.longitude
+        val uri: Uri = Uri.parse(
+            getString(
+                R.string.nav_intent,
+                myLat.toString(),
+                myLng.toString(),
+                placeLat.toString(),
+                placeLng.toString()
+            )
+        )
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
+    /** Using the list of TripEntryObjects extend a polyline through each position  */
+    private fun drawPolyFromTo(myPosition: LatLng, theirPosition: LatLng): Polyline {
+        // Start building our poly line
+        val line = PolylineOptions()
+        line.width(5f)
+        line.color(Color.RED)
+        line.add(LatLng(myPosition.latitude, myPosition.longitude))
+        line.add(LatLng(theirPosition.latitude, theirPosition.longitude))
+
+        // Now that the polyline is built we simply add it to the map
+        return map.addPolyline(line)
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -186,6 +305,22 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
         startObservingMemberLocations()
         startObservingMyLocation()
+
+        map.setOnMarkerClickListener {
+            val myloc = viewmodel.myLocation.value
+            // Try to find the member by their map marker.
+            val memberMarker = memberMarkers.find(it)
+            if (myloc != null) {
+                if (memberMarker?.polyline != null) {
+                    memberMarker.polyline?.remove()
+                    memberMarker.polyline = null
+                } else {
+                    memberMarker?.polyline = drawPolyFromTo(myloc.toLatLng(),
+                        memberMarker?.locUpdate!!.toLatLng())
+                }
+            }
+            false
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -204,7 +339,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 TripUsersLocationManagementService.EXTRA_LOCATION
             )
             if (location != null) {
-                Log.i(TAG, "-=ForegroundOnlyBroadcastReceiver:onReceive|Foreground location: ${location.toText()} =-")
+                Log.i(TAG, "-=onReceive|Foreground location: ${location.toText()} =-")
             }
         }
     }

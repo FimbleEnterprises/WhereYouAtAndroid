@@ -20,6 +20,7 @@ interface MainRepository {
     suspend fun createInApiTrip(memberid: Long): Flow<Resource<BaseApiResponse>>
     suspend fun uploadMyLocationToApi(locUpdate: LocUpdate): Flow<Resource<BaseApiResponse>>
     suspend fun saveMemberLocationToDatabase(locUpdate:LocUpdate): Long
+    suspend fun saveMemberLocationsToDatabase(locUpdates:List<LocUpdate>): List<Long>
     suspend fun deleteAllLocsFromDatabase(): Int
     fun getAllMemberLocsFromDatabase() : Flow<List<LocUpdate>>
 

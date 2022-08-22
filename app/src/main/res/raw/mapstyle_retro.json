@@ -64,13 +64,13 @@
 <script crossorigin="anonymous" defer="defer" type="application/javascript" integrity="sha512-zptz5tdblkgFs+y5Z1XnrAJSGNOcP8dvDMbWaQ5ElKww6NF9mWdBZhacJKDXC9l2ULsC7pimUxRlrE+Oz+Au5A==" src="https://github.githubassets.com/assets/diffs-ce9b73e6d75b.js"></script>
   
 
-  <title>android-samples/ic_launcher_background.xml at main · googlemaps/android-samples</title>
+  <title>android-samples/mapstyle_retro.json at master · googlemaps/android-samples</title>
 
 
 
     
 
-  <meta name="request-id" content="C20D:4AE4:F4705C:181B20A:6302B859" data-pjax-transient="true" /><meta name="html-safe-nonce" content="ba9bdeb244ae3548dd5e2c45b14be33f92cdd50240d91e6c60c044b7cea75b21" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9nb29nbGVtYXBzL2FuZHJvaWQtc2FtcGxlcy90cmVlL21haW4vQXBpRGVtb3Mva290bGluL2FwcC9zcmMvbWFpbi9yZXMvZHJhd2FibGUiLCJyZXF1ZXN0X2lkIjoiQzIwRDo0QUU0OkY0NzA1QzoxODFCMjBBOjYzMDJCODU5IiwidmlzaXRvcl9pZCI6IjI2MDg0Mzc4NzA3NjgxMDI5NzgiLCJyZWdpb25fZWRnZSI6ImlhZCIsInJlZ2lvbl9yZW5kZXIiOiJpYWQifQ==" data-pjax-transient="true" /><meta name="visitor-hmac" content="228956232edc1fb46f46a7bf9909b041392eb1e3d697426bb20ac6b275bf21e4" data-pjax-transient="true" />
+  <meta name="request-id" content="C349:4C0C:D6B556:15172A3:6302BA3A" data-pjax-transient="true" /><meta name="html-safe-nonce" content="ba9bdeb244ae3548dd5e2c45b14be33f92cdd50240d91e6c60c044b7cea75b21" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9nb29nbGVtYXBzL2FuZHJvaWQtc2FtcGxlcy90cmVlL21hc3Rlci9BcGlEZW1vcy9qYXZhL2FwcC9zcmMvbWFpbi9yZXMvcmF3IiwicmVxdWVzdF9pZCI6IkMzNDk6NEMwQzpENkI1NTY6MTUxNzJBMzo2MzAyQkEzQSIsInZpc2l0b3JfaWQiOiIyNjA4NDM3ODcwNzY4MTAyOTc4IiwicmVnaW9uX2VkZ2UiOiJpYWQiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="def72eda99d6d4b8dae1263cd04278e755a0e10fb4ce63e17d8a5ef2d0430e67" data-pjax-transient="true" />
 
     <meta name="hovercard-subject-tag" content="repository:34364279" data-pjax-transient>
 
@@ -102,16 +102,16 @@
 
     <meta name="viewport" content="width=device-width">
     
-      <meta name="description" content="Samples demonstrating how to use Maps SDK for Android - android-samples/ic_launcher_background.xml at main · googlemaps/android-samples">
+      <meta name="description" content="Samples demonstrating how to use Maps SDK for Android - android-samples/mapstyle_retro.json at master · googlemaps/android-samples">
       <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
     <meta property="fb:app_id" content="1401488693436528">
     <meta name="apple-itunes-app" content="app-id=1477376905" />
-      <meta name="twitter:image:src" content="https://opengraph.githubassets.com/cf535b36801eb6adb492dc9e4c4e7265c4f7e8c0df3435e4c527374d544451f8/googlemaps/android-samples" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="android-samples/ic_launcher_background.xml at main · googlemaps/android-samples" /><meta name="twitter:description" content="Samples demonstrating how to use Maps SDK for Android - android-samples/ic_launcher_background.xml at main · googlemaps/android-samples" />
-      <meta property="og:image" content="https://opengraph.githubassets.com/cf535b36801eb6adb492dc9e4c4e7265c4f7e8c0df3435e4c527374d544451f8/googlemaps/android-samples" /><meta property="og:image:alt" content="Samples demonstrating how to use Maps SDK for Android - android-samples/ic_launcher_background.xml at main · googlemaps/android-samples" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="android-samples/ic_launcher_background.xml at main · googlemaps/android-samples" /><meta property="og:url" content="https://github.com/googlemaps/android-samples" /><meta property="og:description" content="Samples demonstrating how to use Maps SDK for Android - android-samples/ic_launcher_background.xml at main · googlemaps/android-samples" />
+      <meta name="twitter:image:src" content="https://opengraph.githubassets.com/cf535b36801eb6adb492dc9e4c4e7265c4f7e8c0df3435e4c527374d544451f8/googlemaps/android-samples" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="android-samples/mapstyle_retro.json at master · googlemaps/android-samples" /><meta name="twitter:description" content="Samples demonstrating how to use Maps SDK for Android - android-samples/mapstyle_retro.json at master · googlemaps/android-samples" />
+      <meta property="og:image" content="https://opengraph.githubassets.com/cf535b36801eb6adb492dc9e4c4e7265c4f7e8c0df3435e4c527374d544451f8/googlemaps/android-samples" /><meta property="og:image:alt" content="Samples demonstrating how to use Maps SDK for Android - android-samples/mapstyle_retro.json at master · googlemaps/android-samples" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="android-samples/mapstyle_retro.json at master · googlemaps/android-samples" /><meta property="og:url" content="https://github.com/googlemaps/android-samples" /><meta property="og:description" content="Samples demonstrating how to use Maps SDK for Android - android-samples/mapstyle_retro.json at master · googlemaps/android-samples" />
       
     <link rel="assets" href="https://github.githubassets.com/">
-      <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/6420279/ws?session=eyJ2IjoiVjMiLCJ1Ijo2NDIwMjc5LCJzIjo4ODc1MzI3MzgsImMiOjQzNjMyNTM5LCJ0IjoxNjYxMTIyNjU2fQ==--f9f243fb3bb9b897039e9cb096f51c93cb10962e591cd3f3825ec09f78dd4826" data-refresh-url="/_alive" data-session-id="dc8600e2b9c00ed1a14fbac774702248f78669dbabd8c535376adba10d69ec69">
+      <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/6420279/ws?session=eyJ2IjoiVjMiLCJ1Ijo2NDIwMjc5LCJzIjo4ODc1MzI3MzgsImMiOjM0MjM3MzU4MjIsInQiOjE2NjExMjMxNDF9--47950e2b89bcc80c03ba8e5e8da8dbf94e73ce8712f9dde08bf642279f006429" data-refresh-url="/_alive" data-session-id="dc8600e2b9c00ed1a14fbac774702248f78669dbabd8c535376adba10d69ec69">
       <link rel="shared-web-socket-src" href="/assets-cdn/worker/socket-worker-b87581f5816c.js">
 
 
@@ -140,7 +140,7 @@
 
 
 
-    <link rel="canonical" href="https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" data-pjax-transient>
   <meta name="turbo-body-classes" content="logged-in env-production page-responsive page-blob">
 
 
@@ -231,7 +231,7 @@
           spellcheck="false"
           autocomplete="off"
         >
-        <input type="hidden" value="YVS_atUgld4OkcS0ihgca5EQ8vyV8zON1MajnoBq6v_P8XbLRcoi_kyIJkhsMPvAkgEgWBYnyeJepzzsXkz-jA" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
+        <input type="hidden" value="JFBIwZVQO4Hm-1HR15_KUhOUmIfR2ZQHt_TbYxAtQ-yK9YFgBbqMoaTisy0xty35EIVKI1INbmg9lUQRzgtXnw" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
         <input type="hidden" class="js-site-search-type-field" name="type" >
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" aria-hidden="true" class="mr-1 header-search-key-slash"><path fill="none" stroke="#979A9C" opacity=".4" d="M3.5.5h12c1.7 0 3 1.3 3 3v13c0 1.7-1.3 3-3 3h-12c-1.7 0-3-1.3-3-3v-13c0-1.7 1.3-3 3-3z"></path><path fill="#979A9C" d="M11.8 6L8 15.1h-.9L10.8 6h1z"></path></svg>
 
@@ -431,7 +431,7 @@
     <a class="js-selected-navigation-item Header-link mt-md-n3 mb-md-n3 py-2 py-md-3 mr-0 mr-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:explore" data-turbo="false" data-selected-links="/explore /trending /trending/developers /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship showcases showcases_search showcases_landing /explore" href="/explore">Explore</a>
 
 
-      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;FimbleEnterprises&quot;,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="c6aec9f0aa0fb4e74da1bceb660aaafae1c186b4d2706221175a3345bb9221e1" data-turbo="false" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
+      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;FimbleEnterprises&quot;,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="468e31fb5d9565f0a7823a02885fabefeb635c988fab355b2df33aedd58abf39" data-turbo="false" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
 
     <a class="Header-link d-block d-md-none mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-turbo="false" href="/settings/profile">Settings</a>
 
@@ -439,7 +439,7 @@
       <img class="avatar avatar-user" loading="lazy" decoding="async" src="https://avatars.githubusercontent.com/u/6420279?s=40&amp;v=4" width="20" height="20" alt="@FimbleEnterprises" />
       FimbleEnterprises
 </a>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-turbo="false" action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="tuwdHUocADsDop-IfuF-ZjmoAP05-KYUXbhySudNALT6SSGzC5QcA0zlRbscaFE_117KIs3wgu2pqizfP77i-g" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-turbo="false" action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="eajc3zvZB8ie-6_5nj80CwcEexWizkICo-1Iu0x3J4o1DeBxelEb8NG8dcr8thtS6fKxylbGZvtX_xYulITFxA" />
       <button
         type="submit"
         class="Header-link mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade d-md-none btn-link d-block width-full text-left"
@@ -476,7 +476,7 @@
 <notification-indicator
   
   class=" js-socket-channel"
-  data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6NjQyMDI3OSIsInQiOjE2NjExMjI2NTd9--445a55f0fb0a43c8d7f4f47ead2ae8db4daee9e7b7aab1ee44fa0088d43c176a"
+  data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6NjQyMDI3OSIsInQiOjE2NjExMjMxNDF9--8a0aa718b867ea21059f156fb266f1305c79dff11ec2e6adfa287587849d9520"
   data-indicator-mode="global"
   data-tooltip-global="You have unread notifications"
   data-tooltip-unavailable="Notifications are unavailable at the moment."
@@ -632,7 +632,7 @@
   <details-dialog class="command-palette-details-dialog d-flex flex-column flex-justify-center height-fit" aria-label="command palette">
     <command-palette
       class="command-palette color-bg-default rounded-3 border color-shadow-small"
-      return-to=/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml
+      return-to=/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json
       user-id="6420279"
       activation-hotkey="Mod+k,Mod+Alt+k"
       command-mode-hotkey="Mod+Shift+k"
@@ -1598,7 +1598,7 @@
         data-action="toggle:notifications-list-subscription-form#detailsToggled"
       >
 
-        <summary data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="77f3589e145603b5712cb2b300a114b16c8721c3ea62dfac4b863fa6a7bda9a9" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notification settings" data-view-component="true" class="btn-sm btn">    <span data-menu-button>
+        <summary data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="568faab15e350038c29a3c44b42bb81166b1f970fcab03e340201c9bb88e3922" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notification settings" data-view-component="true" class="btn-sm btn">    <span data-menu-button>
             <span
               hidden
               
@@ -1650,7 +1650,7 @@
             </header>
 
             <div class="SelectMenu-list">
-              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" data-turbo="false" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="No8MKzxSrr-odawAYompV-xZSjtTdks17OjynyyclejEYDcZ5atQ3QOXzP5B1P55bKQbkC-PEttHZ0PZM8g0WQ" autocomplete="off" />
+              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" data-turbo="false" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="FidQL_OByXFZ589yXcs5wxHCwL-nLwn0TQRmcIEZ-a7kyGsdKng3E_IFr4x-lm7tkT-RFNvWUBrmi9c2nk1YHw" autocomplete="off" />
 
                 <input type="hidden" name="repository_id" value="34364279">
 
@@ -1778,7 +1778,7 @@
           hidden
         >
           <div class="SelectMenu-modal notifications-component-dialog-modal overflow-visible">
-            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" data-turbo="false" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="lmc9WrUzKlmEHivxmrB-7JCSIzkJ8eA7JF5NHDq1AoVkiAZobMrUOy_8Sw-57SnCEG9yknUIudWP0fxaJeGjNA" autocomplete="off" />
+            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" data-turbo="false" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="sekBaXcHBuxK2NI3tESWAEUbk526eeBKSk3MymwhM7VDBjpbrv74juE6ssmXGcEuxebCNsaAuaThwn2Mc3WSBA" autocomplete="off" />
 
               <input type="hidden" name="repository_id" value="34364279">
 
@@ -1925,7 +1925,7 @@
   <li>
       
   <div data-view-component="true" class="BtnGroup">
-        <a href="/googlemaps/android-samples/fork" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="5fc77cda91b2c0c08aade78562bdc1c7d59788e5946eaf29e40a78237ece3bcc" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork" aria-label="Fork your own copy of googlemaps/android-samples" data-view-component="true" class="btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-forked mr-2">
+        <a href="/googlemaps/android-samples/fork" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="02c2f1ff2ff15f6aa7fd3fe87ee5589fcf437d2a437bfebf19e3532d4b23bce0" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork" aria-label="Fork your own copy of googlemaps/android-samples" data-view-component="true" class="btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-forked mr-2">
     <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
 </svg>Fork
           <span id="repo-network-counter" data-pjax-replace="true" title="2,976" data-view-component="true" class="Counter">3k</span>
@@ -1943,13 +1943,13 @@
       
 >
     <div class="SelectMenu-modal">
-        <button class="SelectMenu-closeButton position-absolute right-0 m-2" type="button" aria-label="Close menu" data-toggle-for="details-1a8aca">
+        <button class="SelectMenu-closeButton position-absolute right-0 m-2" type="button" aria-label="Close menu" data-toggle-for="details-4a09b2">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
     <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
 </svg>
         </button>
       <div
-        id="filter-menu-1a8aca"
+        id="filter-menu-4a09b2"
         class="d-flex flex-column flex-1 overflow-hidden"
 >
         <div
@@ -1990,18 +1990,18 @@
 </template>
 
   <div data-view-component="true" class="js-toggler-container js-social-container starring-container BtnGroup d-flex">
-    <form class="starred js-social-form BtnGroup-parent flex-auto js-deferred-toggler-target" data-turbo="false" action="/googlemaps/android-samples/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="kZHJx-MD8KOXFrbvW06ogtU5fhHM3kTBr5FfUQLQ8AvB3s8nb_mttKyK42yeJKKXTIgmeuvbhKUHZTIiDKmBYA" autocomplete="off" />
-        <input type="hidden" value="nGCFzvDOWaQCF0MEMVxGJ7eeZlDC-eFmoepj4zeWh6HML4MufDQEszmLFof0NkwyLi8-O-X8IQIJHg6QOe_2yg" data-csrf="true" class="js-confirm-csrf-token" />
+    <form class="starred js-social-form BtnGroup-parent flex-auto js-deferred-toggler-target" data-turbo="false" action="/googlemaps/android-samples/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="wDjx9HYtlDQIp0FkP_ngfYyb-EkNpRK5R6h6DNKoHvKQd_cU-tfJIzM7FOf6k-poFSqgIiqg0t3vXBd_3NFvmQ" autocomplete="off" />
+        <input type="hidden" value="qFBAoo3xCHvlWTzzSb50qeyHZk273hs0lNEgumXn7En4H0ZCAQtVbN7FaXCM1H68dTY-Jpzb21A8JU3Ja56dIg" data-csrf="true" class="js-confirm-csrf-token" />
       <input type="hidden" name="context" value="repository">
-        <button data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="f39190b5f8bf136387d681d27566784f5b78e43311fdf72122c3909dc12e591e" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar" aria-label="Unstar this repository" type="submit" data-view-component="true" class="rounded-left-2 border-right-0 btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star-fill starred-button-icon d-inline-block mr-2">
+        <button data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="5f06bd55f4694773d420619160410fbb820be30a8ebfbbd9b957e73fe37fe5e1" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar" aria-label="Unstar this repository" type="submit" data-view-component="true" class="rounded-left-2 border-right-0 btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star-fill starred-button-icon d-inline-block mr-2">
     <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
 </svg><span data-view-component="true" class="d-inline">
           Starred
 </span>          <span id="repo-stars-counter-unstar" aria-label="2272 users starred this repository" data-singular-suffix="user starred this repository" data-plural-suffix="users starred this repository" data-pjax-replace="true" data-turbo-replace="true" title="2,272" data-view-component="true" class="Counter js-social-count">2.3k</span>
 </button></form>
-    <form class="unstarred js-social-form BtnGroup-parent flex-auto" data-turbo="false" action="/googlemaps/android-samples/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="4i00oqgr4Tz5YxjpNecbJoY2sn6xGaqQtmoU_VkXBSqxOG71rBkB_FzQgu9hRbYqMgU5J_OGNDvkjIIdoWXOwg" autocomplete="off" />
+    <form class="unstarred js-social-form BtnGroup-parent flex-auto" data-turbo="false" action="/googlemaps/android-samples/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="qR61lpfVOLDGP6inHxrr7h31dJVD5wfGyMf83Dttfj36C-_Bk-fYcGOMMqFLuEbiqcb_zAF4mW2aIWo8wx-11Q" autocomplete="off" />
       <input type="hidden" name="context" value="repository">
-        <button data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="c27072429d25d4ab5d1949810c46529bfea63e490c130c83fb37b976a6285d11" data-ga-click="Repository, click star button, action:blob#show; text:Star" aria-label="Star this repository" type="submit" data-view-component="true" class="js-toggler-target rounded-left-2 btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star d-inline-block mr-2">
+        <button data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="2c5f4f570e705fcd650e9edcf48775a0029b3e27dd9849315f1ba94df0158597" data-ga-click="Repository, click star button, action:blob#show; text:Star" aria-label="Star this repository" type="submit" data-view-component="true" class="js-toggler-target rounded-left-2 btn-sm btn BtnGroup-item">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star d-inline-block mr-2">
     <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
 </svg><span data-view-component="true" class="d-inline">
           Star
@@ -2020,13 +2020,13 @@
       
 >
     <div class="SelectMenu-modal">
-        <button class="SelectMenu-closeButton position-absolute right-0 m-2" type="button" aria-label="Close menu" data-toggle-for="details-1f9a53">
+        <button class="SelectMenu-closeButton position-absolute right-0 m-2" type="button" aria-label="Close menu" data-toggle-for="details-43ee12">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
     <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
 </svg>
         </button>
       <div
-        id="filter-menu-1f9a53"
+        id="filter-menu-43ee12"
         class="d-flex flex-column flex-1 overflow-hidden"
 >
         <div
@@ -2065,7 +2065,7 @@
 
   <ul data-view-component="true" class="UnderlineNav-body list-style-none">
       <li data-view-component="true" class="d-inline-flex">
-  <a id="code-tab" href="/googlemaps/android-samples" data-tab-item="i0code-tab" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /googlemaps/android-samples" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g c" aria-current="page" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item selected">
+  <a id="code-tab" href="/googlemaps/android-samples/tree/master" data-tab-item="i0code-tab" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /googlemaps/android-samples/tree/master" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g c" aria-current="page" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item selected">
     
               <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code UnderlineNav-octicon d-none d-sm-inline">
     <path fill-rule="evenodd" d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"></path>
@@ -2160,7 +2160,7 @@
   
             <ul>
                 <li data-menu-item="i0code-tab" hidden>
-                  <a role="menuitem" class="js-selected-navigation-item selected dropdown-item" aria-current="page" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /googlemaps/android-samples" href="/googlemaps/android-samples">
+                  <a role="menuitem" class="js-selected-navigation-item selected dropdown-item" aria-current="page" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments /googlemaps/android-samples/tree/master" href="/googlemaps/android-samples/tree/master">
                     Code
 </a>                </li>
                 <li data-menu-item="i1issues-tab" hidden>
@@ -2220,7 +2220,7 @@
 
 
     
-<a class="d-none js-permalink-shortcut" data-hotkey="y" href="/googlemaps/android-samples/blob/421801adc2c71357d98d1431a4bba41bfd6c5f93/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">Permalink</a>
+<a class="d-none js-permalink-shortcut" data-hotkey="y" href="/googlemaps/android-samples/blob/29ca74b9a3894121f179b9f36b0a51755e7231b0/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">Permalink</a>
 
 <div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-wrap flex-md-nowrap flex-justify-between flex-md-justify-start">
   
@@ -2232,7 +2232,7 @@
       <svg text="gray" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-branch">
     <path fill-rule="evenodd" d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"></path>
 </svg>
-      <span class="css-truncate-target" data-menu-button>main</span>
+      <span class="css-truncate-target" data-menu-button>master</span>
       <span class="dropdown-caret"></span>
     </summary>
 
@@ -2279,7 +2279,7 @@
             query-endpoint="/googlemaps/android-samples/refs"
             
             cache-key="v0:1660569216.919277"
-            current-committish="bWFpbg=="
+            current-committish="bWFzdGVy"
             default-branch="bWFpbg=="
             name-with-owner="Z29vZ2xlbWFwcy9hbmRyb2lkLXNhbXBsZXM="
             prefetch-on-mouseover
@@ -2304,7 +2304,7 @@
             </div>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/googlemaps/android-samples/blob/{{ urlEncodedRefName }}/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/googlemaps/android-samples/blob/{{ urlEncodedRefName }}/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
     <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
 </svg>
@@ -2330,7 +2330,7 @@
             data-targets="input-demux.sinks"
             query-endpoint="/googlemaps/android-samples/refs"
             cache-key="v0:1660569216.919277"
-            current-committish="bWFpbg=="
+            current-committish="bWFzdGVy"
             default-branch="bWFpbg=="
             name-with-owner="Z29vZ2xlbWFwcy9hbmRyb2lkLXNhbXBsZXM="
           >
@@ -2344,7 +2344,7 @@
             </template>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/googlemaps/android-samples/blob/{{ urlEncodedRefName }}/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/googlemaps/android-samples/blob/{{ urlEncodedRefName }}/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
     <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
 </svg>
@@ -2375,9 +2375,9 @@
 </div>
 
   <h2 id="blob-path" class="breadcrumb flex-auto flex-self-center min-width-0 text-normal mx-2 width-full width-md-auto flex-order-1 flex-md-order-none mt-3 mt-md-0">
-    <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples"><span>android-samples</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos"><span>ApiDemos</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos/kotlin"><span>kotlin</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos/kotlin/app"><span>app</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos/kotlin/app/src"><span>src</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos/kotlin/app/src/main"><span>main</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos/kotlin/app/src/main/res"><span>res</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/main/ApiDemos/kotlin/app/src/main/res/drawable"><span>drawable</span></a></span><span class="separator">/</span><strong class="final-path">ic_launcher_background.xml</strong>
+    <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master"><span>android-samples</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos"><span>ApiDemos</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos/java"><span>java</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos/java/app"><span>app</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos/java/app/src"><span>src</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos/java/app/src/main"><span>main</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos/java/app/src/main/res"><span>res</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" href="/googlemaps/android-samples/tree/master/ApiDemos/java/app/src/main/res/raw"><span>raw</span></a></span><span class="separator">/</span><strong class="final-path">mapstyle_retro.json</strong>
   </h2>
-    <a href="/googlemaps/android-samples/find/main" data-pjax="" data-hotkey="t" data-view-component="true" class="btn mr-2 d-none d-md-block">    Go to file
+    <a href="/googlemaps/android-samples/find/master" data-pjax="" data-hotkey="t" data-view-component="true" class="btn mr-2 d-none d-md-block">    Go to file
 </a>
   <details id="blob-more-options-details" data-view-component="true" class="details-overlay details-reset position-relative">
     <summary role="button" data-view-component="true" class="btn">    <svg aria-label="More options" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-kebab-horizontal">
@@ -2386,7 +2386,7 @@
 </summary>
   <div data-view-component="true">      <ul class="dropdown-menu dropdown-menu-sw">
         <li class="d-block d-md-none">
-          <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="6788c92438758721fc41147cd35e2ae86263b0a31eda50104ca4b7555dadece2" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/googlemaps/android-samples/find/main">
+          <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="92484e185913101fef232b1f6d2a615e76a133483c3eed47ecc56ea3b0c6c960" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/googlemaps/android-samples/find/master">
             <span class="flex-auto">Go to file</span>
             <span class="text-small color-fg-muted" aria-hidden="true">T</span>
 </a>        </li>
@@ -2398,13 +2398,13 @@
 </button>        </li>
         <li class="dropdown-divider" role="none"></li>
         <li>
-          <clipboard-copy data-toggle-for="blob-more-options-details" aria-label="Copy path" value="ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" data-view-component="true" class="dropdown-item cursor-pointer">
+          <clipboard-copy data-toggle-for="blob-more-options-details" aria-label="Copy path" value="ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" data-view-component="true" class="dropdown-item cursor-pointer">
     
             Copy path
 
 </clipboard-copy>        </li>
         <li>
-          <clipboard-copy data-toggle-for="blob-more-options-details" aria-label="Copy permalink" value="https://github.com/googlemaps/android-samples/blob/421801adc2c71357d98d1431a4bba41bfd6c5f93/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" data-view-component="true" class="dropdown-item cursor-pointer">
+          <clipboard-copy data-toggle-for="blob-more-options-details" aria-label="Copy permalink" value="https://github.com/googlemaps/android-samples/blob/29ca74b9a3894121f179b9f36b0a51755e7231b0/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" data-view-component="true" class="dropdown-item cursor-pointer">
     
             <span class="d-flex flex-items-baseline">
               <span class="flex-auto">Copy permalink</span>
@@ -2433,237 +2433,20 @@
   
 </div></div>
 
-    <include-fragment src="/googlemaps/android-samples/spoofed_commit_check/421801adc2c71357d98d1431a4bba41bfd6c5f93" data-test-selector="spoofed-commit-check"></include-fragment>
+    <include-fragment src="/googlemaps/android-samples/spoofed_commit_check/29ca74b9a3894121f179b9f36b0a51755e7231b0" data-test-selector="spoofed-commit-check"></include-fragment>
 
     <div class="Box d-flex flex-column flex-shrink-0 mb-3">
-  
-  <div class="Box-header Details js-details-container">
-      <div class="d-flex flex-items-center">
-        <span class="flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1">
-          <a rel="contributor" data-skip-pjax="true" data-hovercard-type="user" data-hovercard-url="/users/arriolac/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/arriolac"><img class="avatar avatar-user" src="https://avatars.githubusercontent.com/u/463186?s=48&amp;v=4" width="24" height="24" alt="@arriolac" /></a>
-        </span>
-        <div class="flex-1 d-flex flex-items-center ml-3 min-width-0">
-          <div class="css-truncate css-truncate-overflow">
-            <a class="text-bold Link--primary" rel="contributor" data-hovercard-type="user" data-hovercard-url="/users/arriolac/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/arriolac">arriolac</a>
-
-              <span class="markdown-title">
-                <a data-pjax="true" title="chore: Add missing snippets (#316)
-
-* chore: Add missing snippets.
-
-* Add POI behavior
-
-* License.
-
-* Adding snippets for Maps Object.
-
-* Add OnPoiClickDemoActivity
-
-* Add LiteMode.
-
-* Add street view sample code.
-
-* Add missing headers.
-
-* Marking activity as public.
-
-* Making activity internal
-
-* Move exclude.
-
-* Adding snippets for Events.
-
-* Add camera and view snippets.
-
-* Adding MyLocationLayerActivity.
-
-* Add snippets for Markers.
-
-* Adding InfoWindows.
-
-* Addiing snippets for Shapes.
-
-* Add GroundOverlays snippets.
-
-* Add tile overlays samples.
-
-* Add AMU + GeoJSON samples.
-
-* ADd KML snippets.
-
-* Adding heatmaps.
-
-* Add clustering.
-
-* Add multilayer." class="Link--secondary" href="/googlemaps/android-samples/commit/6eb23eee452ddd7a9e0bbac9ef45186dbe01992a">chore: Add missing snippets (</a><a class="issue-link js-issue-link" data-error-text="Failed to load title" data-id="698325426" data-permission-text="Title is private" data-url="https://github.com/googlemaps/android-samples/issues/316" data-hovercard-type="pull_request" data-hovercard-url="/googlemaps/android-samples/pull/316/hovercard" href="https://github.com/googlemaps/android-samples/pull/316">#316</a><a data-pjax="true" title="chore: Add missing snippets (#316)
-
-* chore: Add missing snippets.
-
-* Add POI behavior
-
-* License.
-
-* Adding snippets for Maps Object.
-
-* Add OnPoiClickDemoActivity
-
-* Add LiteMode.
-
-* Add street view sample code.
-
-* Add missing headers.
-
-* Marking activity as public.
-
-* Making activity internal
-
-* Move exclude.
-
-* Adding snippets for Events.
-
-* Add camera and view snippets.
-
-* Adding MyLocationLayerActivity.
-
-* Add snippets for Markers.
-
-* Adding InfoWindows.
-
-* Addiing snippets for Shapes.
-
-* Add GroundOverlays snippets.
-
-* Add tile overlays samples.
-
-* Add AMU + GeoJSON samples.
-
-* ADd KML snippets.
-
-* Adding heatmaps.
-
-* Add clustering.
-
-* Add multilayer." class="Link--secondary" href="/googlemaps/android-samples/commit/6eb23eee452ddd7a9e0bbac9ef45186dbe01992a">)</a>
-              </span>
-          </div>
-
-            <span class="hidden-text-expander ml-1 flex-shrink-0">
-              <button type="button" class="ellipsis-expander js-details-target" aria-expanded="false">&hellip;</button>
-            </span>
-
-          <span class="ml-2">
-            <include-fragment accept="text/fragment+html" src="/googlemaps/android-samples/commit/6eb23eee452ddd7a9e0bbac9ef45186dbe01992a/rollup?direction=e" class="d-inline"></include-fragment>
-          </span>
-        </div>
-        <div class="ml-3 d-flex flex-shrink-0 flex-items-center flex-justify-end color-fg-muted no-wrap">
-          <span class="d-none d-md-inline">
-            <span>Latest commit</span>
-            <a class="text-small text-mono Link--secondary" href="/googlemaps/android-samples/commit/6eb23eee452ddd7a9e0bbac9ef45186dbe01992a" data-pjax>6eb23ee</a>
-            <span itemprop="dateModified"><relative-time datetime="2020-09-23T22:14:56Z" class="no-wrap">Sep 23, 2020</relative-time></span>
-          </span>
-
-          <a data-pjax href="/googlemaps/android-samples/commits/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" class="ml-3 no-wrap Link--primary no-underline">
-            <svg text="gray" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-history">
-    <path fill-rule="evenodd" d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z"></path>
-</svg>
-            <span class="d-none d-sm-inline">
-              <strong>History</strong>
-            </span>
-          </a>
-        </div>
-      </div>
-        <div class="Details-content--hidden ml-5 mt-2"><pre class="mt-2 f6 ws-pre-wrap">* chore: Add missing snippets.
-
-* Add POI behavior
-
-* License.
-
-* Adding snippets for Maps Object.
-
-* Add OnPoiClickDemoActivity
-
-* Add LiteMode.
-
-* Add street view sample code.
-
-* Add missing headers.
-
-* Marking activity as public.
-
-* Making activity internal
-
-* Move exclude.
-
-* Adding snippets for Events.
-
-* Add camera and view snippets.
-
-* Adding MyLocationLayerActivity.
-
-* Add snippets for Markers.
-
-* Adding InfoWindows.
-
-* Addiing snippets for Shapes.
-
-* Add GroundOverlays snippets.
-
-* Add tile overlays samples.
-
-* Add AMU + GeoJSON samples.
-
-* ADd KML snippets.
-
-* Adding heatmaps.
-
-* Add clustering.
-
-* Add multilayer.</pre></div>
-
-  </div>
-
-  <div class="Box-body d-flex flex-items-center flex-auto border-bottom-0 flex-wrap" >
-    <details class="details-reset details-overlay details-overlay-dark lh-default color-fg-default float-left mr-3" id="blob_contributors_box">
-      <summary class="Link--primary">
-        <svg text="gray" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-people">
-    <path fill-rule="evenodd" d="M5.5 3.5a2 2 0 100 4 2 2 0 000-4zM2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4z"></path>
-</svg>
-        <strong>2</strong>
-        
-        contributors
-      </summary>
-      <details-dialog
-        class="Box Box--overlay d-flex flex-column anim-fade-in fast"
-        aria-label="Users who have contributed to this file"
-        src="/googlemaps/android-samples/contributors-list/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" preload>
-        <div class="Box-header">
-          <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog" data-close-dialog>
-            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
-    <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
-</svg>
-          </button>
-          <h3 class="Box-title">
-            Users who have contributed to this file
-          </h3>
-        </div>
-        <include-fragment>
-          <svg style="box-sizing: content-box; color: var(--color-icon-primary);" width="32" height="32" viewBox="0 0 16 16" fill="none" data-view-component="true" class="my-3 mx-auto d-block anim-rotate">
-  <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" vector-effect="non-scaling-stroke" />
-  <path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
-</svg>
-        </include-fragment>
-      </details-dialog>
-    </details>
-      <span class="">
-    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/arriolac/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/googlemaps/android-samples/commits/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml?author=arriolac">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/463186?s=48&amp;v=4" width="24" height="24" alt="@arriolac" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/bellarm/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/googlemaps/android-samples/commits/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml?author=bellarm">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/19516199?s=48&amp;v=4" width="24" height="24" alt="@bellarm" /> 
-</a>
-</span>
-
-  </div>
-</div>
+  <include-fragment src="/googlemaps/android-samples/contributors/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" class="commit-loader">
+    <div class="Box-header d-flex flex-items-center">
+      <div class="Skeleton avatar avatar-user flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1" style="width:24px;height:24px;"></div>
+      <div class="Skeleton Skeleton--text col-5 ml-2">&nbsp;</div>
+    </div>
+
+    <div class="Box-body d-flex flex-items-center" >
+      <div class="Skeleton Skeleton--text col-1">&nbsp;</div>
+      <span class="color-fg-danger h6 loader-error">Cannot retrieve contributors at this time</span>
+    </div>
+</include-fragment></div>
 
 
 
@@ -2686,25 +2469,25 @@
 
 
   <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1">
-      <include-fragment src="/googlemaps/android-samples/codeowners-badge/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml"></include-fragment>
+      <include-fragment src="/googlemaps/android-samples/codeowners-badge/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json"></include-fragment>
 
-      186 lines (182 sloc)
+      191 lines (191 sloc)
       <span class="file-info-divider"></span>
-    6.03 KB
+    3.03 KB
   </div>
 
   <div class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between hide-sm hide-md">
       
 
     <div class="BtnGroup">
-        <a data-permalink-href="/googlemaps/android-samples/raw/421801adc2c71357d98d1431a4bba41bfd6c5f93/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" href="/googlemaps/android-samples/raw/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" id="raw-url" data-view-component="true" class="js-permalink-replaceable-link btn-sm btn BtnGroup-item">    Raw
-</a>          <a data-permalink-href="/googlemaps/android-samples/blame/421801adc2c71357d98d1431a4bba41bfd6c5f93/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" href="/googlemaps/android-samples/blame/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" data-hotkey="b" data-view-component="true" class="js-update-url-with-hash js-permalink-replaceable-link btn-sm btn BtnGroup-item">    Blame
+        <a data-permalink-href="/googlemaps/android-samples/raw/29ca74b9a3894121f179b9f36b0a51755e7231b0/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" href="/googlemaps/android-samples/raw/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" id="raw-url" data-view-component="true" class="js-permalink-replaceable-link btn-sm btn BtnGroup-item">    Raw
+</a>          <a data-permalink-href="/googlemaps/android-samples/blame/29ca74b9a3894121f179b9f36b0a51755e7231b0/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" href="/googlemaps/android-samples/blame/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" data-hotkey="b" data-view-component="true" class="js-update-url-with-hash js-permalink-replaceable-link btn-sm btn BtnGroup-item">    Blame
 </a>    </div>
 
     <div class="d-flex">
         
 <div class="ml-1" data-test-selector="edit-dropdown-menu-component">
-  <form class="BtnGroup-parent js-update-url-with-hash " data-turbo="false" action="/googlemaps/android-samples/edit/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="2oKI6t6p8vINytQh177_HvzFrQ7v9ha3sihR-HBQQn1MPF9xXJ7HsRdiqXKkvb1ublYFhkWtFsxub0I4bGvCgQ" autocomplete="off" />
+  <form class="BtnGroup-parent js-update-url-with-hash " data-turbo="false" action="/googlemaps/android-samples/edit/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="NBNf2Uiu0U6TVDO28R1brg7suBaL4I2WAPjSNErY45MeOdP8YAIfV4ymAsrvgMyLfKICvublNcVfaniVoZ3IJA" autocomplete="off" />
       <button title="Fork this project and edit the file" data-hotkey="e" data-disable-with="" data-test-selector="edit-icon-button" type="submit" data-view-component="true" class="btn-sm BtnGroup-item btn">    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-pencil">
     <path fill-rule="evenodd" d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.249.249 0 00.108-.064l6.286-6.286z"></path>
 </svg>
@@ -2714,7 +2497,7 @@
 </summary>    <div class="SelectMenu right-0">
       <div class="SelectMenu-modal width-full">
         <div class="SelectMenu-list SelectMenu-list--borderless py-2">
-          <form class="SelectMenu-item js-update-url-with-hash " data-turbo="false" action="/googlemaps/android-samples/edit/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="DE-IBrDMyNDUCvjMp3rb-7WJ0LCEE4gnNI3YRuKp7wua8V-dMvv9k86ihZ_UeZmLJxp4OC5IiFzoysuG_pJv9w" autocomplete="off" />
+          <form class="SelectMenu-item js-update-url-with-hash " data-turbo="false" action="/googlemaps/android-samples/edit/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="y81hxqOSoOZ2zt32Ub5FI1kcDO67-jD3c6sCQbxcW_Xh5-3jiz5u_2k87IpPI9IGK1K2Rtb_iKQsOajgVxlwQg" autocomplete="off" />
               <button title="Fork this project and edit the file" data-test-selector="edit-text-button" type="submit" data-view-component="true" class="btn-invisible btn width-full d-flex flex-justify-between color-fg-default text-normal p-0">    <div class="mr-5">Edit this file</div>
               <div class="color-fg-muted">E</div>
 </button></form>
@@ -2722,7 +2505,7 @@
               <div class="mr-5 no-wrap">Open in github.dev</div>
               <div class="color-fg-muted">.</div>
 </a>
-            <a data-platforms="windows,mac" data-test-selector="github-desktop-link" aria-label="Open this file in GitHub Desktop" href="x-github-client://openRepo/https://github.com/googlemaps/android-samples?branch=main&amp;filepath=ApiDemos%2Fkotlin%2Fapp%2Fsrc%2Fmain%2Fres%2Fdrawable%2Fic_launcher_background.xml" data-view-component="true" class="SelectMenu-item no-wrap js-remove-unless-platform width-full text-normal color-fg-default f5">
+            <a data-platforms="windows,mac" data-test-selector="github-desktop-link" aria-label="Open this file in GitHub Desktop" href="x-github-client://openRepo/https://github.com/googlemaps/android-samples?branch=master&amp;filepath=ApiDemos%2Fjava%2Fapp%2Fsrc%2Fmain%2Fres%2Fraw%2Fmapstyle_retro.json" data-view-component="true" class="SelectMenu-item no-wrap js-remove-unless-platform width-full text-normal color-fg-default f5">
               Open in GitHub Desktop
 </a>        </div>
       </div>
@@ -2733,10 +2516,10 @@
 
         
 <div data-test-selector="remote-clipboard-copy">
-  <remote-clipboard-copy class="d-inline-block btn-octicon" style="height: 26px" data-src="/googlemaps/android-samples/raw/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" data-action="click:remote-clipboard-copy#remoteCopy">
+  <remote-clipboard-copy class="d-inline-block btn-octicon" style="height: 26px" data-src="/googlemaps/android-samples/raw/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" data-action="click:remote-clipboard-copy#remoteCopy">
   
 
-  <span data-target="remote-clipboard-copy.idle">      <span class="tooltipped tooltipped-nw cursor-pointer" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;COPY_RAW_CONTENTS_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="33fe386d978e32881c0007829fe6f66ee797eedd08d302528e5f396d4369b407" aria-label="Copy raw contents">
+  <span data-target="remote-clipboard-copy.idle">      <span class="tooltipped tooltipped-nw cursor-pointer" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;COPY_RAW_CONTENTS_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="e18688d4d15d2a3ba59f9b37eac7b5bb5c0cb55721ab2acc155c5dcd57783b0c" aria-label="Copy raw contents">
         <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy">
     <path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
 </svg>
@@ -2761,7 +2544,7 @@
 </remote-clipboard-copy></div>
 
 
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" data-turbo="false" action="/googlemaps/android-samples/delete/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="Wbgs5rmRFu5pSNtF7XixWf224_lb7C_Eqvd3M8Vm9wrwg4n8O-hukm9ZaSNF9fLUslBCymuT-KQX1aAHwYvGOQ" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" data-turbo="false" action="/googlemaps/android-samples/delete/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="MldWxsgY6m8GtRBoUGcgiMcEMECaz7K5yycBKAay_jGBw-O81L0e9urgq7LvLZuwjoEw0yDuC0lV38tQykheiw" />
             <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and delete the file" data-disable-with>
               <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-trash">
@@ -2789,20 +2572,20 @@
             <li>
                 <a class="dropdown-item tooltipped tooltipped-nw js-remove-unless-platform"
                    data-platforms="windows,mac"
-                   href="x-github-client://openRepo/https://github.com/googlemaps/android-samples?branch=main&amp;filepath=ApiDemos%2Fkotlin%2Fapp%2Fsrc%2Fmain%2Fres%2Fdrawable%2Fic_launcher_background.xml">
+                   href="x-github-client://openRepo/https://github.com/googlemaps/android-samples?branch=master&amp;filepath=ApiDemos%2Fjava%2Fapp%2Fsrc%2Fmain%2Fres%2Fraw%2Fmapstyle_retro.json">
                   Open with Desktop
                 </a>
             </li>
           <li>
-            <a class="dropdown-item" href="/googlemaps/android-samples/raw/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">
+            <a class="dropdown-item" href="/googlemaps/android-samples/raw/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">
               View raw
             </a>
           </li>
             <li>
-              <remote-clipboard-copy class="dropdown-item" data-src="/googlemaps/android-samples/raw/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml" data-action="click:remote-clipboard-copy#remoteCopy">
+              <remote-clipboard-copy class="dropdown-item" data-src="/googlemaps/android-samples/raw/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json" data-action="click:remote-clipboard-copy#remoteCopy">
   
 
-  <span data-target="remote-clipboard-copy.idle">                  <span class="cursor-pointer" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;COPY_RAW_CONTENTS_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="33fe386d978e32881c0007829fe6f66ee797eedd08d302528e5f396d4369b407">
+  <span data-target="remote-clipboard-copy.idle">                  <span class="cursor-pointer" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;COPY_RAW_CONTENTS_BUTTON&quot;,&quot;repository_id&quot;:34364279,&quot;originating_url&quot;:&quot;https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json&quot;,&quot;user_id&quot;:6420279}}" data-hydro-click-hmac="e18688d4d15d2a3ba59f9b37eac7b5bb5c0cb55721ab2acc155c5dcd57783b0c">
                     Copy raw contents
 </span></span>
   <span data-target="remote-clipboard-copy.fetching" hidden="hidden">                  Copy raw contents
@@ -2825,20 +2608,20 @@
 </span>
 </remote-clipboard-copy>            </li>
             <li>
-              <a class="dropdown-item" href="/googlemaps/android-samples/blame/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">
+              <a class="dropdown-item" href="/googlemaps/android-samples/blame/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">
                 View blame
               </a>
             </li>
 
               <li class="dropdown-divider" role="none"></li>
               <li>
-                <a class="dropdown-item" href="/googlemaps/android-samples/edit/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">Edit file</a>
+                <a class="dropdown-item" href="/googlemaps/android-samples/edit/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">Edit file</a>
               </li>
                 <li>
                   <a class="dropdown-item js-github-dev-shortcut js-blob-dropdown-click" data-test-selector="small-screen-github-dev-link" data-dropdown-tracking="{&quot;type&quot;:&quot;blob_edit_dropdown.dev_link_click&quot;,&quot;context&quot;:{&quot;repository_id&quot;:34364279,&quot;actor_id&quot;:6420279,&quot;edit_enabled&quot;:true,&quot;small_screen&quot;:true}}" href="https://github.dev/">Open with github.dev</a>
                 </li>
               <li>
-                <a class="dropdown-item menu-item-danger" href="/googlemaps/android-samples/delete/main/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">Delete file</a>
+                <a class="dropdown-item menu-item-danger" href="/googlemaps/android-samples/delete/master/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">Delete file</a>
               </li>
         </ul>
       </details>
@@ -2847,7 +2630,7 @@
 
 
       
-    <div itemprop="text" class="Box-body p-0 blob-wrapper data type-xml  gist-border-0">
+    <div itemprop="text" class="Box-body p-0 blob-wrapper data type-json  gist-border-0">
 
         
 <div class="js-check-bidi js-blob-code-container blob-code-content">
@@ -2875,751 +2658,770 @@
 </svg>
 </span></template>
 
-  <table data-hpc class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="XML" data-tagsearch-path="ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">
+  <table data-hpc class="highlight tab-size js-file-line-container js-code-nav-container js-tagsearch-file" data-tab-size="8" data-paste-markdown-skip data-tagsearch-lang="JSON" data-tagsearch-path="ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">
         <tr>
           <td id="L1" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="1"></td>
-          <td id="LC1" class="blob-code blob-code-inner js-file-line">&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>1.0<span class="pl-pds">&quot;</span></span><span class="pl-e"> encoding</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>utf-8<span class="pl-pds">&quot;</span></span>?&gt;</td>
+          <td id="LC1" class="blob-code blob-code-inner js-file-line">[</td>
         </tr>
         <tr>
           <td id="L2" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="2"></td>
-          <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">&lt;!--</span></span></td>
+          <td id="LC2" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L3" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="3"></td>
-          <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> Copyright 2020 Google LLC</span></td>
+          <td id="LC3" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>all<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L4" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="4"></td>
-          <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-c"></span></td>
+          <td id="LC4" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>labels.text.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L5" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="5"></td>
-          <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></td>
+          <td id="LC5" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L6" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="6"></td>
-          <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> you may not use this file except in compliance with the License.</span></td>
+          <td id="LC6" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L7" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="7"></td>
-          <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> You may obtain a copy of the License at</span></td>
+          <td id="LC7" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#755f5d<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L8" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="8"></td>
-          <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c"></span></td>
+          <td id="LC8" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L9" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="9"></td>
-          <td id="LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">      http://www.apache.org/licenses/LICENSE-2.0</span></td>
+          <td id="LC9" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L10" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="10"></td>
-          <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c"></span></td>
+          <td id="LC10" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L11" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="11"></td>
-          <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> Unless required by applicable law or agreed to in writing, software</span></td>
+          <td id="LC11" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L12" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="12"></td>
-          <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></td>
+          <td id="LC12" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>administrative<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L13" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="13"></td>
-          <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></td>
+          <td id="LC13" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L14" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="14"></td>
-          <td id="LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> See the License for the specific language governing permissions and</span></td>
+          <td id="LC14" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L15" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="15"></td>
-          <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> limitations under the License.</span></td>
+          <td id="LC15" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L16" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="16"></td>
-          <td id="LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">--&gt;</span></span></td>
+          <td id="LC16" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#d4ccb9<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L17" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="17"></td>
-          <td id="LC17" class="blob-code blob-code-inner js-file-line">
-</td>
+          <td id="LC17" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L18" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="18"></td>
-          <td id="LC18" class="blob-code blob-code-inner js-file-line">&lt;<span class="pl-ent">vector</span> <span class="pl-e">xmlns</span><span class="pl-e">:</span><span class="pl-e">android</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>http://schemas.android.com/apk/res/android<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC18" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L19" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="19"></td>
-          <td id="LC19" class="blob-code blob-code-inner js-file-line">    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">width</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>108dp<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC19" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L20" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="20"></td>
-          <td id="LC20" class="blob-code blob-code-inner js-file-line">    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">height</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>108dp<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC20" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L21" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="21"></td>
-          <td id="LC21" class="blob-code blob-code-inner js-file-line">    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">viewportHeight</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC21" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>administrative.country<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L22" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="22"></td>
-          <td id="LC22" class="blob-code blob-code-inner js-file-line">    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">viewportWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>108<span class="pl-pds">&quot;</span></span>&gt;</td>
+          <td id="LC22" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.stroke<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L23" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="23"></td>
-          <td id="LC23" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC23" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L24" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="24"></td>
-          <td id="LC24" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#26A69A<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC24" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L25" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="25"></td>
-          <td id="LC25" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,0h108v108h-108z<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC25" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#baafae<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L26" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="26"></td>
-          <td id="LC26" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC26" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L27" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="27"></td>
-          <td id="LC27" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC27" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L28" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="28"></td>
-          <td id="LC28" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M9,0L9,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC28" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L29" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="29"></td>
-          <td id="LC29" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC29" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L30" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="30"></td>
-          <td id="LC30" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC30" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>administrative.land_parcel<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L31" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="31"></td>
-          <td id="LC31" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC31" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.stroke<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L32" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="32"></td>
-          <td id="LC32" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC32" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L33" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="33"></td>
-          <td id="LC33" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,0L19,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC33" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L34" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="34"></td>
-          <td id="LC34" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC34" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#d4ccb9<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L35" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="35"></td>
-          <td id="LC35" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC35" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L36" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="36"></td>
-          <td id="LC36" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC36" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L37" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="37"></td>
-          <td id="LC37" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC37" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L38" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="38"></td>
-          <td id="LC38" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M29,0L29,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC38" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L39" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="39"></td>
-          <td id="LC39" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC39" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>landscape.man_made<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L40" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="40"></td>
-          <td id="LC40" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC40" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L41" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="41"></td>
-          <td id="LC41" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC41" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L42" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="42"></td>
-          <td id="LC42" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC42" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L43" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="43"></td>
-          <td id="LC43" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M39,0L39,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC43" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#ebe3cd<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L44" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="44"></td>
-          <td id="LC44" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC44" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L45" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="45"></td>
-          <td id="LC45" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC45" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L46" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="46"></td>
-          <td id="LC46" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC46" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L47" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="47"></td>
-          <td id="LC47" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC47" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L48" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="48"></td>
-          <td id="LC48" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M49,0L49,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC48" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>landscape.natural<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L49" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="49"></td>
-          <td id="LC49" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC49" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L50" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="50"></td>
-          <td id="LC50" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC50" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L51" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="51"></td>
-          <td id="LC51" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC51" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L52" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="52"></td>
-          <td id="LC52" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC52" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#ebe3cd<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L53" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="53"></td>
-          <td id="LC53" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M59,0L59,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC53" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L54" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="54"></td>
-          <td id="LC54" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC54" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L55" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="55"></td>
-          <td id="LC55" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC55" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L56" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="56"></td>
-          <td id="LC56" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC56" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L57" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="57"></td>
-          <td id="LC57" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC57" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>landscape.natural<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L58" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="58"></td>
-          <td id="LC58" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M69,0L69,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC58" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L59" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="59"></td>
-          <td id="LC59" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC59" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L60" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="60"></td>
-          <td id="LC60" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC60" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L61" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="61"></td>
-          <td id="LC61" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC61" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;lightness&quot;</span>: <span class="pl-c1">-10</span></td>
         </tr>
         <tr>
           <td id="L62" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="62"></td>
-          <td id="LC62" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC62" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L63" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="63"></td>
-          <td id="LC63" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M79,0L79,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC63" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L64" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="64"></td>
-          <td id="LC64" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC64" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L65" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="65"></td>
-          <td id="LC65" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC65" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L66" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="66"></td>
-          <td id="LC66" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC66" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>poi<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L67" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="67"></td>
-          <td id="LC67" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC67" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L68" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="68"></td>
-          <td id="LC68" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M89,0L89,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC68" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L69" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="69"></td>
-          <td id="LC69" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC69" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L70" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="70"></td>
-          <td id="LC70" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC70" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#d4ccb9<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L71" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="71"></td>
-          <td id="LC71" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC71" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L72" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="72"></td>
-          <td id="LC72" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC72" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L73" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="73"></td>
-          <td id="LC73" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M99,0L99,108<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC73" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L74" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="74"></td>
-          <td id="LC74" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC74" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L75" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="75"></td>
-          <td id="LC75" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC75" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>poi<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L76" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="76"></td>
-          <td id="LC76" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC76" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>labels.icon<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L77" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="77"></td>
-          <td id="LC77" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC77" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L78" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="78"></td>
-          <td id="LC78" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,9L108,9<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC78" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L79" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="79"></td>
-          <td id="LC79" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC79" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;hue&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#ff7f00<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L80" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="80"></td>
-          <td id="LC80" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC80" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L81" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="81"></td>
-          <td id="LC81" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC81" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L82" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="82"></td>
-          <td id="LC82" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC82" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L83" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="83"></td>
-          <td id="LC83" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,19L108,19<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC83" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L84" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="84"></td>
-          <td id="LC84" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC84" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>poi.park<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L85" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="85"></td>
-          <td id="LC85" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC85" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L86" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="86"></td>
-          <td id="LC86" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC86" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L87" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="87"></td>
-          <td id="LC87" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC87" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L88" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="88"></td>
-          <td id="LC88" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,29L108,29<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC88" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#9ba56f<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L89" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="89"></td>
-          <td id="LC89" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC89" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L90" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="90"></td>
-          <td id="LC90" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC90" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L91" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="91"></td>
-          <td id="LC91" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC91" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L92" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="92"></td>
-          <td id="LC92" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC92" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L93" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="93"></td>
-          <td id="LC93" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,39L108,39<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC93" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L94" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="94"></td>
-          <td id="LC94" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC94" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L95" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="95"></td>
-          <td id="LC95" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC95" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L96" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="96"></td>
-          <td id="LC96" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC96" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L97" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="97"></td>
-          <td id="LC97" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC97" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#f5f1e6<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L98" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="98"></td>
-          <td id="LC98" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,49L108,49<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC98" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L99" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="99"></td>
-          <td id="LC99" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC99" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L100" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="100"></td>
-          <td id="LC100" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC100" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L101" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="101"></td>
-          <td id="LC101" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC101" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L102" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="102"></td>
-          <td id="LC102" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC102" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L103" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="103"></td>
-          <td id="LC103" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,59L108,59<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC103" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.stroke<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L104" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="104"></td>
-          <td id="LC104" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC104" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L105" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="105"></td>
-          <td id="LC105" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC105" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L106" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="106"></td>
-          <td id="LC106" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC106" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#dfd8c3<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L107" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="107"></td>
-          <td id="LC107" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC107" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L108" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="108"></td>
-          <td id="LC108" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,69L108,69<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC108" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L109" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="109"></td>
-          <td id="LC109" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC109" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L110" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="110"></td>
-          <td id="LC110" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC110" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L111" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="111"></td>
-          <td id="LC111" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC111" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road.arterial<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L112" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="112"></td>
-          <td id="LC112" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC112" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L113" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="113"></td>
-          <td id="LC113" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,79L108,79<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC113" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L114" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="114"></td>
-          <td id="LC114" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC114" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L115" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="115"></td>
-          <td id="LC115" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC115" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#fdfcf8<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L116" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="116"></td>
-          <td id="LC116" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC116" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L117" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="117"></td>
-          <td id="LC117" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC117" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L118" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="118"></td>
-          <td id="LC118" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,89L108,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC118" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L119" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="119"></td>
-          <td id="LC119" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC119" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L120" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="120"></td>
-          <td id="LC120" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC120" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road.arterial<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L121" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="121"></td>
-          <td id="LC121" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC121" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.stroke<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L122" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="122"></td>
-          <td id="LC122" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC122" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L123" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="123"></td>
-          <td id="LC123" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M0,99L108,99<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC123" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L124" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="124"></td>
-          <td id="LC124" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC124" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#e4e3df<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L125" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="125"></td>
-          <td id="LC125" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC125" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L126" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="126"></td>
-          <td id="LC126" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC126" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L127" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="127"></td>
-          <td id="LC127" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC127" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L128" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="128"></td>
-          <td id="LC128" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,29L89,29<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC128" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L129" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="129"></td>
-          <td id="LC129" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC129" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road.highway<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L130" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="130"></td>
-          <td id="LC130" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC130" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L131" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="131"></td>
-          <td id="LC131" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC131" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L132" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="132"></td>
-          <td id="LC132" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC132" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L133" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="133"></td>
-          <td id="LC133" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,39L89,39<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC133" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#f2cb77<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L134" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="134"></td>
-          <td id="LC134" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC134" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L135" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="135"></td>
-          <td id="LC135" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC135" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L136" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="136"></td>
-          <td id="LC136" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC136" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L137" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="137"></td>
-          <td id="LC137" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC137" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L138" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="138"></td>
-          <td id="LC138" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,49L89,49<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC138" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road.highway<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L139" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="139"></td>
-          <td id="LC139" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC139" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.stroke<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L140" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="140"></td>
-          <td id="LC140" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC140" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L141" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="141"></td>
-          <td id="LC141" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC141" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L142" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="142"></td>
-          <td id="LC142" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC142" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#ecb43d<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L143" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="143"></td>
-          <td id="LC143" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,59L89,59<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC143" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L144" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="144"></td>
-          <td id="LC144" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC144" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L145" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="145"></td>
-          <td id="LC145" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC145" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L146" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="146"></td>
-          <td id="LC146" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC146" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L147" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="147"></td>
-          <td id="LC147" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC147" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road.highway.controlled_access<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L148" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="148"></td>
-          <td id="LC148" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,69L89,69<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC148" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L149" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="149"></td>
-          <td id="LC149" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC149" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L150" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="150"></td>
-          <td id="LC150" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC150" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L151" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="151"></td>
-          <td id="LC151" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC151" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#e98d58<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L152" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="152"></td>
-          <td id="LC152" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC152" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L153" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="153"></td>
-          <td id="LC153" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M19,79L89,79<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC153" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L154" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="154"></td>
-          <td id="LC154" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC154" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L155" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="155"></td>
-          <td id="LC155" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC155" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L156" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="156"></td>
-          <td id="LC156" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC156" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>road.highway.controlled_access<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L157" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="157"></td>
-          <td id="LC157" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC157" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.stroke<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L158" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="158"></td>
-          <td id="LC158" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M29,19L29,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC158" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L159" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="159"></td>
-          <td id="LC159" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC159" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L160" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="160"></td>
-          <td id="LC160" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC160" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#d27f4f<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L161" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="161"></td>
-          <td id="LC161" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC161" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L162" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="162"></td>
-          <td id="LC162" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC162" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L163" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="163"></td>
-          <td id="LC163" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M39,19L39,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC163" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L164" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="164"></td>
-          <td id="LC164" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC164" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L165" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="165"></td>
-          <td id="LC165" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC165" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>transit.line<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L166" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="166"></td>
-          <td id="LC166" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC166" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L167" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="167"></td>
-          <td id="LC167" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC167" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L168" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="168"></td>
-          <td id="LC168" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M49,19L49,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC168" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L169" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="169"></td>
-          <td id="LC169" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC169" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#d4ccb9<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L170" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="170"></td>
-          <td id="LC170" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC170" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L171" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="171"></td>
-          <td id="LC171" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC171" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L172" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="172"></td>
-          <td id="LC172" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC172" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L173" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="173"></td>
-          <td id="LC173" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M59,19L59,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC173" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L174" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="174"></td>
-          <td id="LC174" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC174" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>transit.station.airport<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L175" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="175"></td>
-          <td id="LC175" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC175" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L176" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="176"></td>
-          <td id="LC176" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC176" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L177" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="177"></td>
-          <td id="LC177" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC177" class="blob-code blob-code-inner js-file-line">      {</td>
         </tr>
         <tr>
           <td id="L178" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="178"></td>
-          <td id="LC178" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M69,19L69,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC178" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#d4ccb9<span class="pl-pds">&quot;</span></span></td>
         </tr>
         <tr>
           <td id="L179" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="179"></td>
-          <td id="LC179" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC179" class="blob-code blob-code-inner js-file-line">      }</td>
         </tr>
         <tr>
           <td id="L180" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="180"></td>
-          <td id="LC180" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC180" class="blob-code blob-code-inner js-file-line">    ]</td>
         </tr>
         <tr>
           <td id="L181" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="181"></td>
-          <td id="LC181" class="blob-code blob-code-inner js-file-line">    &lt;<span class="pl-ent">path</span></td>
+          <td id="LC181" class="blob-code blob-code-inner js-file-line">  },</td>
         </tr>
         <tr>
           <td id="L182" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="182"></td>
-          <td id="LC182" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">fillColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#00000000<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC182" class="blob-code blob-code-inner js-file-line">  {</td>
         </tr>
         <tr>
           <td id="L183" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="183"></td>
-          <td id="LC183" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">pathData</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>M79,19L79,89<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC183" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;featureType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>water<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L184" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="184"></td>
-          <td id="LC184" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeColor</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#33FFFFFF<span class="pl-pds">&quot;</span></span></td>
+          <td id="LC184" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;elementType&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>geometry.fill<span class="pl-pds">&quot;</span></span>,</td>
         </tr>
         <tr>
           <td id="L185" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="185"></td>
-          <td id="LC185" class="blob-code blob-code-inner js-file-line">        <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">strokeWidth</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>0.8<span class="pl-pds">&quot;</span></span> /&gt;</td>
+          <td id="LC185" class="blob-code blob-code-inner js-file-line">    <span class="pl-ent">&quot;stylers&quot;</span>: [</td>
         </tr>
         <tr>
           <td id="L186" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="186"></td>
-          <td id="LC186" class="blob-code blob-code-inner js-file-line">&lt;/<span class="pl-ent">vector</span>&gt;</td>
+          <td id="LC186" class="blob-code blob-code-inner js-file-line">      {</td>
+        </tr>
+        <tr>
+          <td id="L187" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="187"></td>
+          <td id="LC187" class="blob-code blob-code-inner js-file-line">        <span class="pl-ent">&quot;color&quot;</span>: <span class="pl-s"><span class="pl-pds">&quot;</span>#b9d3c2<span class="pl-pds">&quot;</span></span></td>
+        </tr>
+        <tr>
+          <td id="L188" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="188"></td>
+          <td id="LC188" class="blob-code blob-code-inner js-file-line">      }</td>
+        </tr>
+        <tr>
+          <td id="L189" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="189"></td>
+          <td id="LC189" class="blob-code blob-code-inner js-file-line">    ]</td>
+        </tr>
+        <tr>
+          <td id="L190" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="190"></td>
+          <td id="LC190" class="blob-code blob-code-inner js-file-line">  }</td>
+        </tr>
+        <tr>
+          <td id="L191" class="blob-num js-line-number js-code-nav-line-number js-blob-rnum" data-line-number="191"></td>
+          <td id="LC191" class="blob-code blob-code-inner js-file-line">]</td>
         </tr>
   </table>
 </div>
@@ -3645,7 +3447,7 @@
             Copy permalink
           </clipboard-copy>
         </li>
-        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/googlemaps/android-samples/blame/421801adc2c71357d98d1431a4bba41bfd6c5f93/ApiDemos/kotlin/app/src/main/res/drawable/ic_launcher_background.xml">View git blame</a></li>
+        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/googlemaps/android-samples/blame/29ca74b9a3894121f179b9f36b0a51755e7231b0/ApiDemos/java/app/src/main/res/raw/mapstyle_retro.json">View git blame</a></li>
           <li><a class="dropdown-item" id="js-new-issue" role="menuitem" href="/googlemaps/android-samples/issues/new">Reference in new issue</a></li>
       </ul>
     </details-menu>

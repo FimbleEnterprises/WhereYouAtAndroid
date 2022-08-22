@@ -41,7 +41,7 @@ class StartFragment : Fragment() {
         binding.btnJoin.setOnClickListener {
             startObservingJoinTripLiveData()
             binding.progressBar.visibility = View.VISIBLE
-            AppPreferences.tripcode = "IBASJ"
+            AppPreferences.tripcode = "ECZAX"
             // Navigate to the map
             findNavController().navigate(
                 R.id.mapFragment

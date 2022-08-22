@@ -43,10 +43,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TripUsersLocationManagementService : LifecycleService() {
 
+    // -----------------------------------------------------------
+    //                      SERVICE MANAGEMENT
+    // -----------------------------------------------------------
+    // region SERVICE MANAGEMENT
     /*
-     * Checks whether the bound activity has really gone away (foreground service with notification
-     * created) or simply orientation change (no-op).
-     */
+ * Checks whether the bound activity has really gone away (foreground service with notification
+ * created) or simply orientation change (no-op).
+ */
     private var configurationChange = false
 
     private var serviceRunningInForeground = false
@@ -54,7 +58,12 @@ class TripUsersLocationManagementService : LifecycleService() {
     private val localBinder = LocalBinder()
 
     private lateinit var notificationManager: NotificationManager
+    // endregion
 
+    // -----------------------------------------------------------
+    //                   MY LOCATION MANAGEMENT
+    // -----------------------------------------------------------
+    // region MY LOATION MANAGEMENT
     // TODO: Step 1.1, Review variables (no changes).
     // FusedLocationProviderClient - Main class for receiving location updates.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -71,13 +80,24 @@ class TripUsersLocationManagementService : LifecycleService() {
     // last location to create a Notification if the user navigates away from the app.
     private var currentLocation: Location? = null
 
+    private var lastUploadedLocation: Long = 0
+    // endregion
+
+    // -----------------------------------------------------------
+    //                  MEMBER LOCATION API CALLS
+    // -----------------------------------------------------------
+    // region API
     // Handler and runner for continuously requesting member locations.
     private var myHandler: Handler = Handler(Looper.myLooper()!!)
     private var runner: Runnable? = null
-
     // Set true when request is made and false when it returns.
     private var isWaitingOnApi = false
+    // endregion
 
+    // -----------------------------------------------------------
+    //                       USE CASES
+    // -----------------------------------------------------------
+    // region USE CASES
     @Inject
     lateinit var uploadMyLocToApiUseCase: UploadMyLocToApiUseCase
 
@@ -95,8 +115,7 @@ class TripUsersLocationManagementService : LifecycleService() {
 
     @Inject
     lateinit var saveMemberLocsToDbUseCase: SaveMemberLocsToDbUseCase
-
-    private var lastUploadedLocation: Long = 0
+    // endregion
 
     override fun onCreate() {
         super.onCreate()
@@ -407,6 +426,7 @@ class TripUsersLocationManagementService : LifecycleService() {
      */
     private fun startRequestingMemberLocations() {
 
+        // In case we somehow have a runner that's already instantiated we stop that shit dead.
         if (runner != null) {
             try {
                 myHandler.removeCallbacks(runner!!)
@@ -416,13 +436,19 @@ class TripUsersLocationManagementService : LifecycleService() {
             }
         }
 
+        // Get locations manually, once, so we don't have to wait for the initial delay to elapse.
+        requestMemberLocations()
+
+        // What runs on each execution/loop
         runner = Runnable {
-            // What runs each time
+            // Get trip member locations from the API
             requestMemberLocations()
+
+            // Schedule it again for the future
             myHandler.postDelayed(runner!!, 15000)
         }
 
-        // Starts it up initially
+        // Schedule the first loop
         myHandler.postDelayed(runner!!, 15000)
     }
 
@@ -432,17 +458,8 @@ class TripUsersLocationManagementService : LifecycleService() {
             when (apiResponse) {
                 is Resource.Success -> {
                     isWaitingOnApi = false
-                    apiResponse.data?.locUpdates?.forEach {
-                        try {
-                            deleteAllMemberLocsFromDbUseCase.execute()
-                            saveMemberLocsToDbUseCase.execute(it)
-                        } catch (exception:Exception) {
-                            Log.e(TAG, "requestMemberLocations: ${exception.localizedMessage}"
-                                , exception)
-
-                        }
-                        Log.i(TAG, "-=ForegroundOnlyLocationService:requestMemberLocations Saved $it =-")
-                    }
+                    deleteAllMemberLocsFromDbUseCase.execute()
+                    apiResponse.data?.locUpdates?.let { saveMemberLocsToDbUseCase.executeMany(it) }
                 }
                 is Resource.Loading -> {
                     isWaitingOnApi = true

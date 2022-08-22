@@ -3,6 +3,7 @@ package com.fimbleenterprises.whereyouat.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
@@ -32,5 +33,9 @@ data class LocUpdate(
 
     override fun toString(): String {
         return "ID:${this.memberid} Lat/Lng:${lat}/${lon} Name: ${this.memberName} Tripcode: ${this.tripcode} "
+    }
+
+    fun toLatLng(): LatLng {
+        return LatLng(this.lat, this.lon)
     }
 }

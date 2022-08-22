@@ -7,11 +7,37 @@
         tools:context=".MainActivity"
         android:padding="5dp">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCenterTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/route_icon_1"
+            android:layout_alignParentEnd="false"
+            android:layout_above="@id/bottomContainer"
+            android:layout_marginBottom="80dp"
+            android:contentDescription="@string/center_trip"
+            app:backgroundTint="@color/design_default_color_surface"
+            android:layout_marginStart="10dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCenterMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/center_me_icon"
+            android:layout_alignParentEnd="false"
+            android:layout_above="@id/bottomContainer"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/center_me"
+            app:backgroundTint="@color/design_default_color_surface" />
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout1">
+            android:id="@+id/topContainer">
 
         <Button
                 android:text="@string/btn_push_my_location"
@@ -40,9 +66,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout3"
-            android:layout_below="@id/linearLayout1"
-            android:layout_above="@id/linearLayout2"
+            android:id="@+id/mapContainer"
+            android:layout_below="@id/topContainer"
+            android:layout_above="@id/bottomContainer"
             android:background="@drawable/btn_glass_navy_border">
 
         <androidx.fragment.app.FragmentContainerView
@@ -59,7 +85,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2"
+            android:id="@+id/bottomContainer"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_alignParentBottom="true">
 

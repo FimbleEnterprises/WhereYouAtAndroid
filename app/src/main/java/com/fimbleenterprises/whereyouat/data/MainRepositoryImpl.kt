@@ -41,6 +41,10 @@ class MainRepositoryImpl
         return localDataSource.saveMemberLocationToDB(locUpdate)
     }
 
+    override suspend fun saveMemberLocationsToDatabase(locUpdates: List<LocUpdate>): List<Long> {
+        return localDataSource.saveMemberLocationsToDB(locUpdates)
+    }
+
     override suspend fun deleteAllLocsFromDatabase(): Int {
         return localDataSource.deleteSavedMemberLocations()
     }

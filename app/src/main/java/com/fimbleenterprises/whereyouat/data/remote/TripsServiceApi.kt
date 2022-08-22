@@ -14,7 +14,7 @@ import retrofit2.http.Query
 
 interface TripsServiceApi {
 
-    @GET(Constants.GET_TRIP_UPDATES_URL)
+    @GET("api/Trips?")
     suspend fun getMemberLocations(
         @Query("tripcode") tripcode: String
     ): Response<MemberLocationsApiResponse>
