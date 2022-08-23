@@ -22,11 +22,17 @@ class MainViewModelFactory(
     private val createTripWithApiUseCase: CreateTripWithApiUseCase,
     private val deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
     private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
-    private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase
+    private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
+    private val getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
+    private val getServiceStatusUseCase: GetServiceStatusUseCase,
+    private val saveServiceStatusUseCase: SaveServiceStatusUseCase
 ):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(
+            saveServiceStatusUseCase,
+            getServiceStatusUseCase,
+            getTripcodeIsActiveWithApiUseCase,
             createTripWithApiUseCase,
             deleteAllMemberLocsFromDbUseCase,
             getMemberLocsFromDbUseCase,

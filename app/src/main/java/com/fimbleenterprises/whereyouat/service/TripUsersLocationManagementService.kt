@@ -22,11 +22,14 @@ import com.fimbleenterprises.whereyouat.R
 import com.fimbleenterprises.whereyouat.WhereYouAt
 import com.fimbleenterprises.whereyouat.data.usecases.*
 import com.fimbleenterprises.whereyouat.model.MyLocation
+import com.fimbleenterprises.whereyouat.model.ServiceStatus
 import com.fimbleenterprises.whereyouat.utils.Resource
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -58,6 +61,8 @@ class TripUsersLocationManagementService : LifecycleService() {
     private val localBinder = LocalBinder()
 
     private lateinit var notificationManager: NotificationManager
+
+    private var tripcode: String? = null
     // endregion
 
     // -----------------------------------------------------------
@@ -115,12 +120,38 @@ class TripUsersLocationManagementService : LifecycleService() {
 
     @Inject
     lateinit var saveMemberLocsToDbUseCase: SaveMemberLocsToDbUseCase
+
+    @Inject
+    lateinit var saveServiceStatusUseCase: SaveServiceStatusUseCase
+
+    @Inject
+    lateinit var getServiceStatusUseCase: GetServiceStatusUseCase
     // endregion
 
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "onCreate()")
 
+        CoroutineScope(IO).launch {
+
+            tripcode = getServiceStatusUseCase.execute().tripcode
+            /*getServiceStatusUseCase.executeFlow().collect() {
+                tripcode = it.tripcode
+            }*/
+
+            saveServiceStatusUseCase.execute(
+                ServiceStatus(
+                    isStarting = true,
+                    isRunning = true,
+                    tripcode = tripcode
+                )
+            )
+
+
+
+        }
+
+        // Clear all locations for all members
         CoroutineScope(IO).launch {
             deleteMyLocFromDbUseCase.execute()
             deleteAllMemberLocsFromDbUseCase.execute()
@@ -197,30 +228,32 @@ class TripUsersLocationManagementService : LifecycleService() {
 
                         if (okayToUploadLocation()) {
                             // Upload my loc to API
-                            uploadMyLocToApiUseCase.execute(myLocation.toLocUpdate()).collect {
-                                when (it) {
-                                    is Resource.Success -> {
-                                        Log.i(TAG,
-                                            "-=ForegroundOnlyLocationService:onLocationResult SUCCESS =-")
-                                        Log.i(TAG,
-                                            "-=ForegroundOnlyLocationService:wasSuccessful:${it.data?.wasSuccessful} =-")
-                                    }
-                                    is Resource.Loading -> {
-                                        Log.i(TAG,
-                                            "-=ForegroundOnlyLocationService:onLocationResult LOADING =-")
-                                    }
-                                    is Resource.Error -> {
-                                        Log.w(TAG,
-                                            "-=ForegroundOnlyLocationService:onLocationResult ERROR =-")
-                                    }
-                                } // when
-                            } // collect
+                            myLocation.toLocUpdate(tripcode!!)?.let { locUpdate ->
+                                uploadMyLocToApiUseCase.execute(locUpdate).collect {
+                                    when (it) {
+                                        is Resource.Success -> {
+                                            Log.v(TAG,
+                                                "-=ForegroundOnlyLocationService:onLocationResult SUCCESS =-")
+                                            Log.v(TAG,
+                                                "-=ForegroundOnlyLocationService:wasSuccessful:${it.data?.wasSuccessful} =-")
+                                        }
+                                        is Resource.Loading -> {
+                                            Log.i(TAG,
+                                                "-=ForegroundOnlyLocationService:onLocationResult LOADING =-")
+                                        }
+                                        is Resource.Error -> {
+                                            Log.w(TAG,
+                                                "-=ForegroundOnlyLocationService:onLocationResult ERROR =-")
+                                        }
+                                    } // when
+                                } // collect
+                            } // LocUpdate is not null
                         } // okayToUploadLocation
                     } // currentLocation?.let {
                 } // bg coroutine
             } // on Loc received
         } // loc callback
-    }// onCreate
+    } // onCreate
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand()")
@@ -235,8 +268,8 @@ class TripUsersLocationManagementService : LifecycleService() {
             unsubscribeToLocationUpdates()
             stopSelf()
         }
+
         // Tells the system not to recreate the service after it's been killed.
-        // return
         return super.onStartCommand(intent, START_FLAG_RETRY, startId)
     }
 
@@ -283,8 +316,19 @@ class TripUsersLocationManagementService : LifecycleService() {
 
     override fun onDestroy() {
         stopRequestingMemberLocations()
+
+        CoroutineScope(IO).launch {
+            saveServiceStatusUseCase.execute(
+                ServiceStatus(
+                    1,
+                    false,
+                     System.currentTimeMillis(),
+                    false,
+                    null
+                )
+            )
+        }
         super.onDestroy()
-        Log.d(TAG, "onDestroy()")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -394,13 +438,10 @@ class TripUsersLocationManagementService : LifecycleService() {
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .addAction(
-                R.drawable.ic_launch, getString(R.string.launch_activity),
-                activityPendingIntent
-            )
+            .setContentIntent(activityPendingIntent)
             .addAction(
                 R.drawable.ic_cancel,
-                getString(R.string.stop_location_updates_button_text),
+                getString(R.string.leave_trip_notification_button),
                 servicePendingIntent
             )
             .build()
@@ -425,6 +466,18 @@ class TripUsersLocationManagementService : LifecycleService() {
      * Starts a runner that repeatedly checks for member locations.
      */
     private fun startRequestingMemberLocations() {
+
+        CoroutineScope(Main).launch {
+            saveServiceStatusUseCase.execute(
+                ServiceStatus(
+                    1,
+                    true,
+                    System.currentTimeMillis(),
+                    false,
+                    getServiceStatusUseCase.execute().tripcode
+                )
+            )
+        }
 
         // In case we somehow have a runner that's already instantiated we stop that shit dead.
         if (runner != null) {
@@ -453,21 +506,27 @@ class TripUsersLocationManagementService : LifecycleService() {
     }
 
     private fun requestMemberLocations() = CoroutineScope(IO).launch {
-        isWaitingOnApi = true
-        getMemberLocsFromApiUseCase.execute(WhereYouAt.AppPreferences.tripcode).collect { apiResponse ->
-            when (apiResponse) {
-                is Resource.Success -> {
-                    isWaitingOnApi = false
-                    deleteAllMemberLocsFromDbUseCase.execute()
-                    apiResponse.data?.locUpdates?.let { saveMemberLocsToDbUseCase.executeMany(it) }
-                }
-                is Resource.Loading -> {
-                    isWaitingOnApi = true
-                }
-                is Resource.Error -> {
-                    isWaitingOnApi = false
+        if (tripcode != null) {
+            isWaitingOnApi = true
+            getMemberLocsFromApiUseCase.execute(tripcode!!).collect { apiResponse ->
+                when (apiResponse) {
+                    is Resource.Success -> {
+                        isWaitingOnApi = false
+                        deleteAllMemberLocsFromDbUseCase.execute()
+                        apiResponse.data?.locUpdates?.let { saveMemberLocsToDbUseCase.executeMany(it) }
+                    }
+                    is Resource.Loading -> {
+                        isWaitingOnApi = true
+                    }
+                    is Resource.Error -> {
+                        isWaitingOnApi = false
+                    }
                 }
             }
+        } else {
+            stopRequestingMemberLocations()
+            unsubscribeToLocationUpdates()
+            stopSelf()
         }
     }
 
@@ -481,7 +540,7 @@ class TripUsersLocationManagementService : LifecycleService() {
     }
 
     companion object {
-        private const val TAG = "ForegroundOnlyLocationService"
+        private const val TAG = "FIMTOWN|ForegroundOnlyLocationService"
 
         private const val LOCATION_REQUEST_INTERVAL = 15L
         private const val FASTEST_LOCATION_REQUEST_INTERVAL = 1L
@@ -496,7 +555,7 @@ class TripUsersLocationManagementService : LifecycleService() {
 
         internal const val EXTRA_LOCATION = "$PACKAGE_NAME.extra.LOCATION"
 
-        private const val EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION =
+        const val EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION =
             "$PACKAGE_NAME.extra.CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION"
 
         private const val NOTIFICATION_ID = 12345678

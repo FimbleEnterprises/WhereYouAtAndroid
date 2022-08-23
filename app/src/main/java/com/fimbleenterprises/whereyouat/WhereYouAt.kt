@@ -3,15 +3,37 @@ package com.fimbleenterprises.whereyouat
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.fimbleenterprises.whereyouat.data.usecases.DeleteServiceStatusUseCase
+import com.fimbleenterprises.whereyouat.data.usecases.SaveServiceStatusUseCase
+import com.fimbleenterprises.whereyouat.model.ServiceStatus
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @HiltAndroidApp
 class WhereYouAt : Application() {
 
+    @Inject
+    lateinit var deleteServiceStatusUseCase: DeleteServiceStatusUseCase
+
+    @Inject
+    lateinit var saveServiceStatusUseCase: SaveServiceStatusUseCase
+
     override fun onCreate() {
         super.onCreate()
         AppPreferences.init(this)
+
+        CoroutineScope(IO).launch {
+            saveServiceStatusUseCase.execute(ServiceStatus(1, false, System.currentTimeMillis(), false, null))
+        }
+
+    }
+
+    init {
+
     }
 
     @Singleton
@@ -25,7 +47,7 @@ class WhereYouAt : Application() {
         private const val PREF_MEMBERID = "PREF_MEMBERID"
         private const val PREF_MEMBERNAME = "PREF_MEMBERNAME"
 
-        var tripcode : String
+        var tripcode : String?
             get() = prefs.getString(PREF_TRIPCODE, "").orEmpty()
             set(value) {
                 prefs.edit().putString(PREF_TRIPCODE, value).apply()
@@ -42,7 +64,6 @@ class WhereYouAt : Application() {
             set(value) {
                 prefs.edit().putLong(PREF_MEMBERID, value).apply()
             }
-
 
         fun init(context: Context) {
             prefs = context.getSharedPreferences(NAME, MODE)

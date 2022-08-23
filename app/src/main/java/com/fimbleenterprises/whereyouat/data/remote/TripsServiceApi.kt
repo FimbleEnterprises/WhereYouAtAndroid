@@ -6,26 +6,23 @@ import com.fimbleenterprises.whereyouat.model.MemberLocationsApiResponse
 import com.fimbleenterprises.whereyouat.utils.Constants
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 interface TripsServiceApi {
 
-    @GET("api/Trips?")
+    @GET("api/trips/entries/{tripcode}")
     suspend fun getMemberLocations(
-        @Query("tripcode") tripcode: String
+        @Path("tripcode") tripcode: String
     ): Response<MemberLocationsApiResponse>
 
-    @POST("api/Trips")
-    suspend fun  createTrip(
-        @Body request: ApiRequest
+    @GET("api/trips/isactive/{tripcode}")
+    suspend fun isTripActive(
+        @Path("tripcode") tripcode: String
     ): Response<BaseApiResponse>
 
-    @POST("api/Trips")
-    suspend fun uploadLocation(
+    @POST("api/trips")
+    suspend fun  performPostOperation(
         @Body request: ApiRequest
     ): Response<BaseApiResponse>
 }

@@ -39,6 +39,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/topContainer">
 
+        <TextView
+                android:text="GGGHHH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTripCode"
+                android:textSize="55sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/calculator"
+                android:gravity="center"
+                android:textAllCaps="true" />
+
         <Button
                 android:text="@string/btn_push_my_location"
                 android:layout_width="match_parent"
@@ -50,16 +61,9 @@
                 android:textStyle="bold" />
 
         <TextView
-                android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView1" />
-
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/txtInfo1" />
     </LinearLayout>
 
     <LinearLayout

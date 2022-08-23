@@ -3,10 +3,7 @@ package com.fimbleenterprises.whereyouat.data
 import android.util.Log
 import com.fimbleenterprises.whereyouat.data.local.LocalDataSource
 import com.fimbleenterprises.whereyouat.data.remote.RemoteDataSource
-import com.fimbleenterprises.whereyouat.model.BaseApiResponse
-import com.fimbleenterprises.whereyouat.model.LocUpdate
-import com.fimbleenterprises.whereyouat.model.MemberLocationsApiResponse
-import com.fimbleenterprises.whereyouat.model.MyLocation
+import com.fimbleenterprises.whereyouat.model.*
 import com.fimbleenterprises.whereyouat.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,9 +16,13 @@ class MainRepositoryImpl
         private val localDataSource: LocalDataSource
     ): MainRepository, BaseApiCaller() {
 
-    override suspend fun getAllMemberLocationsFromApi(tripcode: String): Flow<Resource<MemberLocationsApiResponse>> {
+    // -----------------------------------------------------------
+    //                           MISC
+    // -----------------------------------------------------------
+
+    override suspend fun isTripcodeActiveFromApi(tripcode: String): Flow<Resource<BaseApiResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.getMemberLocations(tripcode) })
+            emit(safeApiCall { remoteDataSource.isTripActive(tripcode) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -31,9 +32,13 @@ class MainRepositoryImpl
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun uploadMyLocationToApi(locUpdate:LocUpdate): Flow<Resource<BaseApiResponse>> {
+    // -----------------------------------------------------------
+    //                       MEMBER LOCS
+    // -----------------------------------------------------------
+
+    override suspend fun getAllMemberLocationsFromApi(tripcode: String): Flow<Resource<MemberLocationsApiResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.uploadMyLocation(locUpdate) })
+            emit(safeApiCall { remoteDataSource.getMemberLocations(tripcode) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -51,6 +56,16 @@ class MainRepositoryImpl
 
     override fun getAllMemberLocsFromDatabase(): Flow<List<LocUpdate>> {
         return localDataSource.getSavedMemberLocationsFromDB()
+    }
+
+    // -----------------------------------------------------------
+    //                       MY LOCATIONS
+    // -----------------------------------------------------------
+
+    override suspend fun uploadMyLocationToApi(locUpdate:LocUpdate): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.uploadMyLocation(locUpdate) })
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun saveMyLocationToDb(myLocation: MyLocation): Long {
@@ -74,10 +89,24 @@ class MainRepositoryImpl
     }
 
     // -----------------------------------------------------------
-    //                     MY LOCATION STUFF
+    //                       SERVICE STATUS
     // -----------------------------------------------------------
 
+    override suspend fun getServiceStatus(): ServiceStatus {
+        return localDataSource.getServiceStatus()
+    }
 
+    override suspend fun getServiceStatusFlow(): Flow<ServiceStatus> {
+        return localDataSource.getServiceStatusFlow()
+    }
+
+    override suspend fun deleteServiceStatus(): Int {
+        return localDataSource.deleteServiceStatus()
+    }
+
+    override suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long {
+        return localDataSource.insertServiceStatus(serviceStatus)
+    }
 
     init { Log.i(TAG, "Initialized:TripRepositoryImpl") }
     companion object { private const val TAG = "FIMTOWN|TripRepositoryImpl" }

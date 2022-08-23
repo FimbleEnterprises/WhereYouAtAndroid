@@ -21,7 +21,7 @@ data class MyLocation(
     @SerializedName("Lon")
     val lon: Double,
 ) {
-    fun toLocUpdate(): LocUpdate {
+    fun toLocUpdate(tripcode: String): LocUpdate? {
         return LocUpdate(
             WhereYouAt.AppPreferences.memberid,
             WhereYouAt.AppPreferences.membername,
@@ -29,7 +29,7 @@ data class MyLocation(
             elevation,
             lat,
             lon,
-            WhereYouAt.AppPreferences.tripcode
+            tripcode
         )
     }
 

@@ -5,12 +5,12 @@ import android.util.Log
 import androidx.room.Room
 import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
 import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
+import com.fimbleenterprises.whereyouat.data.db.ServiceStatusDao
 import com.fimbleenterprises.whereyouat.data.db.WhereYouAtDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -34,13 +34,19 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideTripsDAO(whereYouAtDatabase: WhereYouAtDatabase): MemberLocationsDao {
-        return whereYouAtDatabase.getTripDao()
+        return whereYouAtDatabase.getMemberLocationsDao()
     }
 
     @Singleton
     @Provides
     fun provideMyLocationsDAO(whereYouAtDatabase: WhereYouAtDatabase): MyLocationDao {
         return whereYouAtDatabase.getMyLocationDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideServiceStatusDAO(whereYouAtDatabase: WhereYouAtDatabase): ServiceStatusDao {
+        return whereYouAtDatabase.getServiceStatusDao()
     }
 
 

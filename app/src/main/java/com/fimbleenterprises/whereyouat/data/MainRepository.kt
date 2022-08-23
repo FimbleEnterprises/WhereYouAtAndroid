@@ -1,10 +1,7 @@
 package com.fimbleenterprises.whereyouat.data
 
 import android.util.Log
-import com.fimbleenterprises.whereyouat.model.BaseApiResponse
-import com.fimbleenterprises.whereyouat.model.LocUpdate
-import com.fimbleenterprises.whereyouat.model.MemberLocationsApiResponse
-import com.fimbleenterprises.whereyouat.model.MyLocation
+import com.fimbleenterprises.whereyouat.model.*
 import com.fimbleenterprises.whereyouat.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +22,11 @@ interface MainRepository {
     fun getAllMemberLocsFromDatabase() : Flow<List<LocUpdate>>
 
     // -----------------------------------------------------------
+    //                         GENERIC
+    // -----------------------------------------------------------
+    suspend fun isTripcodeActiveFromApi(tripcode: String): Flow<Resource<BaseApiResponse>>
+
+    // -----------------------------------------------------------
     //                         MY LOC
     // -----------------------------------------------------------
     suspend fun deleteAllMyLocationsFromDb(): Int
@@ -32,5 +34,13 @@ interface MainRepository {
     suspend fun deleteMyLocationFromDb(myLocation: MyLocation): Int
     suspend fun saveMyLocationToDb(myLocation: MyLocation): Long
     fun getMyLocationFromDb(memberid: Long) : Flow<MyLocation>
+
+    // -----------------------------------------------------------
+    //                       SERVICE STATUS
+    // -----------------------------------------------------------
+    suspend fun getServiceStatusFlow(): Flow<ServiceStatus>
+    suspend fun getServiceStatus(): ServiceStatus
+    suspend fun deleteServiceStatus(): Int
+    suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long
 
 }

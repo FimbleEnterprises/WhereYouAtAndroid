@@ -2,8 +2,10 @@ package com.fimbleenterprises.whereyouat.data.local
 
 import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
 import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
+import com.fimbleenterprises.whereyouat.data.db.ServiceStatusDao
 import com.fimbleenterprises.whereyouat.model.LocUpdate
 import com.fimbleenterprises.whereyouat.model.MyLocation
+import com.fimbleenterprises.whereyouat.model.ServiceStatus
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
@@ -13,7 +15,8 @@ import javax.inject.Singleton
 @Singleton
 class LocalDataSourceImpl(
     private val memberLocationsDao: MemberLocationsDao,
-    private val myLocationDao: MyLocationDao
+    private val myLocationDao: MyLocationDao,
+    private val serviceStatusDao: ServiceStatusDao
 )
 : LocalDataSource {
 
@@ -73,6 +76,25 @@ class LocalDataSourceImpl(
 
     override suspend fun updateMyLocation(myLocation: MyLocation): Int {
         return myLocationDao.updateMyLocation(myLocation)
+    }
+
+    // -----------------------------------------------------------
+    //                       SERVICE STATUS
+    // -----------------------------------------------------------
+    override suspend fun getServiceStatus(): ServiceStatus {
+        return serviceStatusDao.getServiceStatus()
+    }
+
+    override fun getServiceStatusFlow(): Flow<ServiceStatus> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long {
+        return serviceStatusDao.insertServiceStatus(serviceStatus)
+    }
+
+    override suspend fun deleteServiceStatus(): Int {
+        return serviceStatusDao.delete()
     }
 
 

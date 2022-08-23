@@ -6,11 +6,12 @@ import androidx.room.TypeConverters
 import com.fimbleenterprises.sportsdb.data.db.Converters
 import com.fimbleenterprises.whereyouat.model.LocUpdate
 import com.fimbleenterprises.whereyouat.model.MyLocation
+import com.fimbleenterprises.whereyouat.model.ServiceStatus
 
 // This annotation is what gets Room to actually create and maintain a single table in the database.
 @Database(
-    entities = [LocUpdate::class, MyLocation::class],
-    version =  1,
+    entities = [LocUpdate::class, MyLocation::class, ServiceStatus::class],
+    version =  2,
     exportSchema = false
 )
 // OPTIONAL
@@ -25,6 +26,7 @@ import com.fimbleenterprises.whereyouat.model.MyLocation
  * must implement.  Shit's confusing for sure but pretty cool and gets cooler the more you learn it.
  */
 abstract class WhereYouAtDatabase : RoomDatabase() {
-    abstract fun getTripDao() : MemberLocationsDao
+    abstract fun getMemberLocationsDao() : MemberLocationsDao
     abstract fun getMyLocationDao() : MyLocationDao
+    abstract fun getServiceStatusDao(): ServiceStatusDao
 }

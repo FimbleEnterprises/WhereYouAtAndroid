@@ -9,4 +9,5 @@ interface RemoteDataSource {
     suspend fun getMemberLocations(tripcode: String): Response<MemberLocationsApiResponse>
     suspend fun createTrip(memberid: Long): Response<BaseApiResponse>
     suspend fun uploadMyLocation(locUpdate: LocUpdate): Response<BaseApiResponse>
+    suspend fun isTripActive(tripcode: String): Response<BaseApiResponse>
 }

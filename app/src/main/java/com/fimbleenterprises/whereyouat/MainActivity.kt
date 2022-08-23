@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.fimbleenterprises.whereyouat.data.MainRepository
+import com.fimbleenterprises.whereyouat.data.usecases.GetServiceStatusUseCase
+import com.fimbleenterprises.whereyouat.data.usecases.SaveServiceStatusUseCase
 import com.fimbleenterprises.whereyouat.databinding.ActivityMainBinding
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModelFactory
@@ -22,10 +24,16 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
     @Inject
     lateinit var repository: MainRepository
+    @Inject
+    lateinit var saveServiceStatusUseCase: SaveServiceStatusUseCase
+    @Inject
+    lateinit var getServiceStatusUseCase: GetServiceStatusUseCase
+
     private lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
 

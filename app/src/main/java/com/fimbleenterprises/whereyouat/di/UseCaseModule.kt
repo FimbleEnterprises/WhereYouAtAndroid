@@ -75,4 +75,32 @@ class UseCaseModule {
         return SaveMyLocToDbUseCase(mainRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideGetTripcodeIsActiveWithApiUseCase(mainRepository: MainRepository):
+            GetTripcodeIsActiveWithApiUseCase {
+        return GetTripcodeIsActiveWithApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeleteServiceStatusUseCase(mainRepository: MainRepository):
+            DeleteServiceStatusUseCase {
+        return DeleteServiceStatusUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveServiceStatusUseCase(mainRepository: MainRepository):
+            SaveServiceStatusUseCase {
+        return SaveServiceStatusUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetServiceStatusUseCase(mainRepository: MainRepository):
+            GetServiceStatusUseCase {
+        return GetServiceStatusUseCase(mainRepository)
+    }
+
 }

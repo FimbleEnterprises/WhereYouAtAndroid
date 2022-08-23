@@ -2,6 +2,7 @@ package com.fimbleenterprises.whereyouat.di
 
 import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
 import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
+import com.fimbleenterprises.whereyouat.data.db.ServiceStatusDao
 import com.fimbleenterprises.whereyouat.data.local.LocalDataSource
 import com.fimbleenterprises.whereyouat.data.local.LocalDataSourceImpl
 import com.fimbleenterprises.whereyouat.data.remote.RemoteDataSource
@@ -21,9 +22,10 @@ class DataSourcesModule {
     @Singleton
     fun providesLocalDataSource(
         memberLocationsDao: MemberLocationsDao,
-        myLocationDao: MyLocationDao
+        myLocationDao: MyLocationDao,
+        serviceStatusDao: ServiceStatusDao
     ): LocalDataSource {
-        return LocalDataSourceImpl(memberLocationsDao, myLocationDao)
+        return LocalDataSourceImpl(memberLocationsDao, myLocationDao,serviceStatusDao)
     }
 
     @Provides

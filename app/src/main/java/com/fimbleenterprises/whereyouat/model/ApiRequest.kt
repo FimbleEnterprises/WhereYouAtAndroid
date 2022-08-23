@@ -7,7 +7,7 @@ data class ApiRequest(val function: String) {
     val arguments = ArrayList<Argument>()
 
     init {
-        Log.i(TAG, "Initialized:ApiRequest")
+        Log.v(TAG, "Initialized:ApiRequest")
     }
 
     companion object {

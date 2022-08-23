@@ -20,13 +20,19 @@ object ViewModelFactoryModule {
         deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
         getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
         getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
+        getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
+        getServiceStatusUseCase: GetServiceStatusUseCase,
+        saveServiceStatusUseCase: SaveServiceStatusUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
             application,
             createTripWithApiUseCase,
             deleteAllMemberLocsFromDbUseCase,
             getMemberLocsFromDbUseCase,
-            getMyLocFromDbUseCase
+            getMyLocFromDbUseCase,
+            getTripcodeIsActiveWithApiUseCase,
+            getServiceStatusUseCase,
+            saveServiceStatusUseCase
         )
     }
 
