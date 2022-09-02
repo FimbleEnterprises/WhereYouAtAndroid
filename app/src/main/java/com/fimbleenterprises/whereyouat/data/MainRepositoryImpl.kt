@@ -26,7 +26,7 @@ class MainRepositoryImpl
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun createInApiTrip(memberid: Long): Flow<Resource<BaseApiResponse>> {
+    override suspend fun createTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.createTrip(memberid) })
         }.flowOn(Dispatchers.IO)
@@ -96,7 +96,7 @@ class MainRepositoryImpl
         return localDataSource.getServiceStatus()
     }
 
-    override suspend fun getServiceStatusFlow(): Flow<ServiceStatus> {
+    override fun getServiceStatusFlow(): Flow<ServiceStatus> {
         return localDataSource.getServiceStatusFlow()
     }
 
@@ -105,6 +105,22 @@ class MainRepositoryImpl
     }
 
     override suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long {
+        return localDataSource.insertServiceStatus(serviceStatus)
+    }
+
+    override suspend fun setServiceRunning(isRunning: Boolean): Int {
+        return localDataSource.setServiceRunning(isRunning)
+    }
+
+    override suspend fun setServiceStarting(isStarting: Boolean): Int {
+        return localDataSource.setServiceStarting(isStarting)
+    }
+
+    override suspend fun setServiceStopping(isStopping: Boolean): Int {
+        return localDataSource.setServiceStopping(isStopping)
+    }
+
+    override suspend fun setServiceStatus(serviceStatus: ServiceStatus): Long {
         return localDataSource.insertServiceStatus(serviceStatus)
     }
 

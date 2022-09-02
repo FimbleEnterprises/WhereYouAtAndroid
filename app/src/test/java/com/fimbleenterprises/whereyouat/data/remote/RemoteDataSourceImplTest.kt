@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDataSourceImplTest {
 
-    private lateinit var service: TripsServiceApi
+    private lateinit var service: WhereYouAtWebApi
     private lateinit var server: MockWebServer
 
     @Before
@@ -24,7 +24,7 @@ class RemoteDataSourceImplTest {
             .baseUrl(server.url(""))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(TripsServiceApi::class.java)
+            .create(WhereYouAtWebApi::class.java)
     }
 
     private fun enqueueMockResponse(

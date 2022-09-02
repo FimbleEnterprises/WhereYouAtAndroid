@@ -78,8 +78,8 @@ class UseCaseModule {
     @Singleton
     @Provides
     fun provideGetTripcodeIsActiveWithApiUseCase(mainRepository: MainRepository):
-            GetTripcodeIsActiveWithApiUseCase {
-        return GetTripcodeIsActiveWithApiUseCase(mainRepository)
+            ValidateTripCodeAgainstApiUseCase {
+        return ValidateTripCodeAgainstApiUseCase(mainRepository)
     }
 
     @Singleton
@@ -101,6 +101,13 @@ class UseCaseModule {
     fun provideGetServiceStatusUseCase(mainRepository: MainRepository):
             GetServiceStatusUseCase {
         return GetServiceStatusUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideValidateClientTripCodeUseCase():
+            ValidateClientTripCodeUseCase {
+        return ValidateClientTripCodeUseCase()
     }
 
 }

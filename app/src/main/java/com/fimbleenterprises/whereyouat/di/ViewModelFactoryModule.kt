@@ -3,6 +3,7 @@ package com.fimbleenterprises.whereyouat.di
 import android.app.Application
 import com.fimbleenterprises.whereyouat.data.usecases.*
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModelFactory
+import com.fimbleenterprises.whereyouat.service.ServiceMessenger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,22 +18,28 @@ object ViewModelFactoryModule {
     fun provideViewModelFactory(
         application: Application,
         createTripWithApiUseCase: CreateTripWithApiUseCase,
-        deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
         getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
         getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
-        getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
+        validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
         getServiceStatusUseCase: GetServiceStatusUseCase,
-        saveServiceStatusUseCase: SaveServiceStatusUseCase
+        saveServiceStatusUseCase: SaveServiceStatusUseCase,
+        uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
+        getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
+        serviceMessenger: ServiceMessenger,
+        validateClientTripCodeUseCase: ValidateClientTripCodeUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
             application,
             createTripWithApiUseCase,
-            deleteAllMemberLocsFromDbUseCase,
             getMemberLocsFromDbUseCase,
             getMyLocFromDbUseCase,
-            getTripcodeIsActiveWithApiUseCase,
+            validateTripCodeAgainstApiUseCase,
             getServiceStatusUseCase,
-            saveServiceStatusUseCase
+            saveServiceStatusUseCase,
+            uploadMyLocToApiUseCase,
+            getMemberLocsFromApiUseCase,
+            serviceMessenger,
+            validateClientTripCodeUseCase
         )
     }
 

@@ -1,43 +1,41 @@
 package com.fimbleenterprises.whereyouat
 
 import android.Manifest
-import android.content.*
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.KeyEvent
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.fimbleenterprises.whereyouat.data.MainRepository
-import com.fimbleenterprises.whereyouat.data.usecases.GetServiceStatusUseCase
-import com.fimbleenterprises.whereyouat.data.usecases.SaveServiceStatusUseCase
 import com.fimbleenterprises.whereyouat.databinding.ActivityMainBinding
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModelFactory
-import com.fimbleenterprises.whereyouat.service.SharedPreferenceUtil
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
-    @Inject
-    lateinit var repository: MainRepository
-    @Inject
-    lateinit var saveServiceStatusUseCase: SaveServiceStatusUseCase
-    @Inject
-    lateinit var getServiceStatusUseCase: GetServiceStatusUseCase
 
     private lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,10 +44,24 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHostFragment.navController
 
+        // Set our memberid if it isn't already set.
+        if (WhereYouAt.AppPreferences.memberid == 0L) {
+            WhereYouAt.AppPreferences.memberid = System.currentTimeMillis()
+            Log.w(TAG, "onCreate: MEMBERID SET TO ${WhereYouAt.AppPreferences.memberid}!!")
+        }
+
+
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        sendBroadcast(Intent(BACK_PRESSED))
+        return super.onKeyDown(keyCode, event)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onStart() {
         super.onStart()
+        // Check if we have foreground permissions
         if (!foregroundPermissionApproved()) {
             requestForegroundPermissions()
         }
@@ -63,7 +75,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         )
     }
 
+
+
     // TODO: Step 1.0, Review Permissions: Method requests permissions.
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun requestForegroundPermissions() {
         val provideRationale = foregroundPermissionApproved()
 
@@ -79,7 +94,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     // Request permission
                     ActivityCompat.requestPermissions(
                         this@MainActivity,
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
                         REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
                     )
                 }
@@ -98,10 +113,9 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d(TAG, "onRequestPermissionResult")
 
         when (requestCode) {
             REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE -> when {
@@ -138,17 +152,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
+
+
     init { Log.i(TAG, "Initialized:MainActivity") }
     companion object {
         private const val TAG = "FIMTOWN|MainActivity"
         private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
+        private const val BACK_PRESSED = "BACK_PRESSED"
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         // Updates button states if new while in use location is added to SharedPreferences.
-        if (key == SharedPreferenceUtil.KEY_FOREGROUND_ENABLED) {
-
-        }
+        // if (key == SharedPreferenceUtil.KEY_FOREGROUND_ENABLED) { }
     }
 
 }

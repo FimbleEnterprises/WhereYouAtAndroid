@@ -4,10 +4,10 @@ package com.fimbleenterprises.whereyouat.model
 import com.google.gson.annotations.SerializedName
 
 data class BaseApiResponse(
-    @SerializedName("genericValue")
+    @SerializedName("GenericValue")
     val genericValue: String,
-    @SerializedName("operation")
+    @SerializedName("Operation")
     val operation: String,
-    @SerializedName("wasSuccessful")
+    @SerializedName("WasSuccessful")
     val wasSuccessful: Boolean
 )

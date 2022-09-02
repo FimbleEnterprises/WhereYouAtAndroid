@@ -7,7 +7,7 @@ import com.fimbleenterprises.whereyouat.data.local.LocalDataSource
 import com.fimbleenterprises.whereyouat.data.local.LocalDataSourceImpl
 import com.fimbleenterprises.whereyouat.data.remote.RemoteDataSource
 import com.fimbleenterprises.whereyouat.data.remote.RemoteDataSourceImpl
-import com.fimbleenterprises.whereyouat.data.remote.TripsServiceApi
+import com.fimbleenterprises.whereyouat.data.remote.WhereYouAtWebApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,9 +31,9 @@ class DataSourcesModule {
     @Provides
     @Singleton
     fun providesRemoteDataSource(
-        tripsServiceApi: TripsServiceApi
+        whereYouAtWebApi: WhereYouAtWebApi
     ): RemoteDataSource {
-        return RemoteDataSourceImpl(tripsServiceApi)
+        return RemoteDataSourceImpl(whereYouAtWebApi)
     }
 
 }

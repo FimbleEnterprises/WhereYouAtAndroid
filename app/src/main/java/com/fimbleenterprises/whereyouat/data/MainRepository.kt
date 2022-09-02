@@ -14,7 +14,7 @@ interface MainRepository {
     //                       MEMBER LOCS
     // -----------------------------------------------------------
     suspend fun getAllMemberLocationsFromApi(tripcode: String): Flow<Resource<MemberLocationsApiResponse>>
-    suspend fun createInApiTrip(memberid: Long): Flow<Resource<BaseApiResponse>>
+    suspend fun createTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>>
     suspend fun uploadMyLocationToApi(locUpdate: LocUpdate): Flow<Resource<BaseApiResponse>>
     suspend fun saveMemberLocationToDatabase(locUpdate:LocUpdate): Long
     suspend fun saveMemberLocationsToDatabase(locUpdates:List<LocUpdate>): List<Long>
@@ -38,9 +38,12 @@ interface MainRepository {
     // -----------------------------------------------------------
     //                       SERVICE STATUS
     // -----------------------------------------------------------
-    suspend fun getServiceStatusFlow(): Flow<ServiceStatus>
+    fun getServiceStatusFlow(): Flow<ServiceStatus>
     suspend fun getServiceStatus(): ServiceStatus
     suspend fun deleteServiceStatus(): Int
     suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long
+    suspend fun setServiceRunning(isRunning: Boolean): Int
+    suspend fun setServiceStarting(isStarting: Boolean): Int
+    suspend fun setServiceStopping(isStopping: Boolean): Int
 
 }

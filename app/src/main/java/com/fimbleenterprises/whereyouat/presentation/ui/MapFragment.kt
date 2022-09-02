@@ -1,24 +1,28 @@
 package com.fimbleenterprises.whereyouat.presentation.ui
 
+import android.Manifest
 import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.net.Uri
-import android.os.Bundle
-import android.os.IBinder
+import android.os.*
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
+import com.fimbleenterprises.whereyouat.BuildConfig
 import com.fimbleenterprises.whereyouat.MainActivity
 import com.fimbleenterprises.whereyouat.R
 import com.fimbleenterprises.whereyouat.WhereYouAt
-import com.fimbleenterprises.whereyouat.data.usecases.GetServiceStatusUseCase
 import com.fimbleenterprises.whereyouat.databinding.FragmentMapBinding
 import com.fimbleenterprises.whereyouat.model.MemberMarker
 import com.fimbleenterprises.whereyouat.model.MemberMarkers
@@ -29,8 +33,8 @@ import com.fimbleenterprises.whereyouat.service.toText
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.GoogleMap.CancelableCallback
 import com.google.android.gms.maps.model.*
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -63,6 +67,18 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private val foregroundOnlyServiceConnection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
+
+            // It is very possible to get here if the user has killed the trip using
+            // the notification then multi-tasked back to the map frag which causes
+            // the frag to rebind but the service isn't actually running and shit
+            // will get fucking weird, fast.  We check for that before proceeding.
+            if (viewmodel.serviceStatus.value?.isRunning == false &&
+                    viewmodel.serviceStatus.value?.isStarting == false) {
+                // Pretty sure we have to call unbind here.  onDestroy() isn't called
+                // unless all bound members are gone.  I'm not 100% sure...
+                requireContext().unbindService(this)
+                return
+            }
             val binder = service as TripUsersLocationManagementService.LocalBinder
             tripUsersLocationManagementService = binder.service
             foregroundOnlyLocationServiceBound = true
@@ -81,8 +97,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         savedInstanceState: Bundle?,
     ): View? {
         mLifecycleOwner = viewLifecycleOwner
-        // getServiceStatusUseCase = (activity as MainActivity).getServiceStatusUseCase
         return inflater.inflate(R.layout.fragment_map, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,11 +113,45 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
+    }
+
+    private fun isProcessing(isBusy: Boolean) {
+
+        binding.btnLeave.isEnabled = !isBusy
+        binding.btnPushUpdate.isEnabled = !isBusy
+        binding.fabCenterMe.isEnabled = !isBusy
+        binding.fabCenterTrip.isEnabled = !isBusy
+
+        when(isBusy) {
+            true -> {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.mapContainer.visibility = View.INVISIBLE
+            }
+            else -> {
+                binding.progressBar.visibility = View.GONE
+                binding.mapContainer.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun onStart() {
+
         binding.btnPushUpdate.setOnClickListener {
-            // viewmodel.getMemberLocationsFromApi()
+            binding.progressBar.visibility = View.VISIBLE
+            viewmodel.requestForcePush()
+            viewmodel.oneTimeServiceStatusMsg.observe(viewLifecycleOwner) {
+                binding.txtInfo1.text = it
+            }
         }
         binding.btnLeave.setOnClickListener {
-            viewmodel.stopService()
+
+            isProcessing(true)
+
+            // Just an arbitrary delay to prevent spamming leave/resume/create trip.
+            Handler(Looper.getMainLooper()).postDelayed({
+                isProcessing(false)
+                viewmodel.stopService()
+            }, 1500)
         }
         binding.fabCenterTrip.setOnClickListener {
             if (viewmodel.memberLocations.value != null && viewmodel.memberLocations.value?.size!! > 0) {
@@ -112,13 +162,11 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             centerCameraOnMe()
         }
 
-    }
-
-    override fun onStart() {
-        super.onStart()
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         val serviceIntent = Intent(requireContext(), TripUsersLocationManagementService::class.java)
         requireContext().bindService(serviceIntent, foregroundOnlyServiceConnection, Context.BIND_AUTO_CREATE)
+        super.onStart()
+
     }
 
     override fun onResume() {
@@ -154,10 +202,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
                 // Build a map marker for this member
                 val position = LatLng(member.lat, member.lon)
-                val markerOptions: MarkerOptions
 
-                markerOptions =
-                    if (member.memberid == WhereYouAt.AppPreferences.memberid) {
+                val markerOptions: MarkerOptions = if (member.memberid == WhereYouAt.AppPreferences.memberid) {
                         MarkerOptions()
                             .position(position)
                             .title(member.memberid.toString())
@@ -190,6 +236,13 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     private fun startObservingMyLocation() {
+
+        // The tripcode will be null if the user clicks the leave trip button so we should
+        // bail if that is the case.
+        if (WhereYouAt.AppPreferences.tripCode == null) {
+            return
+        }
+
         viewmodel.myLocation.observe(this@MapFragment) {
             if (it != null) {
                 val position = LatLng(it.lat, it.lon)
@@ -212,7 +265,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_map_icon))
 
                     // Create a MemberMarker object to hold our location
-                    myMapMarker = it.toLocUpdate(viewmodel.serviceStatus.value?.tripcode!!)?.let { locUpdate ->
+                    myMapMarker = it.toLocUpdate(WhereYouAt.AppPreferences.tripCode!!)?.let { locUpdate ->
                         MemberMarker(
                             map.addMarker(markerOptions)!!,
                             locUpdate,
@@ -237,14 +290,174 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     private fun startObservingServiceStatus() {
         viewmodel.serviceStatus.observe(viewLifecycleOwner) {
+
             if (!it.isStarting && !it.isRunning) {
                 Toast.makeText(context, "Left trip.", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
                 findNavController().navigate(
                     R.id.startFragment
                 )
-                findNavController().popBackStack(R.id.startFragment, false)
+            } else {
+                binding.txtTripCode.text = WhereYouAt.AppPreferences.tripCode
+                binding.txtInfo1.text = it.oneTimeMessage
+
+                startDelayWipeOfLogMsg()
             }
         }
+    }
+
+    // TODO: Step 1.0, Review Permissions: Method checks if permissions approved.
+    private fun backgroundPermissionApproved(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            )
+        } else {
+            TODO("VERSION.SDK_INT < Q")
+        }
+    }
+
+    // TODO: Step 1.0, Review Permissions: Method requests permissions.
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun requestBackgroundPermissions() {
+        val provideRationale = backgroundPermissionApproved()
+
+        // If the user denied a previous request, but didn't check "Don't ask again", provide
+        // additional rationale.
+        if (provideRationale) {
+            // Request permission
+            ActivityCompat.requestPermissions(
+                (activity as MainActivity),
+                arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                REQUEST_BACKGROUND_ONLY_PERMISSIONS_REQUEST_CODE
+            )
+        } else {
+            if (WhereYouAt.AppPreferences.nagUserAboutBgPermission) {
+                showTwoButtonSnackbar()
+            }
+
+            /*Snackbar.make(
+                binding.root,
+                R.string.permission_rationale_background,
+                60000
+            )
+                .setAction(R.string.okay) {
+                    showBackgroundPermRationale()
+                }
+                .show()*/
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d(TAG, "onRequestPermissionResult")
+
+        when (requestCode) {
+            REQUEST_BACKGROUND_ONLY_PERMISSIONS_REQUEST_CODE -> when {
+                grantResults.isEmpty() ->
+                    // If user interaction was interrupted, the permission request
+                    // is cancelled and you receive empty arrays.
+                    Log.d(TAG, "User interaction was cancelled.")
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
+                    // Now we ask for background permissions
+                    if (!backgroundPermissionApproved()) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            requestBackgroundPermissions()
+                        }
+                    }
+                }
+                // Permission was granted.
+
+                else -> {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.permission_denied_explanation,
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction(R.string.settings) {
+                            // Build intent that displays the App settings screen.
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts(
+                                "package",
+                                BuildConfig.APPLICATION_ID,
+                                null
+                            )
+                            intent.data = uri
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun showBackgroundPermRationale() {
+        BgPermRationaleDialogFragment(object : BgPermRationaleDialogFragment.DecisionListener {
+            override fun affirmative() {
+                Log.d(TAG, "Request background only permission")
+
+                val provideRationale = backgroundPermissionApproved()
+                if (provideRationale) {
+                    // Build intent that displays the App settings screen.
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts(
+                        "package",
+                        BuildConfig.APPLICATION_ID,
+                        null
+                    )
+                    intent.data = uri
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ActivityCompat.requestPermissions(
+                            (activity as MainActivity),
+                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                            REQUEST_BACKGROUND_ONLY_PERMISSIONS_REQUEST_CODE
+                        )
+                    }
+                }
+            }
+
+            override fun negative() {
+                Toast.makeText(context, "Paranoid much?", Toast.LENGTH_SHORT).show()
+            }
+
+        }).show(parentFragmentManager, "")
+    }
+    // Handler and runner for clearing the info textview.
+    private var myHandler: Handler = Handler(Looper.myLooper()!!)
+    private var runner: Runnable? = null
+
+    /**
+     * Starts a runner that repeatedly checks for member locations.
+     */
+    private fun startDelayWipeOfLogMsg() {
+        if (runner != null) {
+            try {
+                myHandler.removeCallbacks(runner!!)
+                myHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        runner = Runnable {
+            // What runs each time
+            binding.txtInfo1.text = ""
+            myHandler.postDelayed(runner!!, 3000)
+        }
+
+        // Starts it up initially
+        myHandler.postDelayed(runner!!, 3000)
     }
 
     /** Moves the camera to a position such that both the start and end map markers are viewable on screen.  */
@@ -346,6 +559,12 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             }
             false
         }
+
+        if (!backgroundPermissionApproved()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                requestBackgroundPermissions()
+            }
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -353,6 +572,62 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         if (key == SharedPreferenceUtil.KEY_FOREGROUND_ENABLED) {
             Log.i(TAG, "-=MapFragment:onSharedPreferenceChanged  =-")
         }
+    }
+
+    private fun showTwoButtonSnackbar() {
+
+        // Create the Snackbar
+        val objLayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT)
+        val snackbar =
+            Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE)
+
+        // Get the Snackbar layout view
+        val layout = snackbar.getView() as Snackbar.SnackbarLayout
+
+        // Set snackbar layout params
+        val navbarHeight: Int = getNavBarHeight(requireContext())
+        val parentParams = layout.layoutParams as FrameLayout.LayoutParams
+        parentParams.setMargins(0, 0, 0, 0 - navbarHeight + 50)
+
+
+        // Inflate our custom view
+        val snackView: View = layoutInflater.inflate(R.layout.two_button_snackbar, null)
+
+        // Configure our custom view
+        val messageTextView = snackView.findViewById(R.id.message_text_view) as TextView
+        messageTextView.setText(R.string.permission_rationale_background)
+
+        val textViewOne = snackView.findViewById(R.id.first_text_view) as TextView
+        textViewOne.text = getString(R.string.fix)
+        textViewOne.setOnClickListener {
+            showBackgroundPermRationale()
+            snackbar.dismiss()
+        }
+
+        val textViewTwo = snackView.findViewById(R.id.second_text_view) as TextView
+        textViewTwo.text = getString(R.string.dont_remind_me)
+        textViewTwo.setOnClickListener {
+            WhereYouAt.AppPreferences.nagUserAboutBgPermission = false
+            Log.d("Deny", "showTwoButtonSnackbar() : deny forever clicked")
+            snackbar.dismiss()
+        }
+
+        // Add our custom view to the Snackbar's layout
+        layout.addView(snackView, objLayoutParams)
+
+        // Show the Snackbar
+        snackbar.show()
+    }
+
+    private fun getNavBarHeight(context: Context): Int {
+        var result = 0
+        val resourceId =
+            context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
     }
 
     /**
@@ -370,6 +645,10 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     init { Log.i(TAG, "Initialized:MapFragment") }
-    companion object { private const val TAG = "FIMTOWN|MapFragment" }
+    companion object {
+
+        private const val REQUEST_BACKGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 33
+        private const val TAG = "FIMTOWN|MapFragment"
+    }
 
 }

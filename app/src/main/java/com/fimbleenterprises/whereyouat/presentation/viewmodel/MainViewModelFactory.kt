@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fimbleenterprises.whereyouat.data.usecases.*
+import com.fimbleenterprises.whereyouat.service.ServiceMessenger
 import javax.inject.Singleton
 
 /**
@@ -20,23 +21,29 @@ import javax.inject.Singleton
 class MainViewModelFactory(
     private val app:Application,
     private val createTripWithApiUseCase: CreateTripWithApiUseCase,
-    private val deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
     private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
     private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
-    private val getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
+    private val validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
     private val getServiceStatusUseCase: GetServiceStatusUseCase,
-    private val saveServiceStatusUseCase: SaveServiceStatusUseCase
+    private val saveServiceStatusUseCase: SaveServiceStatusUseCase,
+    private val uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
+    private val getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
+    private val serviceMessenger: ServiceMessenger,
+    private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase
 ):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(
             saveServiceStatusUseCase,
             getServiceStatusUseCase,
-            getTripcodeIsActiveWithApiUseCase,
+            validateTripCodeAgainstApiUseCase,
             createTripWithApiUseCase,
-            deleteAllMemberLocsFromDbUseCase,
             getMemberLocsFromDbUseCase,
             getMyLocFromDbUseCase,
+            uploadMyLocToApiUseCase,
+            getMemberLocsFromApiUseCase,
+            serviceMessenger,
+            validateClientTripCodeUseCase,
             app
         ) as T
     }

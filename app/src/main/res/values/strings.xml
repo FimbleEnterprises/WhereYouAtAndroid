@@ -26,6 +26,26 @@
     <string name="no_location_text">No current location</string>
     <string name="center_trip">Center camera on trip</string>
     <string name="center_me">Center camera on me</string>
-    <string name="resume_trip_button_text">Resume (%1$s)</string>
+    <string name="resume_trip_button_text">Resume %1$s</string>
     <string name="leave_trip_button">Leave trip</string>
+    <string name="interval_manual">Manually update location</string>
+    <string name="interval_15_seconds">Update every 15 seconds (roughly)</string>
+    <string name="interval_every_minute">Update every minute or so</string>
+    <string name="interval_five_minutes">Update every 5 minutes</string>
+    <string name="requesting_member_locations_from_api">Requesting member locations...</string>
+    <string name="member_locations_received">Member locations received and updated.</string>
+    <string name="failed_to_get_member_locations">Failed to get member locations.</string>
+    <string name="resume_button">Resume</string>
+    <string name="permission_rationale_background">Background permission needed for full functionality.</string>
+    <string name="background_permission_rationale_message">In order for WhereYouAt to notify your friends where you are when in the background we need to grant that permission.\n\nClick below to be taken to the permission screen and when ready you should select \"Allow all the time\".  \n\nIt is worth mentioning that allowing this permission does not allow ANYONE to see your location unless WhereYouAt is explicitly running and you are in an active trip (notification showing).</string>
+    <string name="yes">Take me there!</string>
+    <string name="no">No thanks.</string>
+    <string name="no_thankyou">No thanks</string>
+    <string name="snack_button_never_show_again">Don\'t show me again.</string>
+    <string name="dont_remind_me">NEVER</string>
+    <string name="fix">FIX</string>
+    <string name="enter_tripcode_hint">Code</string>
+    <string name="toast_code_not_valid">Trip code is not valid.  Must be non-null and 5 characters long.</string>
+    <string name="toast_trip_created">Created trip: %1$s!</string>
+    <string name="toast_something_wrong">Something went wrong!</string>
 </resources>

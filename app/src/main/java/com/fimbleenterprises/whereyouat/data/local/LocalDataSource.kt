@@ -30,6 +30,9 @@ interface LocalDataSource {
     fun getServiceStatusFlow(): Flow<ServiceStatus>
     suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long
     suspend fun deleteServiceStatus(): Int
+    suspend fun setServiceRunning(isRunning: Boolean): Int
+    suspend fun setServiceStarting(isStarting: Boolean): Int
+    suspend fun setServiceStopping(isStopping: Boolean): Int
 
     // Just dealing with single rows at this time for my locations
     // fun getSavedMyLocationsFromDB(): Flow<List<MyLocation>>

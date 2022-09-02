@@ -10,7 +10,7 @@ class GetServiceStatusUseCase(private val mainRepository: MainRepository) {
     suspend fun execute(): ServiceStatus =
         mainRepository.getServiceStatus()
 
-    suspend fun executeFlow(): Flow<ServiceStatus> =
+    fun executeFlow(): Flow<ServiceStatus> =
         mainRepository.getServiceStatusFlow()
 
 }

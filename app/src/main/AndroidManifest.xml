@@ -4,10 +4,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <!--android:theme="@style/Theme.AppCompat.Light"-->
     <application
             android:name=".WhereYouAt"
             android:allowBackup="true"
@@ -16,7 +19,8 @@
             android:requestLegacyExternalStorage="true"
             android:roundIcon="@drawable/where_you_at_logo1"
             android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true"> <!-- Needed to connect to API over http (non secure connection) -->
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -38,13 +42,16 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyAAaUh9c-tEWx8QGW9hhcJ0WNJBkHeqWak" />
 
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
 <!--        <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="${MAPS_API_KEY}" />-->
 
         <activity
                 android:name=".MainActivity"
-                android:exported="true">
+                android:exported="true"
+                android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +64,7 @@
         <service
                 android:name=".service.TripUsersLocationManagementService"
                 android:enabled="true"
-                android:exported="false"
+                android:exported="true"
                 android:foregroundServiceType="location" />
 
     </application>

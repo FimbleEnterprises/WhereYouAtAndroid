@@ -5,9 +5,6 @@ import com.fimbleenterprises.whereyouat.model.BaseApiResponse
 import com.fimbleenterprises.whereyouat.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
-class CreateTripWithApiUseCase(private val mainRepository: MainRepository) {
-
-    suspend fun execute(memberid: Long):
-            Flow<Resource<BaseApiResponse>> = mainRepository.createTripInApi(memberid)
-
+class ValidateClientTripCodeUseCase() {
+    fun execute(tripcode: String?): Boolean = tripcode != null && tripcode.length == 5
 }

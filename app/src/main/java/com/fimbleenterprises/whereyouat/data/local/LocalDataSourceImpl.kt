@@ -86,7 +86,7 @@ class LocalDataSourceImpl(
     }
 
     override fun getServiceStatusFlow(): Flow<ServiceStatus> {
-        TODO("Not yet implemented")
+        return serviceStatusDao.getServiceStatusFlow()
     }
 
     override suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long {
@@ -95,6 +95,18 @@ class LocalDataSourceImpl(
 
     override suspend fun deleteServiceStatus(): Int {
         return serviceStatusDao.delete()
+    }
+
+    override suspend fun setServiceRunning(isRunning: Boolean): Int {
+        return serviceStatusDao.setServiceRunning(isRunning)
+    }
+
+    override suspend fun setServiceStarting(isStarting: Boolean): Int {
+        return serviceStatusDao.setServiceStarting(isStarting)
+    }
+
+    override suspend fun setServiceStopping(isStopping: Boolean): Int {
+        return serviceStatusDao.setServiceStopping(isStopping)
     }
 
 

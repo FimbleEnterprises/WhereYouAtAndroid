@@ -6,5 +6,5 @@ import com.fimbleenterprises.whereyouat.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 class GetMemberLocsFromApiUseCase(private val mainRepository: MainRepository) {
-    suspend fun execute(tripcode: String): Flow<Resource<MemberLocationsApiResponse>> = mainRepository.getAllMemberLocationsFromApi(tripcode)
+    suspend fun execute(tripcode: String) = mainRepository.getAllMemberLocationsFromApi(tripcode)
 }

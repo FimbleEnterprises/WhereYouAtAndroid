@@ -5,7 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     // id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
-
+    id 'com.google.gms.google-services'
     id 'androidx.navigation.safeargs.kotlin' version '2.4.1' apply false
 }
 
@@ -18,7 +18,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 32
         versionCode 1
-        versionName "1.0"
+        versionName "Alpha 1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation 'androidx.lifecycle:lifecycle-service:2.5.1'
 
+
     def coroutinesVersion = '1.6.4'
     def retrofitVersion = "2.9.0"
     def daggerHiltVersion = '2.43.2'
@@ -70,6 +71,10 @@ dependencies {
     // -----------------------------------------------------------
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
+
+    // Declare the dependency for the Analytics library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     def activity_version = "1.5.1"
     implementation "androidx.activity:activity-ktx:$activity_version"

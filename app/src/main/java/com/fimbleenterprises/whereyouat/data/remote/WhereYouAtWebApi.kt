@@ -9,20 +9,14 @@ import retrofit2.Response
 import retrofit2.http.*
 
 
-interface TripsServiceApi {
+interface WhereYouAtWebApi {
 
     @GET("api/trips/entries/{tripcode}")
-    suspend fun getMemberLocations(
-        @Path("tripcode") tripcode: String
-    ): Response<MemberLocationsApiResponse>
+    suspend fun getMemberLocations(@Path("tripcode") tripcode: String): Response<MemberLocationsApiResponse>
 
     @GET("api/trips/isactive/{tripcode}")
-    suspend fun isTripActive(
-        @Path("tripcode") tripcode: String
-    ): Response<BaseApiResponse>
+    suspend fun isTripActive(@Path("tripcode") tripcode: String): Response<BaseApiResponse>
 
     @POST("api/trips")
-    suspend fun  performPostOperation(
-        @Body request: ApiRequest
-    ): Response<BaseApiResponse>
+    suspend fun  performPostOperation(@Body request: ApiRequest): Response<BaseApiResponse>
 }

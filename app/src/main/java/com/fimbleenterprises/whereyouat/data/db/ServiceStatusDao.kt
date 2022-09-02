@@ -22,4 +22,15 @@ interface ServiceStatusDao {
     @Query("SELECT * FROM service_status WHERE rowid = 1")
     fun getServiceStatusFlow(): Flow<ServiceStatus>
 
+    @Query("UPDATE service_status SET isRunning = :isRunning WHERE rowid = 1")
+    fun setServiceRunning(isRunning: Boolean): Int
+
+    @Query("UPDATE service_status SET isStarting = :isStarting WHERE rowid = 1")
+    fun setServiceStarting(isStarting: Boolean): Int
+
+    @Query("UPDATE service_status SET isStopping = :isStopping WHERE rowid = 1")
+    fun setServiceStopping(isStopping: Boolean): Int
+
+
+
 }
