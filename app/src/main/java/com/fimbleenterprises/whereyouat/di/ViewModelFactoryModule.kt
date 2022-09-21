@@ -21,12 +21,12 @@ object ViewModelFactoryModule {
         getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
         getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
         validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
-        getServiceStatusUseCase: GetServiceStatusUseCase,
-        saveServiceStatusUseCase: SaveServiceStatusUseCase,
+        serviceStateUseCases: ServiceStateUseCases,
         uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
         getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
         serviceMessenger: ServiceMessenger,
-        validateClientTripCodeUseCase: ValidateClientTripCodeUseCase
+        validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
+        validateApiServerRunningUseCase: ValidateApiServerRunningUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
             application,
@@ -34,12 +34,12 @@ object ViewModelFactoryModule {
             getMemberLocsFromDbUseCase,
             getMyLocFromDbUseCase,
             validateTripCodeAgainstApiUseCase,
-            getServiceStatusUseCase,
-            saveServiceStatusUseCase,
+            serviceStateUseCases,
             uploadMyLocToApiUseCase,
             getMemberLocsFromApiUseCase,
             serviceMessenger,
-            validateClientTripCodeUseCase
+            validateClientTripCodeUseCase,
+            validateApiServerRunningUseCase
         )
     }
 

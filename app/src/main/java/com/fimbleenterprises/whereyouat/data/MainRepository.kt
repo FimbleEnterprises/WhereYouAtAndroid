@@ -1,12 +1,8 @@
 package com.fimbleenterprises.whereyouat.data
 
-import android.util.Log
 import com.fimbleenterprises.whereyouat.model.*
 import com.fimbleenterprises.whereyouat.utils.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 interface MainRepository {
 
@@ -19,12 +15,16 @@ interface MainRepository {
     suspend fun saveMemberLocationToDatabase(locUpdate:LocUpdate): Long
     suspend fun saveMemberLocationsToDatabase(locUpdates:List<LocUpdate>): List<Long>
     suspend fun deleteAllLocsFromDatabase(): Int
+    suspend fun deleteLocFromDatabase(locUpdate: LocUpdate):Int
     fun getAllMemberLocsFromDatabase() : Flow<List<LocUpdate>>
+    suspend fun getAllMemberLocsFromDatabaseOneTime() : List<LocUpdate>
 
     // -----------------------------------------------------------
     //                         GENERIC
     // -----------------------------------------------------------
     suspend fun isTripcodeActiveFromApi(tripcode: String): Flow<Resource<BaseApiResponse>>
+    suspend fun removeUserFromTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>>
+    suspend fun validateApiServerRunning(): Flow<Resource<BaseApiResponse>>
 
     // -----------------------------------------------------------
     //                         MY LOC
@@ -36,14 +36,15 @@ interface MainRepository {
     fun getMyLocationFromDb(memberid: Long) : Flow<MyLocation>
 
     // -----------------------------------------------------------
-    //                       SERVICE STATUS
+    //                       SERVICE STATE
     // -----------------------------------------------------------
-    fun getServiceStatusFlow(): Flow<ServiceStatus>
-    suspend fun getServiceStatus(): ServiceStatus
-    suspend fun deleteServiceStatus(): Int
-    suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long
-    suspend fun setServiceRunning(isRunning: Boolean): Int
-    suspend fun setServiceStarting(isStarting: Boolean): Int
-    suspend fun setServiceStopping(isStopping: Boolean): Int
-
+    fun getServiceStateAsFlow(): Flow<ServiceState>
+    suspend fun getServiceState(): ServiceState
+    suspend fun deleteServiceState(): Int
+    suspend fun saveServiceState(serviceState: ServiceState): Long
+    suspend fun setServiceRunning(): Int
+    suspend fun setServiceStarting(): Int
+    suspend fun setServiceStopping(): Int
+    suspend fun setServiceStopped(): Int
+    suspend fun setServiceRestarting(): Int
 }

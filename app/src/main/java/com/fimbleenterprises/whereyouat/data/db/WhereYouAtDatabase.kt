@@ -7,12 +7,12 @@ import com.fimbleenterprises.sportsdb.data.db.Converters
 import com.fimbleenterprises.whereyouat.model.LocUpdate
 import com.fimbleenterprises.whereyouat.model.Message
 import com.fimbleenterprises.whereyouat.model.MyLocation
-import com.fimbleenterprises.whereyouat.model.ServiceStatus
+import com.fimbleenterprises.whereyouat.model.ServiceState
 
 // This annotation is what gets Room to actually create and maintain a single table in the database.
 @Database(
-    entities = [LocUpdate::class, MyLocation::class, ServiceStatus::class, Message::class],
-    version =  2,
+    entities = [LocUpdate::class, MyLocation::class, ServiceState::class, Message::class],
+    version =  1,
     exportSchema = false
 )
 // OPTIONAL
@@ -29,6 +29,6 @@ import com.fimbleenterprises.whereyouat.model.ServiceStatus
 abstract class WhereYouAtDatabase : RoomDatabase() {
     abstract fun getMemberLocationsDao() : MemberLocationsDao
     abstract fun getMyLocationDao() : MyLocationDao
-    abstract fun getServiceStatusDao(): ServiceStatusDao
+    abstract fun getServiceStatusDao(): ServiceStateDao
     abstract fun getMessagesDao(): MessagesDao
 }

@@ -17,6 +17,9 @@ interface WhereYouAtWebApi {
     @GET("api/trips/isactive/{tripcode}")
     suspend fun isTripActive(@Path("tripcode") tripcode: String): Response<BaseApiResponse>
 
+    @GET("api/trips/test")
+    suspend fun isServerUp(): Response<BaseApiResponse>
+
     @POST("api/trips")
     suspend fun  performPostOperation(@Body request: ApiRequest): Response<BaseApiResponse>
 }

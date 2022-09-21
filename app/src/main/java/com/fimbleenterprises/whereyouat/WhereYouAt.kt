@@ -3,9 +3,10 @@ package com.fimbleenterprises.whereyouat
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.fimbleenterprises.whereyouat.data.usecases.DeleteServiceStatusUseCase
-import com.fimbleenterprises.whereyouat.data.usecases.SaveServiceStatusUseCase
-import com.fimbleenterprises.whereyouat.model.ServiceStatus
+import android.util.Log
+import com.fimbleenterprises.whereyouat.data.usecases.ServiceStateUseCases
+import com.fimbleenterprises.whereyouat.model.ServiceState
+import com.fimbleenterprises.whereyouat.utils.Constants
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -18,10 +19,7 @@ import javax.inject.Singleton
 class WhereYouAt : Application() {
 
     @Inject
-    lateinit var deleteServiceStatusUseCase: DeleteServiceStatusUseCase
-
-    @Inject
-    lateinit var saveServiceStatusUseCase: SaveServiceStatusUseCase
+    lateinit var serviceStateUseCases: ServiceStateUseCases
 
     override fun onCreate() {
         super.onCreate()
@@ -29,12 +27,19 @@ class WhereYouAt : Application() {
         FirebaseApp.initializeApp(this)
 
         CoroutineScope(IO).launch {
-            saveServiceStatusUseCase.execute(ServiceStatus(1, false, System.currentTimeMillis(), false))
+            serviceStateUseCases.setServiceState(
+                ServiceState(
+                    state = ServiceState.SERVICE_STATE_STOPPED
+                )
+            )
+            Log.i(TAG, "-=onCreate:RESET SERVICE STATUS (IDLE) =-")
         }
 
     }
 
-    init {
+    init { Log.i(TAG, "Initialized:WhereYouAt") }
+    companion object {
+        private const val TAG = "FIMTOWN|WhereYouAt"
     }
 
     @Singleton
@@ -48,12 +53,48 @@ class WhereYouAt : Application() {
         private const val PREF_LAST_TRIPCODE = "PREF_LAST_TRIPCODE"
         private const val PREF_MEMBERID = "PREF_MEMBERID"
         private const val PREF_MEMBERNAME = "PREF_MEMBERNAME"
-        private const val PREF_BG_PERMISSION_PESTER = "PREF_PERMISSION_PESTER"
+        private const val PREF_API_SCAN_INTERVAL = "PREF_API_SCAN_INTERVAL"
         private const val PREF_MY_LOC_INTERVAL = "PREF_MY_LOC_INTERVAL"
         private const val PREF_MY_LOC_FASTEST_INTERVAL = "PREF_MY_LOC_FASTEST_INTERVAL"
         private const val PREF_MAX_WAIT_TIME = "PREF_MAX_WAIT_TIME"
-        private const val PREF_SLIDER_POSITION_FOREGROUND = "PREF_SLIDER_POSITION_FOREGROUND"
-        private const val PREF_SLIDER_POSITION_BACKGROUND = "PREF_SLIDER_POSITION_BACKGROUND"
+        private const val PREF_EMAIL = "PREF_EMAIL"
+        private const val PREF_GOOGLEID = "PREF_GOOGLEID"
+        private const val PREF_NAME = "PREF_NAME"
+        private const val PREF_TOKEN = "PREF_TOKEN"
+        private const val PREF_AVATAR = "PREF_AVATAR"
+        private const val PREF_BASE_URL = "PREF_BASE_URL"
+
+        var baseUrl: String?
+            get() = prefs.getString(PREF_BASE_URL, Constants.BASE_URL)
+            set(value) {
+                prefs.edit().putString(PREF_BASE_URL, value).apply()
+            }
+
+        var email : String?
+            get() = prefs.getString(PREF_EMAIL, null)
+            set(value) {
+                prefs.edit().putString(PREF_EMAIL, value).apply()
+            }
+        var googleid : String?
+            get() = prefs.getString(PREF_GOOGLEID, null)
+            set(value) {
+                prefs.edit().putString(PREF_GOOGLEID, value).apply()
+            }
+        var token : String?
+            get() = prefs.getString(PREF_TOKEN, null)
+            set(value) {
+                prefs.edit().putString(PREF_TOKEN, value).apply()
+            }
+        var name : String?
+            get() = prefs.getString(PREF_NAME, null)
+            set(value) {
+                prefs.edit().putString(PREF_NAME, value).apply()
+            }
+        var avatarUrl : String?
+            get() = prefs.getString(PREF_AVATAR, null)
+            set(value) {
+                prefs.edit().putString(PREF_AVATAR, value).apply()
+            }
 
         /**
          * The value used to set the slider on the map frag.
@@ -71,24 +112,6 @@ class WhereYouAt : Application() {
             get() = prefs.getString(PREF_LAST_TRIPCODE, null)
             set(value) {
                 prefs.edit().putString(PREF_LAST_TRIPCODE, value).apply()
-            }
-
-        /**
-         * The value used to set the slider on the map frag.
-         */
-        var sliderPositionForeground : Int
-            get() = prefs.getInt(PREF_SLIDER_POSITION_FOREGROUND, 0)
-            set(value) {
-                prefs.edit().putInt(PREF_SLIDER_POSITION_FOREGROUND, value).apply()
-            }
-
-        /**
-         * The value used to set the slider on the map frag.
-         */
-        var sliderPositionBackground : Int
-            get() = prefs.getInt(PREF_SLIDER_POSITION_BACKGROUND, 0)
-            set(value) {
-                prefs.edit().putInt(PREF_SLIDER_POSITION_BACKGROUND, value).apply()
             }
 
         /**
@@ -141,16 +164,19 @@ class WhereYouAt : Application() {
          * Background version of the scan interval
          */
         var scanInterval_MapInBackground : Long
-            get() = prefs.getLong(PREF_MY_LOC_INTERVAL, 60L)
+            get() = prefs.getLong(PREF_MY_LOC_INTERVAL, 45L)
             set(value) {
                 prefs.edit().putLong(PREF_MY_LOC_INTERVAL, value).apply()
             }
 
         /**
-         * Background version
+         * Background version - I believe that this interval will be reset if you manually call
+         * for the last known location while you have a location listener active.  So you cannot
+         * have the location listener doing its thing then calling manually.  That manual call will
+         * count as an event to the location listener.
          */
         var fastestScanInterval_MapInBackground : Long
-            get() = prefs.getLong(PREF_MY_LOC_FASTEST_INTERVAL, 30L)
+            get() = prefs.getLong(PREF_MY_LOC_FASTEST_INTERVAL, 15L)
             set(value) {
                 prefs.edit().putLong(PREF_MY_LOC_FASTEST_INTERVAL, value).apply()
             }
@@ -159,7 +185,7 @@ class WhereYouAt : Application() {
          * Background version
          */
         var maxWaitTime_MapInBackground : Long
-            get() = prefs.getLong(PREF_MAX_WAIT_TIME, 120L)
+            get() = prefs.getLong(PREF_MAX_WAIT_TIME, 30L)
             set(value) {
                 prefs.edit().putLong(PREF_MAX_WAIT_TIME, value).apply()
             }
@@ -176,11 +202,27 @@ class WhereYouAt : Application() {
                 prefs.edit().putLong(PREF_MEMBERID, value).apply()
             }
 
-        var nagUserAboutBgPermission : Boolean
+        var apiRequestInterval: Long
+            get() = prefs.getLong(PREF_API_SCAN_INTERVAL, 5L)
+            set(value) {
+                prefs.edit().putLong(PREF_API_SCAN_INTERVAL, value).apply()
+            }
+
+        /**
+         * Throttles uploads of my location to the API.  This amount of time must elapse before
+         * a new my location upload can take place.
+         */
+/*        var uploadMyLocWaitIntervalSeconds : Long
+            get() = prefs.getLong(PREF_UPLOAD_MY_LOC_INTERVAL, 5L)
+            set(value) {
+                prefs.edit().putLong(PREF_UPLOAD_MY_LOC_INTERVAL, value).apply()
+            }*/
+
+/*        var nagUserAboutBgPermission : Boolean
             get() = prefs.getBoolean(PREF_BG_PERMISSION_PESTER, true)
             set(value) {
                 prefs.edit().putBoolean(PREF_BG_PERMISSION_PESTER, value).apply()
-            }
+            }*/
 
         fun init(context: Context) {
             prefs = context.getSharedPreferences(NAME, MODE)

@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/messages_header">
+
+        <EditTextPreference
+                app:key="signature"
+                app:title="@string/signature_title"
+                app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+                app:key="PREF_MAX_WAIT_TIME"
+                app:title="@string/bg_scan_interval_title"
+                app:entries="@array/bg_loc_request_interval_entries"
+                app:entryValues="@array/bg_loc_request_interval_values"
+                app:defaultValue="45"
+                app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+                app:key="PREF_API_SCAN_INTERVAL"
+                app:title="@string/pref_api_request_interval_title"
+                app:entries="@array/api_request_interval_entries"
+                app:entryValues="@array/api_request_interval_values"
+                app:defaultValue="5"
+                app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+                app:key="sync"
+                app:title="@string/sync_title" />
+
+        <SwitchPreferenceCompat
+                app:key="attachment"
+                app:title="@string/attachment_title"
+                app:summaryOn="@string/attachment_summary_on"
+                app:summaryOff="@string/attachment_summary_off"
+                app:dependency="sync" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

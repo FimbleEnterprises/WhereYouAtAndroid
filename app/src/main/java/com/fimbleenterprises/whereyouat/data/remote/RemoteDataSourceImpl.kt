@@ -2,12 +2,12 @@ package com.fimbleenterprises.whereyouat.data.remote
 
 import android.util.Log
 import com.fimbleenterprises.whereyouat.model.*
+import com.fimbleenterprises.whereyouat.model.FunctionName.*
 import retrofit2.Response
 import javax.inject.Singleton
 
 @Singleton
-class RemoteDataSourceImpl(private val whereYouAtWebApi: WhereYouAtWebApi):
-    RemoteDataSource {
+class RemoteDataSourceImpl(private val whereYouAtWebApi: WhereYouAtWebApi): RemoteDataSource {
 
     override suspend fun getMemberLocations(tripcode: String): Response<MemberLocationsApiResponse> {
         return whereYouAtWebApi.getMemberLocations(tripcode)
@@ -18,15 +18,25 @@ class RemoteDataSourceImpl(private val whereYouAtWebApi: WhereYouAtWebApi):
     }
 
     override suspend fun createTrip(memberid: Long): Response<BaseApiResponse> {
-        val apiRequest = ApiRequest(ApiRequest.CREATE_NEW_TRIP)
+        val apiRequest = ApiRequest(CREATE_NEW_TRIP)
         apiRequest.arguments.add(Argument("memberid", memberid))
         return whereYouAtWebApi.performPostOperation(apiRequest)
     }
 
     override suspend fun uploadMyLocation(locUpdate: LocUpdate): Response<BaseApiResponse> {
-        val apiRequest = ApiRequest(ApiRequest.UPDATE_TRIP)
+        val apiRequest = ApiRequest(UPDATE_TRIP)
         apiRequest.arguments.add(Argument("locupdate", locUpdate))
         return whereYouAtWebApi.performPostOperation(apiRequest)
+    }
+
+    override suspend fun removeUserFromTrip(memberid: Long): Response<BaseApiResponse> {
+        val apiRequest = ApiRequest(LEAVE_TRIP)
+        apiRequest.arguments.add(Argument("memberid", memberid))
+        return whereYouAtWebApi.performPostOperation(apiRequest)
+    }
+
+    override suspend fun validateApiServerRunning(): Response<BaseApiResponse> {
+        return whereYouAtWebApi.isServerUp()
     }
 
     init { Log.i(TAG, "Initialized:RemoteDataSourceImpl") }

@@ -27,6 +27,9 @@ interface MemberLocationsDao {
     @Query("SELECT * FROM member_locations")
     fun getAllMemberLocations(): Flow<List<LocUpdate>>
 
+    @Query("SELECT * FROM member_locations")
+    suspend fun getAllMemberLocationsOneTime(): List<LocUpdate>
+
     @Query("SELECT * FROM member_locations WHERE memberid = :memberid")
     fun getMemberLocation(memberid: Long): Flow<LocUpdate>
 

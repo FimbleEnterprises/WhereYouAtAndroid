@@ -4,6 +4,8 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -12,16 +14,19 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.fimbleenterprises.whereyouat.MainActivity
 import com.fimbleenterprises.whereyouat.R
 import com.fimbleenterprises.whereyouat.WhereYouAt.AppPreferences
 import com.fimbleenterprises.whereyouat.databinding.FragmentStartBinding
+import com.fimbleenterprises.whereyouat.model.ApiEvent
+import com.fimbleenterprises.whereyouat.model.ServiceState
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
 import com.fimbleenterprises.whereyouat.utils.Resource
 import com.fimbleenterprises.whereyouat.utils.Utils
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_start.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -31,6 +36,7 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class StartFragment : Fragment(), View.OnKeyListener {
+
     init { Log.i(TAG, "Initialized:StartFragment") }
     companion object { private const val TAG = "FIMTOWN|StartFragment" }
 
@@ -41,10 +47,13 @@ class StartFragment : Fragment(), View.OnKeyListener {
     private lateinit var binding: FragmentStartBinding
     private lateinit var viewmodel: MainViewModel
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
         return inflater.inflate(R.layout.fragment_start, container, false)
     }
 
@@ -52,24 +61,6 @@ class StartFragment : Fragment(), View.OnKeyListener {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStartBinding.bind(view)
         viewmodel = (activity as MainActivity).mainViewModel
-
-        /* Listen for keyboard show/hide so we can re-focus the container when the keyboard goes to sleepy.
-        The "container" is the outer-most element of the XML design resource and if it is not focused
-        we cannot get onKey events from the onKeyListener that we have attached to it.  */
-        /*val decorView  = activity?.window?.decorView ?: return
-        ViewCompat.setOnApplyWindowInsetsListener(decorView) { _, insets ->
-            val showingKeyboard = insets.isVisible(WindowInsetsCompat.Type.ime())
-            if(showingKeyboard){
-                Log.i(TAG, "-=onViewCreated:KEYBOARD IS SHOWING =-")
-            } else {
-                Log.i(TAG, "-=onViewCreated:KEYBOARD IS NOT SHOWING =-")
-                // Re-focus the container so we can detect back presses
-                binding.container.isFocusableInTouchMode = true
-                binding.container.requestFocus()
-            }
-            insets
-        }*/
-
     } // onViewCreated
 
     // Button onClickListeners are implemented here.
@@ -79,30 +70,37 @@ class StartFragment : Fragment(), View.OnKeyListener {
         // Create button doubles as a cancel button - check the service status
         // to decide what action to perform (create or cancel)
         binding.btnCreate.setOnClickListener {
-            // Service running, we cancel it.
-            if (viewmodel.serviceStatus.value?.isStarting == true
-                || viewmodel.serviceStatus.value?.isRunning == true) {
-                viewmodel.stopService()
-            } else {
-                // Create a trip and go
-                //startObservingCreateTripLiveData()
-                viewmodel.createTrip(System.currentTimeMillis())
-                viewmodel.tripcodeCreated.observe(viewLifecycleOwner) {
-                    when (it) {
-                        true -> {
-                            // Navigate to the map
-                            findNavController().navigate(
-                                R.id.action_startFragment_to_mapFragment
-                            )
-                        }
-                    }
+
+            // Check that user is signed in
+            if (GoogleSignIn.getLastSignedInAccount(requireContext()) == null) {
+                Toast.makeText(context, getString(R.string.please_sign_in), Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).signInGoogle()
+                return@setOnClickListener
+            }
+
+            when (viewmodel.serviceState.value?.state) {
+                // Service running, we cancel it.
+                ServiceState.SERVICE_STATE_RUNNING -> {
+                    viewmodel.requestServiceStop()
                 }
-                isProcessing(true)
+                // Create a trip and go
+                ServiceState.SERVICE_STATE_IDLE -> {
+                    isProcessing(true)
+                    viewmodel.createTrip(System.currentTimeMillis())
+                }
             }
         }
 
-        // Entered code will be validated and if passes, a trip will begin (navigate to map frag)
+        // Entered code will be validated and if passes will be navigated to map frag
         binding.btnJoin.setOnClickListener {
+
+            // Check that user is signed in
+            if (GoogleSignIn.getLastSignedInAccount(requireContext()) == null) {
+                Toast.makeText(context, getString(R.string.please_sign_in), Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).signInGoogle()
+                return@setOnClickListener
+            }
+
             // Check the state of the button
             if (!tripCodeEntryExpanded) {
                 // Gracefully show the enter trip code edit text
@@ -112,7 +110,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 imm.showSoftInput(binding.edittextTripCode, InputMethodManager.SHOW_FORCED)
             } else {
                 val proposedTripCode = binding.edittextTripCode.text.toString()
-                isProcessing(true)
+                // isProcessing(true)
                 // We have a tripcode from the user, we need to validate it against the server.
                 // Valid meaning:
                 //      CLIENTSIDE:
@@ -125,19 +123,27 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 // validate code client-side
                 if (!viewmodel.tripcodeIsValidClientside(proposedTripCode)) {
                     Toast.makeText(context, getString(R.string.toast_code_not_valid), Toast.LENGTH_SHORT).show()
-                    isProcessing(false)
+                    // isProcessing(false)
                     return@setOnClickListener
                 }
 
-                validateAndGoToTrip(proposedTripCode)
+                validateThenJoinTrip(proposedTripCode)
 
             } // tripcode entered by user
         } // button click
 
         // Will attempt to join the last successfully joined trip.
         binding.btnResume.setOnClickListener {
+
+            // Check that user is signed in
+            if (GoogleSignIn.getLastSignedInAccount(requireContext()) == null) {
+                Toast.makeText(context, getString(R.string.please_sign_in), Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).signInGoogle()
+                return@setOnClickListener
+            }
+
             if (AppPreferences.lastTripCode != null) {
-                validateAndGoToTrip(AppPreferences.lastTripCode!!)
+                validateThenJoinTrip(AppPreferences.lastTripCode!!)
             } else {
                 Toast.makeText(context, "No trip to resume.", Toast.LENGTH_SHORT).show()
             }
@@ -171,11 +177,10 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 binding.container.requestFocus()
             }
         }
-
     }
 
     /** Performs server-side validation of the trip code and then navigates to the map if it's good.*/
-    private fun validateAndGoToTrip(proposedTripCode: String) {
+    private fun validateThenJoinTrip(proposedTripCode: String) {
         isProcessing(true)
         // Validate code server-side and go to map (trip now active) if validation passes
         CoroutineScope(IO).launch {
@@ -183,7 +188,9 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 when (it) {
                     is Resource.Success -> {
                         if (it.data?.wasSuccessful == true) {
-                            if (it.data.genericValue.toBoolean()) {
+                            // We know that the API will use the GenericValue property to pass
+                            // a boolean indicating validity.
+                            if (it.data.genericValue?.toString().toBoolean()) {
                                 // Trip code is valid according to server - we proceed.
                                 withContext(Main) {
 
@@ -192,23 +199,15 @@ class StartFragment : Fragment(), View.OnKeyListener {
 
                                     // Set the ServiceStatus isStarting == true
                                     viewmodel.requestTripStart()
-
-                                    // Navigate to the map
-                                    findNavController().navigate(
-                                        R.id.action_startFragment_to_mapFragment
-                                    )
-
-                                    // Stop progressbars and enable buttons.
-                                    isProcessing(false)
                                 }
-                            } else { // Proper response, no errors but trip code is not valid
+                            } else { // Proper response, no errors, but trip code is not valid
 
                                 // Null out trip code (it probably already is but still)
                                 AppPreferences.tripCode = null
+                                viewmodel.setServiceIdle()
 
                                 // Show toast and be done.
                                 withContext(Main) {
-                                    isProcessing(false)
                                     Toast.makeText(context,
                                         "Trip code is no longer active.",
                                         Toast.LENGTH_SHORT).show()
@@ -217,8 +216,12 @@ class StartFragment : Fragment(), View.OnKeyListener {
                         } else { // I/O problem with API
                             withContext(Main) {
 
+                                // Null out trip code (it probably already is but still)
+                                AppPreferences.tripCode = null
+
+                                viewmodel.setServiceIdle()
+
                                 // Show toast and be done.
-                                isProcessing(false)
                                 Toast.makeText(context,
                                     "Something went wrong.",
                                     Toast.LENGTH_SHORT).show()
@@ -232,6 +235,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
                             Toast.makeText(context,
                                 "Something went wrong.",
                                 Toast.LENGTH_SHORT).show()
+                            isProcessing(false)
                         }
                     }
                 } // API response
@@ -255,6 +259,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
 
     override fun onResume() {
         observeServiceStatus()
+        observeApiEvents()
         super.onResume()
     }
 
@@ -297,7 +302,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
         )
 
         // Arbitrary durations
-        anim1.duration = 350
+        anim1.duration = 300
         anim2.duration = 350
 
         anim1.start()
@@ -308,12 +313,32 @@ class StartFragment : Fragment(), View.OnKeyListener {
      * Enables/Disables controls while processing.
      */
     private fun isProcessing(processing: Boolean) {
-        if (processing) { binding.progressBar.visibility = View.VISIBLE } else
-            { binding.progressBar.visibility = View.GONE }
+
+        if (processing) {
+            // Utils.crossFadeAnimation(binding.progressBar, binding.controls, 350)
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            // Utils.crossFadeAnimation(binding.controls, binding.progressBar, 350)
+            binding.progressBar.visibility = View.GONE
+        }
         binding.btnJoin.isEnabled = !processing
         binding.btnCreate.isEnabled = !processing
         binding.btnResume.isEnabled = !processing
-        edittext_trip_code.isEnabled = !processing
+        binding.edittextTripCode.isEnabled = !processing
+    }
+
+    private fun observeApiEvents() {
+        viewmodel.apiEvent.observe(viewLifecycleOwner) {
+            when (it?.event) {
+                ApiEvent.Event.REQUEST_FAILED -> {
+                    Log.w(TAG, "observeApiEvents: $it")
+                    Toast.makeText(context, "Failed to create trip.", Toast.LENGTH_SHORT).show()
+                    isProcessing(false)
+                } else -> {
+                    Log.i(TAG, "-=observeApiEvents:Value:$it =-")
+                }
+            }
+        }
     }
 
     /**
@@ -322,30 +347,67 @@ class StartFragment : Fragment(), View.OnKeyListener {
      */
     private fun observeServiceStatus() = CoroutineScope(Main).launch {
         binding.btnResume.text = getString(R.string.resume_trip_button_text, AppPreferences.lastTripCode ?: "")
-        viewmodel.serviceStatus.observe(viewLifecycleOwner) {
-            when (it.isRunning) {
-                true -> {
+        viewmodel.serviceState.observe(viewLifecycleOwner) {
+            when (it.state) {
+                // This state means that the service is already running, a trip is active.  It is
+                // not super easy to get here with this state - requiring the user to have specifically
+                // swiped away the activity and then come back but not super rare either.
+                ServiceState.SERVICE_STATE_RUNNING -> {
                     // Probably don't need this here as we are going to navigate the user to the
                     // map screen immediately anyway but I'm gonna leave it here anyway.
-                    binding.btnCreate.text = getString(R.string.leave_trip_button)
-
-                    findNavController().navigate(
-                        R.id.action_startFragment_to_mapFragment
-                    )
+                    // binding.btnCreate.text = getString(R.string.leave_trip_button)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        // Navigate to the map
+                        findNavController().popBackStack()
+                        val navBuilder = NavOptions.Builder()
+                        navBuilder.setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_left)
+                            .setPopEnterAnim(android.R.anim.fade_in).setPopExitAnim(android.R.anim.fade_out)
+                        findNavController().navigate(
+                            R.id.mapFragment, null, navBuilder.build()
+                        )
+                    }, 500)
                 }
-                false -> {
+                // This will be the state if the VM has made an API call and validated the
+                // created /existing trip.  We navigate to the map and the map frag will
+                // start the service and we'll be off!
+                ServiceState.SERVICE_STATE_STARTING -> {
+                    // binding.btnCreate.text = getString(R.string.setting_up)
+                    // binding.btnCreate.setTextAnimation(getString(R.string.setting_up), 200)
+                    isProcessing(true)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        // Navigate to the map
+                        findNavController().popBackStack()
+                        val navBuilder = NavOptions.Builder()
+                        navBuilder.setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_left)
+                            .setPopEnterAnim(android.R.anim.fade_in).setPopExitAnim(android.R.anim.fade_out)
+                        findNavController().navigate(
+                            R.id.mapFragment, null, navBuilder.build()
+                        )
+                    }, 1500)
+                }
+                // This is a good state for this frag - ready to join/create a trip.
+                ServiceState.SERVICE_STATE_STOPPED -> {
                     binding.btnCreate.text = getString(R.string.create_button)
+                    isProcessing(false)
+
+                }
+                ServiceState.SERVICE_STATE_STOPPING -> {
+                    binding.btnCreate.text = getString(R.string.stopping)
+                    isProcessing(true)
+                }
+                else -> {
+                    binding.btnCreate.text = getString(R.string.create_button)
+                    binding.btnResume.isEnabled = AppPreferences.lastTripCode != null
+
+                    if (AppPreferences.lastTripCode != null) {
+                        binding.btnResume.text = getString(R.string.resume_trip_button_text, AppPreferences.lastTripCode)
+                    } else {
+                        binding.btnResume.text = getString(R.string.resume_button)
+                    }
+
+                    isProcessing(false)
                 }
             }
-            /*when (it.isStarting) {
-                true -> {
-                    // Navigate to the map
-                    findNavController().navigate(
-                        R.id.action_startFragment_to_mapFragment
-                    )
-                }
-                else -> {}
-            }*/
         }
     }
 }

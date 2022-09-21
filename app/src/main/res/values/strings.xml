@@ -48,4 +48,29 @@
     <string name="toast_code_not_valid">Trip code is not valid.  Must be non-null and 5 characters long.</string>
     <string name="toast_trip_created">Created trip: %1$s!</string>
     <string name="toast_something_wrong">Something went wrong!</string>
+    <string name="setting_up">Setting up...</string>
+    <string name="stopping">Stopping...</string>
+    <string name="playstore_url">www.google.com</string>
+    <string name="share_code_button">Share code with friends</string>
+    <string name="dismiss">DISMISS</string>
+    <string name="please_sign_in">Please sign in!</string>
+    <string name="units_away">%1$s miles away (%2$s)</string>
+    <string name="me">Me</string>
+    <string name="clicked_self_in_map">Hey that\'s me!</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="bg_scan_interval_title">NOT WORKING Background location detection speed.</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="pref_api_request_interval_title">NOT WORKING Server communication frequency</string>
+    <string name="menu_privacy_policy">Privacy policy</string>
 </resources>

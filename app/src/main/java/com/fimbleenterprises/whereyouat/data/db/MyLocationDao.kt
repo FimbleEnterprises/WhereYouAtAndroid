@@ -2,7 +2,6 @@ package com.fimbleenterprises.whereyouat.data.db
 import androidx.room.*
 import com.fimbleenterprises.whereyouat.model.MyLocation
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.DELETE
 
 /**
  * This interface is what Room will use to actually perform CRUD operations in the db.

@@ -5,9 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class BaseApiResponse(
     @SerializedName("GenericValue")
-    val genericValue: String,
+    val genericValue: Any?,
+    
     @SerializedName("Operation")
     val operation: String,
+    
     @SerializedName("WasSuccessful")
     val wasSuccessful: Boolean
 )

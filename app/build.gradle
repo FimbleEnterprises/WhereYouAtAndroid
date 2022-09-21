@@ -52,6 +52,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation 'androidx.lifecycle:lifecycle-service:2.5.1'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.7'
+    implementation 'com.google.android.gms:play-services-ads:21.2.0'
+    implementation 'androidx.preference:preference:1.2.0'
 
 
     def coroutinesVersion = '1.6.4'
@@ -65,6 +69,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // -----------------------------------------------------------
+    //                           Glide
+    // -----------------------------------------------------------
+    // Don't forget to add| id 'kotlin-kapt' |to the plugin block at the top of the file!
+    def glide_version = "4.13.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // -----------------------------------------------------------
     //                     FIREBASE ANALYTICS

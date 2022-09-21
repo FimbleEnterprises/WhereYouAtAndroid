@@ -1,6 +1,8 @@
 package com.fimbleenterprises.whereyouat.di
 
+import com.fimbleenterprises.whereyouat.WhereYouAt
 import com.fimbleenterprises.whereyouat.data.remote.WhereYouAtWebApi
+import com.fimbleenterprises.whereyouat.utils.Constants
 import com.fimbleenterprises.whereyouat.utils.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -26,7 +28,7 @@ object NetworkModule {
             .Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(interceptor)
+            /*.addInterceptor(interceptor)*/
             .build()
     }
 
@@ -42,7 +44,7 @@ object NetworkModule {
     ): Retrofit {
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

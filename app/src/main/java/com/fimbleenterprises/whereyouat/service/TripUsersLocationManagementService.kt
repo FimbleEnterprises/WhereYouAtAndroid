@@ -1,25 +1,30 @@
 package com.fimbleenterprises.whereyouat.service
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.*
 import android.os.*
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.lifecycle.LifecycleService
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.fimbleenterprises.whereyouat.MainActivity
 import com.fimbleenterprises.whereyouat.R
 import com.fimbleenterprises.whereyouat.WhereYouAt.AppPreferences
 import com.fimbleenterprises.whereyouat.data.usecases.*
 import com.fimbleenterprises.whereyouat.model.MyLocation
 import com.fimbleenterprises.whereyouat.model.ServiceStatus
+import com.fimbleenterprises.whereyouat.model.ServiceState
 import com.fimbleenterprises.whereyouat.utils.Constants
 import com.fimbleenterprises.whereyouat.utils.Resource
 import com.google.android.gms.location.*
@@ -27,15 +32,16 @@ import com.google.android.gms.location.LocationRequest
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.cancellable
+import java.lang.Runnable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 /**
@@ -49,6 +55,45 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TripUsersLocationManagementService : LifecycleService() {
+
+    // Handler and runner for continuously requesting member locations.
+    private var myHandler: Handler = Handler(Looper.myLooper()!!)
+    private var runner: Runnable? = null
+
+    /**
+     * Starts a runner that repeatedly checks for member locations.
+     */
+    private fun startMonitoring() {
+        if (runner != null) {
+            try {
+                myHandler.removeCallbacks(runner!!)
+                myHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        runner = Runnable {
+            // What runs each time
+            val seconds = (System.currentTimeMillis() - lastLocReceivedAt) / 1000
+            Log.i(TAG3, "-=startMonitoring: Last loc was $seconds ago. =-")
+            myHandler.postDelayed(runner!!, 1000)
+        }
+
+        // Starts it up initially
+        myHandler.postDelayed(runner!!, 0)
+    }
+
+    private fun stopMonitoring() {
+        if (runner != null) {
+            try {
+                myHandler.removeCallbacks(runner!!)
+                myHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
     // -----------------------------------------------------------
     //                      FIREBASE ANALYTICS
@@ -67,15 +112,15 @@ class TripUsersLocationManagementService : LifecycleService() {
 
     var serviceRunningInForeground = false
 
+    var rigorousUpdates = false
+
     private val localBinder = LocalBinder()
 
     private lateinit var notificationManager: NotificationManager
 
     private var tripcode: String? = null
 
-    private lateinit var serviceStatus: ServiceStatus
-
-
+    private lateinit var serviceState: ServiceState
     // endregion
 
     // -----------------------------------------------------------
@@ -90,6 +135,8 @@ class TripUsersLocationManagementService : LifecycleService() {
     // updates, the priority, etc.
     private lateinit var locationRequest: LocationRequest
 
+    private var lastLocReceivedAt: Long = 0L
+
     // LocationCallback - Called when FusedLocationProviderClient has a new Location.
     private lateinit var locationCallback: LocationCallback
 
@@ -98,12 +145,25 @@ class TripUsersLocationManagementService : LifecycleService() {
     // frivolous.
     private var initialLocReceived = false
 
+    // Used to keep a constant tally of our location in our proprietary format.
+    private var lastKnownLocation: MyLocation? = null
+
     // Used only for local storage of the last known location. Usually, this would be saved to your
     // database, but because this is a simplified sample without a full database, we only need the
     // last location to create a Notification if the user navigates away from the app.
-    private var currentLocation: Location? = null
+    // private var lastKnownLocation: Location? = null
 
+    /**
+     * Time in millis that my location was uploaded to the API
+     */
     private var lastUploadedLocation: Long = 0
+
+    private var lastRequestedLocations: Long = 0
+
+    // Handler and runner for continuously requesting member locations.
+    private var myLocationUploadHandler: Handler = Handler(Looper.myLooper()!!)
+    private var myLocationUploadRunner: Runnable? = null
+
     // endregion
 
     // -----------------------------------------------------------
@@ -111,12 +171,12 @@ class TripUsersLocationManagementService : LifecycleService() {
     // -----------------------------------------------------------
     // region API
     // Handler and runner for continuously requesting member locations.
-    private var myHandler: Handler = Handler(Looper.myLooper()!!)
-    private var runner: Runnable? = null
-    // Set true when request is made and false when it returns.
+    private var memberLocationRequestHandler: Handler = Handler(Looper.myLooper()!!)
+    private var memberLocationRequestRunner: Runnable? = null
+    /** Set true when request is made and false when it returns.*/
     private var isWaitingOnMemberLocApi = false
+    /** Set true when request is made and false when it returns.*/
     private var isWaitingOnMyLocApi = false
-    private var forceUpdate = false
     // endregion
 
     // -----------------------------------------------------------
@@ -142,60 +202,45 @@ class TripUsersLocationManagementService : LifecycleService() {
     lateinit var saveMemberLocsToDbUseCase: SaveMemberLocsToDbUseCase
 
     @Inject
-    lateinit var saveServiceStatusUseCase: SaveServiceStatusUseCase
+    lateinit var serviceStateUseCases: ServiceStateUseCases
 
     @Inject
-    lateinit var getServiceStatusUseCase: GetServiceStatusUseCase
+    lateinit var removeMemberFromTripInApiUseCase: RemoveMemberFromTripInApiUseCase
+
+    @Inject
+    lateinit var getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase
+
+    @Inject
+    lateinit var leaveTripWithApiUseCase: LeaveTripWithApiUseCase
+
     // endregion
+
+    init {
+        Log.i(TAG, "Initialized:TripUsersLocationManagementService")
+    } // init
 
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "onCreate()")
 
+        startMonitoring()
+
+        startObservingServiceStatus()
+
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = Firebase.analytics
-
-
 
         // Tripcode should never be null here.
         tripcode = AppPreferences.tripCode
         if (tripcode == null) {
-            Log.w(TAG, "onCreate: TRIPCODE SHOULD NOT BE NULL HERE AT SERVICE!  STOPPING!!")
+            Log.w(TAG2, "onCreate: TRIPCODE SHOULD NOT BE NULL HERE AT SERVICE!  STOPPING!!")
             CoroutineScope(IO).launch {
-                saveServiceStatusUseCase.execute(
-                    ServiceStatus(
-                        isRunning = false,
-                        isStarting = false
-                    )
-                )
                 withContext(Main) {
                     stopSelf()
                 }
             }
             return
         }
-
-/*      -- MOVED TO ONSTART INSTEAD --
-        val bundle = Bundle()
-        bundle.putString("TRIPCODE", AppPreferences.tripCode ?: "")
-        firebaseAnalytics.logEvent(Constants.FIREBASE_EVENT_1, bundle)
-
-        isRunning = true
-
-        // Set the service state to starting
-        CoroutineScope(IO).launch {
-
-            serviceStatus = ServiceStatus(
-                isStarting = true,
-                isRunning = false
-            )
-
-            // Set the state to running as the initial state here in onCreate()
-            saveServiceStatusUseCase.execute(
-                serviceStatus
-            )
-
-        }*/
 
         // Clear all locations for all members
         CoroutineScope(IO).launch {
@@ -210,83 +255,81 @@ class TripUsersLocationManagementService : LifecycleService() {
 
     } // onCreate
 
-    override fun onDestroy() {
-        stopRequestingMemberLocations()
-        // unsubscribeToLocationUpdates(false)
-        CoroutineScope(IO).launch {
-            saveServiceStatusUseCase.execute(
-                ServiceStatus(
-                    1,
-                    isRunning = false,
-                    isStarting = false
-                )
-            )
-            AppPreferences.tripCode = null
-        }
-        super.onDestroy()
+    private fun startObservingServiceStatus() = CoroutineScope(IO).launch {
+        // -----------------------------------------------------------
+        //   Retrieve and continue to monitor the db service status.
+        // -----------------------------------------------------------
 
-        isRunning = false
+        // Do testing with this commented out - I had a crash down below due to serviceState
+        // being uninitialized and so explicitly set its value here.  I feel like setting the
+        // value within the flow below should cover this but I need to test to confirm.
+        // serviceState = serviceStateUseCases.getServiceState()
+        // Log.i(TAG2, "-=onCreate:Retrieved service state from db (on main thread):$serviceState =-")
+
+        Log.i(TAG2, "-=onCreate:Coroutine to capture service state flow started. =-")
+        serviceStateUseCases.getServiceStateAsFlow().cancellable().collect {
+            serviceState = it
+            when (it.state) {
+                ServiceState.SERVICE_STATE_STOPPING -> {
+                    Log.i(TAG2, "-= SERVICE FLOW OBSERVER:STOPPING =-")
+                    Log.i(TAG2, "-= SERVICE FLOW OBSERVER:KILLING SERVICE BECAUSE STOPPING STATE =-")
+                    unsubscribeToLocationUpdates()
+                    stopSelf()
+                }
+                ServiceState.SERVICE_STATE_STOPPED -> {
+                    Log.i(TAG2, "-= SERVICE FLOW OBSERVER:STOPPED =-")
+                    it.state = ServiceState.SERVICE_STATE_STOPPED
+                }
+                ServiceState.SERVICE_STATE_RUNNING -> {
+                    Log.i(TAG2, "-= SERVICE FLOW OBSERVER:RUNNING =-")
+                }
+                ServiceState.SERVICE_STATE_STARTING -> {
+                    Log.i(TAG2, "-= SERVICE FLOW OBSERVER:STARTING =-")
+                }
+            }
+        } // Collector
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand()")
 
-        // Start the runner to repeated request member locations.
-        startRequestingMemberLocations()
-
-        val cancelLocationTrackingFromNotification =
+        val cancellationRequest =
             intent?.getBooleanExtra(EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION, false)
 
-        if (cancelLocationTrackingFromNotification == true) {
+        val fastUpdatesRequest =
+            intent?.getBooleanExtra(RIGOROUS_UPDATES_INTENT_EXTRA, false)
+
+        // See if we are here because the user is tryna actually stop the service.
+        if (cancellationRequest == true) {
             unsubscribeToLocationUpdates()
             stopSelf()
-        } else {
-            val bundle = Bundle()
-            bundle.putString("TRIPCODE", AppPreferences.tripCode ?: "")
-            firebaseAnalytics.logEvent(Constants.FIREBASE_EVENT_1, bundle)
+        } else if (intent?.hasExtra(RIGOROUS_UPDATES_INTENT_EXTRA) == true) {
+            rigorousUpdates = fastUpdatesRequest!!
+        } else { // start command sent while NOT running.  We start anew!
+            if (!isRunning) {
+                val bundle = Bundle()
+                bundle.putString("TRIPCODE", AppPreferences.tripCode ?: "")
+                firebaseAnalytics.logEvent(Constants.FIREBASE_EVENT_1, bundle)
 
-            isRunning = true
+                isRunning = true
 
-            // Set the service state to starting
-            CoroutineScope(IO).launch {
-
-                serviceStatus = ServiceStatus(
-                    isStarting = true,
-                    isRunning = true
-                )
-
-                // Set the state to running as the initial state here in onCreate()
-                saveServiceStatusUseCase.execute(
-                    serviceStatus
-                )
-
-            }
-        }
-
-        CoroutineScope(IO).launch {
-            // Retrieve and continue to monitor the db service status.
-            getServiceStatusUseCase.executeFlow().collect {
-                forceUpdate = it.forceUpdate
-
-                if (forceUpdate) {
-                    performMyLocUpload()
-                }
-
-                if (!it.isStopping) {
-                    unsubscribeToLocationUpdates()
-                    stopSelf()
-                }
-
-                when (it.locationRequestState) {
-                    ServiceStatus.LOCATION_STATE_RESTART -> {
-                        unsubscribeToLocationUpdates(true)
-                        it.isRunning = serviceStatus.isRunning
-                        it.isStarting = serviceStatus.isStarting
-                        it.locationRequestState = ServiceStatus.LOCATION_STATE_RUNNING
+                if (this::serviceState.isInitialized) {
+                    // Set the service state to running
+                    CoroutineScope(IO).launch {
+                        AppPreferences.lastTripCode = tripcode
+                        serviceState.state = ServiceState.SERVICE_STATE_RUNNING
+                        // Set the state to running as the initial state here in onCreate()
+                        serviceStateUseCases.setServiceRunning()
                     }
-                }
 
-                serviceStatus = it
+                    // Start the runner to repeated request member locations.
+                    startRequestingMemberLocations()
+
+                    // Start the runner for uploading our location
+                    startMyLocationUploadRunner()
+
+                    postServiceStatus()
+                }
             }
         }
 
@@ -294,23 +337,75 @@ class TripUsersLocationManagementService : LifecycleService() {
         return super.onStartCommand(intent, START_FLAG_REDELIVERY, startId)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        isRunning = false
+        stopRequestingMemberLocations()
+        stopMyLocationUploadRunner()
+        unsubscribeToLocationUpdates(false)
+
+        CoroutineScope(IO).launch {
+            if (!requestLeaveFromApi()) {
+                Log.i(TAG, "-=onDestroy:FAILED TO LEAVE TRIP ON SERVER =-")
+            } else {
+                Log.i(TAG, "-=onDestroy:SUCCESSFULLY LEFT TRIP! =-")
+            }
+            deleteAllMemberLocsFromDbUseCase.execute()
+            serviceStateUseCases.setServiceStopped()
+            AppPreferences.tripCode = null
+        }
+        stopMonitoring()
+    }
+
+    private suspend fun requestLeaveFromApi(): Boolean {
+
+        return suspendCoroutine { cont ->
+            CoroutineScope(IO).launch {
+                removeMemberFromTripInApiUseCase.execute(AppPreferences.memberid).collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            if (it.data?.wasSuccessful == true) {
+                                Log.i(TAG, " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                Log.i(TAG,
+                                    " USER REMOVED FROM TRIP IN API (RESULT: ${it.data.wasSuccessful}) ")
+                                Log.i(TAG, " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                cont.resume(true)
+                            } else {
+                                cont.resume(false)
+                            }
+                        }
+                        is Resource.Error -> {
+                            cont.resume(false)
+                        }
+                        else -> { }
+                    }
+                }
+            }
+        }
+    }
+
+    // MapFragment (client) comes into foreground and binds to service, so the service can
+    // become a background services.
     override fun onBind(intent: Intent): IBinder {
         super.onBind(intent)
         Log.d(TAG, "onBind()")
-
-        // MainActivity (client) comes into foreground and binds to service, so the service can
-        // become a background services.
+        Log.i(TAG3, "-=onBind: UPLOADING MY LOC =-")
+        uploadMyLocation(true)
+        startMyLocationUploadRunner()
         stopForeground(true)
         serviceRunningInForeground = false
         configurationChange = false
         return localBinder
     }
 
+    // MapFragment (client) returns to the foreground and rebinds to service, so the service
+    // can become a background services.
     override fun onRebind(intent: Intent) {
         Log.d(TAG, "onRebind()")
 
-        // MapFragment (client) returns to the foreground and rebinds to service, so the service
-        // can become a background services.
+        Log.i(TAG3, "-=onRebind: UPLOADING MY LOC =-")
+        uploadMyLocation(true)
+        startMyLocationUploadRunner()
         stopForeground(true)
         serviceRunningInForeground = false
         unsubscribeToLocationUpdates(true)
@@ -323,16 +418,17 @@ class TripUsersLocationManagementService : LifecycleService() {
 
     }
 
+    // MainActivity (client) leaves foreground, so service needs to become a foreground service
+    // to maintain the 'while-in-use' label.
+    // NOTE: If this method is called due to a configuration change in MainActivity,
+    // we do nothing.
     override fun onUnbind(intent: Intent): Boolean {
         Log.d(TAG, "onUnbind()")
 
-        // MainActivity (client) leaves foreground, so service needs to become a foreground service
-        // to maintain the 'while-in-use' label.
-        // NOTE: If this method is called due to a configuration change in MainActivity,
-        // we do nothing.
-        if (!configurationChange && SharedPreferenceUtil.getLocationTrackingPref(this)) {
+        /*if (!configurationChange && SharedPreferenceUtil.getLocationTrackingPref(this)) {
+            stopMyLocationUploadRunner()
             Log.d(TAG, "Start foreground service")
-            val notification = generateNotification(currentLocation)
+            val notification = generateNotification(lastKnownLocation)
             try {
                 unsubscribeToLocationUpdates(true)
                 startForeground(NOTIFICATION_ID, notification)
@@ -340,8 +436,30 @@ class TripUsersLocationManagementService : LifecycleService() {
             } catch (exception:RuntimeException) {
                 Log.e(TAG, "onUnbind: ${exception.localizedMessage}\n"
                     , exception)
-
             }
+        }*/
+        stopMyLocationUploadRunner()
+        Log.d(TAG, "Start foreground service")
+
+        // TODO I DON'T FUCKING KNOW, BRO
+        // I screwed up somewhere such that this call can happen when the user leaves a trip and
+        // the notification will show up.  The service is not actually running but the notification
+        // is persistent and... it's bad.
+        //
+        // This RUNNING check seems to resolve it but it's feels so
+        // fucking hacky!!!!!  Maybe I didn't screw up and this is fine but it feels wrong.
+        if (serviceState.state == ServiceState.SERVICE_STATE_RUNNING) {
+            val notification = generateNotification(lastKnownLocation?.toLocation())
+            try {
+                unsubscribeToLocationUpdates(true)
+                startForeground(NOTIFICATION_ID, notification)
+                serviceRunningInForeground = true
+            } catch (exception:RuntimeException) {
+                Log.e(TAG, "onUnbind: ${exception.localizedMessage}\n"
+                    , exception)
+            }
+            Log.i(TAG3, "-=onUnbind: UPLOADING MY LOC =-")
+            uploadMyLocation(true)
         }
 
         // Ensures onRebind() is called if MainActivity (client) rebinds.
@@ -364,21 +482,17 @@ class TripUsersLocationManagementService : LifecycleService() {
         // TODO: Step 1.3, Create a LocationRequest.
         locationRequest = LocationRequest.create().apply {
 
-            // Set foreground or background settings
+            // Default to FAST updates when map is visible in the foreground.
+            var scanInterval = LOCATION_REQUEST_INTERVAL_RIGOROUS
+            var fastestInterval = LOCATION_REQUEST_INTERVAL_RIGOROUS
+            var maxWaitTime = LOCATION_REQUEST_INTERVAL_RIGOROUS
 
-            // Default to FAST updates
-            /*var scanInterval = 1L
-            var fastestInterval = 1L
-            var maxWaitTime = 1L*/
-            var scanInterval = AppPreferences.scanInterval_MapVisible
-            var fastestInterval = AppPreferences.fastestScanInterval_MapVisible
-            var maxWaitTime = AppPreferences.maxWaitTime_MapVisible
-
+            // Use alternate intervals if in background
             if (serviceRunningInForeground) {
                 // The app is in the BACKGROUND (the verbiage is confusing) so we slow updates.
-                scanInterval = AppPreferences.scanInterval_MapInBackground
-                fastestInterval = AppPreferences.fastestScanInterval_MapInBackground
-                maxWaitTime = AppPreferences.maxWaitTime_MapInBackground
+                scanInterval = 60L
+                fastestInterval = 30L
+                maxWaitTime = 120L
             }
 
             // Sets the desired interval for active location updates. This interval is inexact. You
@@ -418,14 +532,20 @@ class TripUsersLocationManagementService : LifecycleService() {
 
             override fun onLocationResult(locationResult: LocationResult) {
 
-                if (!this@TripUsersLocationManagementService::serviceStatus.isInitialized) {
+                if (!isRunning) {
+                    return
+                }
+
+                lastLocReceivedAt = System.currentTimeMillis()
+
+                if (!this@TripUsersLocationManagementService::serviceState.isInitialized) {
                     val bundle = Bundle()
                     bundle.putString("TRIPCODE", AppPreferences.tripCode ?: "")
                     firebaseAnalytics.logEvent(Constants.FIREBASE_EVENT_3, bundle)
                     return
                 }
 
-                if (!serviceStatus.isStarting && !serviceStatus.isRunning) {
+                if (serviceState.state == ServiceState.SERVICE_STATE_STOPPING) {
                     val bundle = Bundle()
                     bundle.putString("TRIPCODE", AppPreferences.tripCode ?: "")
                     firebaseAnalytics.logEvent(Constants.FIREBASE_EVENT_3, bundle)
@@ -436,43 +556,63 @@ class TripUsersLocationManagementService : LifecycleService() {
 
                 initialLocReceived = true
 
-                // Normally, you want to save a new location to a database. We are simplifying
-                // things a bit and just saving it as a local variable, as we only need it again
-                // if a Notification is created (when the user navigates away from app).
-                currentLocation = locationResult.lastLocation
+                // Update the mutable live data containing the Location object as returned by this callback.
+                _location.value = locationResult.lastLocation
 
-                // Notify our Activity that a new location was added. Again, if this was a
-                // production app, the Activity would be listening for changes to a database
-                // with new locations, but we are simplifying things a bit to focus on just
-                // learning the location side of things.
-                val intent = Intent(ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST)
-                intent.putExtra(EXTRA_LOCATION, currentLocation)
-                LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
+                // Update the lastKnownMyLocation live data for outside observers.
+                val lastKnownLoc = locationResult.lastLocation
+                lastKnownLoc?.let {
+                    var isBg = 0
+                    if (serviceRunningInForeground) {
+                        isBg = 1
+                    }
+
+                    lastKnownLocation = MyLocation(
+                        rowid = 0,
+                        createdon = System.currentTimeMillis(),
+                        elevation = locationResult.lastLocation?.altitude,
+                        lat = it.latitude,
+                        lon = it.longitude,
+                        speed = it.speed,
+                        bearing = it.bearing,
+                        accuracy = it.accuracy,
+                        isBg = isBg
+                    )
+                }
+
+                // Save our location to the database.
+                Log.d(TAG3, "-=onLocationResult:Location change detected - saving to local DB =-")
+                CoroutineScope(IO).launch {
+                    lastKnownLocation.let { saveMyLocToDbUseCase.execute(it!!) }
+                }
 
                 // Updates notification content if this service is running as a foreground service.
                 if (serviceRunningInForeground) {
                     notificationManager.notify(
                         NOTIFICATION_ID,
-                        generateNotification(currentLocation))
+                        generateNotification(lastKnownLocation?.toLocation()))
                 }
 
-                //Do upload actions
-                performMyLocUpload()
-
-                requestMemberLocations()
+                if (rigorousUpdates) {
+                    //Do upload actions
+                    uploadMyLocation()
+                    requestMemberLocations()
+                }
 
             } // on Loc received
         } // loc callback
     }
 
     private fun okayToUploadLocation(): Boolean {
-    return true
-    /*val diff = System.currentTimeMillis() - lastUploadedLocation
-        val thresh = TimeUnit.SECONDS.toMillis(MAX_WAIT_LOCATION_REQUEST)
-        val okay = (diff) > thresh
-        Log.v(TAG, " !!!!!!! -= okayToUploadLocation =- !!!!!!!")
-        Log.v(TAG, "-=okayToUploadLocation: LastUploaded: $lastUploadedLocation, DIFF: $diff, thresh: $thresh, OkayToUpload: $okay =-")
-        return okay*/
+        val diff = System.currentTimeMillis() - lastUploadedLocation
+        val thresh = 500
+        return (diff) > thresh
+    }
+
+    private fun okayToRequestLocations(): Boolean {
+        val diff = System.currentTimeMillis() - lastRequestedLocations
+        val thresh = 500
+        return (diff) > thresh
     }
 
     fun subscribeToLocationUpdates() {
@@ -517,9 +657,9 @@ class TripUsersLocationManagementService : LifecycleService() {
                         if (resubscribe) {
                             initLocationRequests()
                             subscribeToLocationUpdates()
-                        }/* else {
-                            stopSelf()
-                        }*/
+                        } else {
+                            // stopSelf()
+                        }
                     } else {
                         Log.d(TAG, "Failed to remove Location Callback.")
                     }
@@ -570,8 +710,8 @@ class TripUsersLocationManagementService : LifecycleService() {
         val cancelIntent = Intent(this, TripUsersLocationManagementService::class.java)
         cancelIntent.putExtra(EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION, true)
 
-        val servicePendingIntent = PendingIntent.getService(
-            this, 0, cancelIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        /*val servicePendingIntent = PendingIntent.getService(
+            this, 0, cancelIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)*/
 
         val activityPendingIntent = PendingIntent.getActivity(
             this, 0, launchActivityIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -591,22 +731,102 @@ class TripUsersLocationManagementService : LifecycleService() {
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setContentIntent(activityPendingIntent)
-            .addAction(
+            /*.addAction(
                 R.drawable.ic_cancel,
                 getString(R.string.leave_trip_notification_button),
                 servicePendingIntent
-            )
+            )*/
             .build()
+    }
+
+    /**
+     * Starts a runner that repeatedly uploads the last known location.
+     */
+    private fun startMyLocationUploadRunner() {
+        if (myLocationUploadRunner != null) {
+            try {
+                myLocationUploadHandler.removeCallbacks(myLocationUploadRunner!!)
+                myLocationUploadHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        myLocationUploadRunner = Runnable {
+
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // No permissions
+                return@Runnable
+            }
+
+            // Get and upload an initial location from the fused location provider before we start the runner
+            fusedLocationProviderClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    // Got last known location. In some rare situations this can be null.
+                    // Update the lastKnownMyLocation live data for outside observers.
+                    location?.let {
+                        var isBg = 0
+                        if (serviceRunningInForeground) {
+                            isBg = 1
+                        }
+
+                        lastKnownLocation = MyLocation(
+                            rowid = 0,
+                            createdon = System.currentTimeMillis(),
+                            elevation = location.altitude,
+                            lat = it.latitude,
+                            lon = it.longitude,
+                            speed = it.speed,
+                            bearing = it.bearing,
+                            accuracy = it.accuracy,
+                            isBg = isBg
+                        )
+                        Log.d(TAG3, "-= UPLOAD MY LOCATION ${location.latitude}/${location.longitude} FROM RUNNER =-")
+                        lastLocReceivedAt = System.currentTimeMillis()
+                        uploadMyLocation()
+                    }
+                }
+
+            // What runs each time
+            Log.d(TAG, "uploadMyLocation: ${lastUploadedLocation()} seconds ago.")
+
+            var interval = TimeUnit.SECONDS.toMillis(LOCATION_REQUEST_INTERVAL_DEFAULT)
+            if (serviceRunningInForeground) {
+                interval = TimeUnit.SECONDS.toMillis(LOCATION_REQUEST_INTERVAL_BACKGROUND)
+            } else {
+                interval = TimeUnit.SECONDS.toMillis(LOCATION_REQUEST_INTERVAL_DEFAULT)
+            }
+
+            myLocationUploadHandler.postDelayed(myLocationUploadRunner!!, interval)
+        }
+
+        // Starts it up initially
+        myLocationUploadHandler.postDelayed(myLocationUploadRunner!!, 0)
+    }
+
+    private fun stopMyLocationUploadRunner() {
+        if (myLocationUploadRunner != null) {
+            try {
+                myLocationUploadHandler.removeCallbacks(myLocationUploadRunner!!)
+                myLocationUploadHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     /**
      * Stops the runner and nulls it out.
      */
     private fun stopRequestingMemberLocations() {
-        if (runner != null) {
-            myHandler.removeCallbacks(runner!!)
-            myHandler.removeCallbacksAndMessages(null)
-            runner = null
+        if (memberLocationRequestRunner != null) {
+            memberLocationRequestHandler.removeCallbacks(memberLocationRequestRunner!!)
+            memberLocationRequestHandler.removeCallbacksAndMessages(null)
+            memberLocationRequestRunner = null
         }
     }
 
@@ -616,82 +836,44 @@ class TripUsersLocationManagementService : LifecycleService() {
     private fun startRequestingMemberLocations() {
 
         // In case we somehow have a runner that's already instantiated we stop that shit dead.
-        if (runner != null) {
-            myHandler.removeCallbacks(runner!!)
-            myHandler.removeCallbacksAndMessages(null)
+        if (memberLocationRequestRunner != null) {
+            memberLocationRequestHandler.removeCallbacks(memberLocationRequestRunner!!)
+            memberLocationRequestHandler.removeCallbacksAndMessages(null)
+        }
+
+        var interval = TimeUnit.SECONDS.toMillis(LOCATION_REQUEST_INTERVAL_DEFAULT)
+        if (serviceRunningInForeground) {
+            interval = TimeUnit.SECONDS.toMillis(LOCATION_REQUEST_INTERVAL_BACKGROUND)
+        } else {
+            interval = TimeUnit.SECONDS.toMillis(LOCATION_REQUEST_INTERVAL_DEFAULT)
         }
 
         // Get locations manually, once, so we don't have to wait for the initial delay to elapse.
+        Log.i(TAG3, "-=startRequestingMemberLocations:INITIAL REQUEST BEFORE RUNNER HAS STARTED =-")
         requestMemberLocations()
 
         // What runs on each execution/loop
-        runner = Runnable {
+        memberLocationRequestRunner = Runnable {
+            Log.d(TAG, "requestMemberLocations: ${lastRequestedLocations()} seconds ago.")
+
             // Get trip member locations from the API
             requestMemberLocations()
-            Log.d(TAG, "startRequestingMemberLocations: Scheduling requestMemberLocations request.")
             // Schedule it again for the future
-            myHandler.postDelayed(runner!!, 15000)
+            memberLocationRequestHandler.postDelayed(memberLocationRequestRunner!!, interval)
         }
 
         // Schedule the first loop
-        myHandler.postDelayed(runner!!, 15000)
+        memberLocationRequestHandler.postDelayed(memberLocationRequestRunner!!, interval)
     }
 
-    private fun performMyLocUpload() = CoroutineScope(IO).launch {
+    /**
+     * Makes the actual call to the API for member locations.
+     */
+    private fun requestMemberLocations() = CoroutineScope(IO).launch {
 
-        if (AppPreferences.tripCode == null) {
-            //stopSelf()
-            stopRequestingMemberLocations()
-            unsubscribeToLocationUpdates(false)
-            //cancel()
+        if (!okayToRequestLocations()) {
             return@launch
         }
-
-        currentLocation?.let {
-                val myLocation = MyLocation(0,
-                    System.currentTimeMillis(),
-                    45,
-                    currentLocation!!.latitude,
-                    currentLocation!!.longitude
-                )
-                // Save to local storage, cause why not.
-                saveMyLocToDbUseCase.execute(myLocation)
-
-                if (okayToUploadLocation() || forceUpdate) {
-                    if (forceUpdate) {
-                        withContext(IO) {
-                            forceUpdate = false
-                            Log.w(TAG, "onLocationResult: FORCE UPDATE REQUESTED")
-                        }
-                    }
-
-                    // Upload my loc to API
-                    myLocation.toLocUpdate(tripcode!!)?.let { locUpdate ->
-                        uploadMyLocToApiUseCase.execute(locUpdate).collect {
-                            when (it) {
-                                is Resource.Success -> {
-                                    lastUploadedLocation = System.currentTimeMillis()
-                                    // It's nice to see our location change on the map after
-                                    // uploading our loc so we request that now.
-                                    requestMemberLocations()
-                                    Log.i(TAG, "-=onLocationResult: Uploaded location was successful. =-")
-                                }
-                                is Resource.Loading -> {
-                                    Log.i(TAG,
-                                        "-=ForegroundOnlyLocationService:onLocationResult LOADING =-")
-                                }
-                                is Resource.Error -> {
-                                    Log.w(TAG,
-                                        "-=ForegroundOnlyLocationService:onLocationResult ERROR =-")
-                                }
-                            } // when
-                        } // collect
-                    } // LocUpdate is not null
-                } // okayToUploadLocation
-            } // currentLocation?.let {
-        } // bg coroutine
-
-    private fun requestMemberLocations() = CoroutineScope(IO).launch {
 
         if (tripcode == null) {
             return@launch
@@ -700,56 +882,141 @@ class TripUsersLocationManagementService : LifecycleService() {
         if (!isWaitingOnMemberLocApi) {
             // writeOnetimeMsg(getString(R.string.requesting_member_locations_from_api))
             isWaitingOnMemberLocApi = true
+            withContext(Main) {
+                _serviceStatus.value?.isRequestingMemberLocs = true
+                postServiceStatus( "Requesting member locations...")
+            }
             try {
                 getMemberLocsFromApiUseCase.execute(tripcode!!).collect { apiResponse ->
                     when (apiResponse) {
                         is Resource.Success -> {
+                            lastRequestedLocations = System.currentTimeMillis()
                             isWaitingOnMemberLocApi = false
+                            withContext(Main) {
+                                _serviceStatus.value?.isRequestingMemberLocs = false
+                                postServiceStatus( "Received member locations!")
+                            }
                             deleteAllMemberLocsFromDbUseCase.execute()
                             apiResponse.data?.locUpdates?.let {
                                 saveMemberLocsToDbUseCase.executeMany(it)
                             }
-                            // writeOnetimeMsg(getString(R.string.member_locations_received))
                         }
                         is Resource.Loading -> {
                             isWaitingOnMemberLocApi = true
+                            withContext(Main) {
+                                _serviceStatus.value?.isRequestingMemberLocs = true
+                            }
                         }
                         is Resource.Error -> {
                             isWaitingOnMemberLocApi = false
+                            lastRequestedLocations = System.currentTimeMillis()
+                            withContext(Main) {
+                                _serviceStatus.value?.isRequestingMemberLocs = false
+                                postServiceStatus( "Failed to get member locations.")
+                            }
                             // writeOnetimeMsg(getString(R.string.failed_to_get_member_locations))
                         }
                     }
                 }
-            } catch (exception: NullPointerException) {
-                Log.e(TAG, "requestMemberLocations: ${exception.localizedMessage}", exception)
-            }
-        }/* else {
-            stopRequestingMemberLocations()
-            unsubscribeToLocationUpdates()
-            stopSelf()
-        }*/
-        // Keeping this here as a reminder not to let a function do more than it should do!  This
-        // method to request something from the API has no business modifying the service for any
-        // reason!  This cost me nearly 12 hours of development time trying to figure out why the
-        // service was silently dying.
+            } catch (exception: NullPointerException) { }
+        }
     }
 
-    /*private fun writeOnetimeMsg(msg: String) {
-        if (this@TripUsersLocationManagementService::serviceStatus.isInitialized) {
-          CoroutineScope(IO).launch {
-                saveServiceStatusUseCase.execute(
-                    ServiceStatus(
-                        isStarting =  serviceStatus.isStarting,
-                        isRunning = serviceStatus.isRunning,
-                        forceUpdate = serviceStatus.forceUpdate,
-                        oneTimeMessage = msg
-                    )
-                )
-            }*//*
-        } else {
-            Log.i(TAG, "-=writeOnetimeMsg:Somthin gon wrong =-")
+    /**
+     * Save my current location to the DB and then upload to the API (if okay to do so).
+     */
+    private fun uploadMyLocation(ignoreWait: Boolean = false) = CoroutineScope(IO).launch {
+
+        if (!okayToUploadLocation()) {
+            return@launch
         }
-    }*/
+
+        // If the tripcode is null here something has gone horribly wrong.
+        if (AppPreferences.tripCode == null) {
+            stopRequestingMemberLocations()
+            unsubscribeToLocationUpdates(false)
+            return@launch
+        }
+
+        // If we have a pending API request we bail so it can finish.
+        if (isWaitingOnMyLocApi) {
+            return@launch
+        }
+
+        // Build a MyLocation object for the purposes of saving it to the local DB.
+        lastKnownLocation?.let {
+            // If the service is in the foreground it means the app is in the background.
+            // Stipulating foreground/background before uploading will allow us to represent
+            // to trip members whether a user has the app in the foreground or not.
+            if (serviceRunningInForeground) {
+                lastKnownLocation?.isBg = 1
+            } else {
+                lastKnownLocation?.isBg = 0
+            }
+
+            // Convert MyLocation object to LocUpdate for consumption by the API
+            lastKnownLocation!!.toLocUpdate(tripcode!!).let { locUpdate ->
+                withContext(Main) {
+                    _serviceStatus.value?.isUploadingMyLoc = true
+                    postServiceStatus("Uploading my location...")
+                }
+
+                // Upload my loc to API
+                isWaitingOnMyLocApi = true
+                Log.i(TAG3, "-=uploadMyLocation:UPLOADING MY LOCATION =-")
+                uploadMyLocToApiUseCase.execute(locUpdate).collect { baseApiResponse ->
+                    when (baseApiResponse) {
+                        is Resource.Success -> {
+                            isWaitingOnMyLocApi = false
+                            if (baseApiResponse.data?.wasSuccessful == true) {
+                                lastUploadedLocation = System.currentTimeMillis()
+                                withContext(Main) {
+                                    _serviceStatus.value?.isUploadingMyLoc = false
+                                    postServiceStatus("Successfully uploaded my location")
+                                }
+                                // It's nice to see our location change on the map after
+                                // uploading our loc so we request that now.
+                                // requestMemberLocations()
+                            } else {
+                                Log.w(TAG, "performMyLocUpload: ${baseApiResponse.data?.genericValue}")
+                            }
+                        }
+                        is Resource.Loading -> {
+                            isWaitingOnMyLocApi = false
+                            Log.i(TAG,
+                                "-=ForegroundOnlyLocationService:onLocationResult LOADING =-")
+                            withContext(Main) {
+                                _serviceStatus.value?.isUploadingMyLoc = true
+                            }
+                        }
+                        is Resource.Error -> {
+                            lastUploadedLocation = System.currentTimeMillis()
+                            isWaitingOnMyLocApi = false
+                            Log.w(TAG,
+                                "-=ForegroundOnlyLocationService:onLocationResult ERROR =-")
+                            withContext(Main) {
+                                _serviceStatus.value?.isUploadingMyLoc = false
+                                postServiceStatus("Failed to upload my location")
+                            }
+                        }
+                    } // API response code.
+                } // collect API results
+            } // LocUpdate is not null
+        } // currentLocation?.let {
+    }
+
+    private fun lastRequestedLocations(): Int {
+        return ((System.currentTimeMillis() - lastRequestedLocations) / 1000).toInt()
+    }
+
+    private fun lastUploadedLocation(): Int {
+        return ((System.currentTimeMillis() - lastUploadedLocation) / 1000).toInt()
+    }
+
+    private fun postServiceStatus(msg: String? = null) {
+        _serviceStatus.value?.log1 = msg
+        _serviceStatus.postValue(_serviceStatus.value)
+    }
 
     /**
      * Class used for the client Binder.  Since this service runs in the same process as its
@@ -758,32 +1025,6 @@ class TripUsersLocationManagementService : LifecycleService() {
     inner class LocalBinder : Binder() {
         internal val service: TripUsersLocationManagementService
             get() = this@TripUsersLocationManagementService
-    }
-
-    companion object {
-        private const val TAG = "FIMTOWN|ForegroundOnlyLocationService"
-
-        private const val LOCATION_REQUEST_INTERVAL = 10L
-        private const val FASTEST_INTERVAL = 1L
-        private const val MAX_WAIT_LOCATION_REQUEST = 20L
-        private const val UPLOAD_LOCATION_INTERVAL = 30
-        private const val MINIMUM_DISTANCE_FOR_UPLOAD = 10
-
-        private const val PACKAGE_NAME = "com.example.android.whileinuselocation"
-
-        internal const val ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST =
-            "$PACKAGE_NAME.action.FOREGROUND_ONLY_LOCATION_BROADCAST"
-
-        internal const val EXTRA_LOCATION = "$PACKAGE_NAME.extra.LOCATION"
-
-        const val EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION =
-            "$PACKAGE_NAME.extra.CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION"
-
-        private const val NOTIFICATION_ID = 12345678
-
-        private const val NOTIFICATION_CHANNEL_ID = "while_in_use_channel_01"
-
-        var isRunning = false
     }
 
     /**
@@ -797,17 +1038,42 @@ class TripUsersLocationManagementService : LifecycleService() {
         }
     }
 
-}
+    companion object {
+        private const val TAG = "FIMTOWN|ForegroundOnlyLocationService"
+        private const val TAG2 = "SERVICESTATE"
+        private const val TAG3 = "TAG3"
+        private const val TAG4 = "TAG4"
 
-/**
- * Returns the `location` object as a human readable string.
- */
-fun Location?.toText(): String {
-    return if (this != null) {
-        "($latitude, $longitude)"
-    } else {
-        "Unknown location"
+        private const val LOCATION_REQUEST_INTERVAL_BACKGROUND = 45L
+        private const val LOCATION_REQUEST_INTERVAL_DEFAULT = 3L
+        private const val LOCATION_REQUEST_INTERVAL_RIGOROUS = 1L
+
+        private const val PACKAGE_NAME = "com.example.android.whileinuselocation"
+
+        internal const val ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST =
+            "$PACKAGE_NAME.action.FOREGROUND_ONLY_LOCATION_BROADCAST"
+
+        internal const val EXTRA_LOCATION = "$PACKAGE_NAME.extra.LOCATION"
+
+        const val EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION =
+            "$PACKAGE_NAME.extra.CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION"
+
+        const val RIGOROUS_UPDATES_INTENT_EXTRA = "RIGOROUS_UPDATES_INTENT_EXTRA"
+
+        private const val NOTIFICATION_ID = 12345678
+
+        private const val NOTIFICATION_CHANNEL_ID = "while_in_use_channel_01"
+
+        var isRunning = false
+
+        private val _serviceStatus: MutableLiveData<ServiceStatus> = MutableLiveData(
+            ServiceStatus())
+        val serviceStatus: LiveData<ServiceStatus> = _serviceStatus
+
+        private val _location: MutableLiveData<Location> = MutableLiveData()
+        val location: LiveData<Location> = _location
     }
+
 }
 
 /**
@@ -837,4 +1103,15 @@ internal object SharedPreferenceUtil {
             Context.MODE_PRIVATE).edit {
             putBoolean(KEY_FOREGROUND_ENABLED, requestingLocationUpdates)
         }
+}
+
+/**
+ * Returns the `location` object as a human readable string.
+ */
+fun Location?.toText(): String {
+    return if (this != null) {
+        "($latitude, $longitude)"
+    } else {
+        "Unknown location"
+    }
 }

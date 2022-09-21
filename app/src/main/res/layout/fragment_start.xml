@@ -27,18 +27,8 @@
             android:textColor="@android:color/holo_red_dark"
             android:textAllCaps="true" />
 
-    <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone" />
-
-    <LinearLayout
+    <RelativeLayout
+            android:id="@+id/controls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -47,11 +37,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="30dp">
 
+        <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:translationZ="200dp" />
+
         <TableLayout
+                android:id="@+id/topRow"
+                android:layout_alignParentTop="true"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingBottom="2dp">
+                android:layout_height="wrap_content">
 
             <TableRow
                     android:layout_width="wrap_content"
@@ -72,6 +70,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                     <Button
                             android:id="@+id/btnCreate"
                             android:layout_width="match_parent"
@@ -87,13 +86,13 @@
                 </FrameLayout>
             </TableRow>
         </TableLayout>
+
         <TableLayout
-                android:id="@+id/row_joinTrip"
+                android:id="@+id/middleRow"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp">
+                android:layout_below="@id/topRow">
+
             <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -125,6 +124,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                     <Button
                             android:id="@+id/btnJoin"
                             android:layout_width="match_parent"
@@ -140,12 +140,13 @@
                 </FrameLayout>
             </TableRow>
         </TableLayout>
+
         <TableLayout
+                android:id="@+id/bottomRow"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp">
+                android:layout_below="@id/middleRow">
+
             <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -163,6 +164,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                     <Button
                             android:id="@+id/btnResume"
                             android:layout_width="match_parent"
@@ -179,6 +181,6 @@
                 </FrameLayout>
             </TableRow>
         </TableLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

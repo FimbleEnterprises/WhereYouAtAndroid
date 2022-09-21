@@ -1,10 +1,16 @@
 package com.fimbleenterprises.whereyouat.utils
 
+import android.animation.Animator
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.widget.Button
 import android.widget.LinearLayout
 
 
@@ -52,4 +58,123 @@ object Utils {
         }
     }
 
+    fun fadeOutView(view: View) {
+        val alphaAnimation = AlphaAnimation(1.0f, 0.0f)
+        alphaAnimation.duration = 100
+        alphaAnimation.repeatCount = 0
+        alphaAnimation.repeatMode = Animation.REVERSE
+        view.startAnimation(alphaAnimation)
+    }
+
+    fun fadeInView(view: View) {
+        val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
+        alphaAnimation.duration = 100
+        alphaAnimation.repeatCount = 0
+        alphaAnimation.repeatMode = Animation.REVERSE
+        view.startAnimation(alphaAnimation)
+    }
+
+    fun crossFadeAnimation(fadeInTarget: View, fadeOutTarget: View, duration: Long) {
+        val mAnimationSet = AnimatorSet()
+        val fadeOut = ObjectAnimator.ofFloat(fadeOutTarget, View.ALPHA, 1f, .5f)
+        fadeOut.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+                fadeOutTarget.isEnabled = false
+            }
+            override fun onAnimationEnd(animation: Animator) {
+                fadeOutTarget.visibility = View.GONE
+            }
+
+            override fun onAnimationCancel(animation: Animator) {}
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
+        fadeOut.interpolator = LinearInterpolator()
+        val fadeIn = ObjectAnimator.ofFloat(fadeInTarget, View.ALPHA, .5f, 1f)
+        fadeIn.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+                fadeInTarget.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                fadeInTarget.isEnabled = true
+            }
+            override fun onAnimationCancel(animation: Animator) {}
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
+        fadeIn.interpolator = LinearInterpolator()
+        mAnimationSet.duration = duration
+        mAnimationSet.playTogether(fadeOut, fadeIn)
+        mAnimationSet.start()
+    }
+
+}
+
+fun Button.setTextAnimation(text: String, duration: Long = 200, completion: (() -> Unit)? = null) {
+    fadOutAnimation(duration) {
+        this.text = text
+        fadInAnimation(duration) {
+            completion?.let {
+                it()
+            }
+        }
+    }
+}// ViewExtensions
+
+fun Button.fadeDisable(duration: Long = 200) {
+    fadOutDisable(duration) { }
+}// ViewExtensions
+
+fun Button.fadeEnable(duration: Long = 200) {
+    fadInEnable(duration) { }
+}// ViewExtensions
+
+fun View.fadOutAnimation(duration: Long = 200, visibility: Int = View.INVISIBLE, completion: (() -> Unit)? = null) {
+    animate()
+        .alpha(0f)
+        .setDuration(duration)
+        .withEndAction {
+            this.visibility = visibility
+            completion?.let {
+                it()
+            }
+        }
+}
+
+fun View.fadInAnimation(duration: Long = 200, completion: (() -> Unit)? = null) {
+    alpha = 0f
+    visibility = View.VISIBLE
+    animate()
+        .alpha(1f)
+        .setDuration(duration)
+        .withEndAction {
+            completion?.let {
+                it()
+            }
+        }
+}
+
+fun View.fadOutDisable(duration: Long = 200, completion: (() -> Unit)? = null) {
+    animate()
+        .alpha(.4f)
+        .setDuration(duration)
+        .withEndAction {
+            this.isEnabled = false
+            completion?.let {
+                it()
+            }
+        }
+}
+
+fun View.fadInEnable(duration: Long = 200, completion: (() -> Unit)? = null) {
+    alpha = .4f
+    visibility = View.VISIBLE
+    animate()
+        .alpha(1f)
+        .setDuration(duration)
+        .withEndAction {
+            this.isEnabled = true
+            completion?.let {
+                it()
+            }
+        }
 }

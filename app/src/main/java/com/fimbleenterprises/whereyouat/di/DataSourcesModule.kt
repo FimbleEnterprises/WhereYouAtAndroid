@@ -2,7 +2,7 @@ package com.fimbleenterprises.whereyouat.di
 
 import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
 import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
-import com.fimbleenterprises.whereyouat.data.db.ServiceStatusDao
+import com.fimbleenterprises.whereyouat.data.db.ServiceStateDao
 import com.fimbleenterprises.whereyouat.data.local.LocalDataSource
 import com.fimbleenterprises.whereyouat.data.local.LocalDataSourceImpl
 import com.fimbleenterprises.whereyouat.data.remote.RemoteDataSource
@@ -23,9 +23,9 @@ class DataSourcesModule {
     fun providesLocalDataSource(
         memberLocationsDao: MemberLocationsDao,
         myLocationDao: MyLocationDao,
-        serviceStatusDao: ServiceStatusDao
+        serviceStateDao: ServiceStateDao
     ): LocalDataSource {
-        return LocalDataSourceImpl(memberLocationsDao, myLocationDao,serviceStatusDao)
+        return LocalDataSourceImpl(memberLocationsDao, myLocationDao,serviceStateDao)
     }
 
     @Provides

@@ -24,18 +24,17 @@ class MainViewModelFactory(
     private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
     private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
     private val validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
-    private val getServiceStatusUseCase: GetServiceStatusUseCase,
-    private val saveServiceStatusUseCase: SaveServiceStatusUseCase,
+    private val serviceStateUseCases: ServiceStateUseCases,
     private val uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
     private val getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
     private val serviceMessenger: ServiceMessenger,
-    private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase
+    private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
+    private val validateApiServerRunningUseCase: ValidateApiServerRunningUseCase
 ):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(
-            saveServiceStatusUseCase,
-            getServiceStatusUseCase,
+            serviceStateUseCases,
             validateTripCodeAgainstApiUseCase,
             createTripWithApiUseCase,
             getMemberLocsFromDbUseCase,
@@ -44,6 +43,7 @@ class MainViewModelFactory(
             getMemberLocsFromApiUseCase,
             serviceMessenger,
             validateClientTripCodeUseCase,
+            validateApiServerRunningUseCase,
             app
         ) as T
     }

@@ -42,9 +42,28 @@ class UseCaseModule {
 
     @Singleton
     @Provides
+    fun provideLeaveTripWithApiUseCase(mainRepository: MainRepository): LeaveTripWithApiUseCase {
+        return LeaveTripWithApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provide(mainRepository: MainRepository): DeleteMemberLocFromDbUseCase {
+        return DeleteMemberLocFromDbUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
     fun provideClearAllMemberLocationsFromDatabaseUseCase(mainRepository: MainRepository):
             DeleteAllMemberLocsFromDbUseCase {
         return DeleteAllMemberLocsFromDbUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideValidateApiServerRunningUseCaseUseCase(mainRepository: MainRepository):
+            ValidateApiServerRunningUseCase {
+        return ValidateApiServerRunningUseCase(mainRepository)
     }
 
     @Singleton
@@ -84,30 +103,23 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideDeleteServiceStatusUseCase(mainRepository: MainRepository):
-            DeleteServiceStatusUseCase {
-        return DeleteServiceStatusUseCase(mainRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSaveServiceStatusUseCase(mainRepository: MainRepository):
-            SaveServiceStatusUseCase {
-        return SaveServiceStatusUseCase(mainRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetServiceStatusUseCase(mainRepository: MainRepository):
-            GetServiceStatusUseCase {
-        return GetServiceStatusUseCase(mainRepository)
-    }
-
-    @Singleton
-    @Provides
     fun provideValidateClientTripCodeUseCase():
             ValidateClientTripCodeUseCase {
         return ValidateClientTripCodeUseCase()
+    }
+
+    @Singleton
+    @Provides
+    fun provideServiceStateUseCases(mainRepository: MainRepository):
+        ServiceStateUseCases{
+        return ServiceStateUseCases(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoveMemberFromTripInApiUseCase(mainRepository: MainRepository):
+            RemoveMemberFromTripInApiUseCase{
+        return RemoveMemberFromTripInApiUseCase(mainRepository)
     }
 
 }

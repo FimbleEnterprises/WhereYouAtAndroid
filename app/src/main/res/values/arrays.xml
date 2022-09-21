@@ -1,0 +1,30 @@
+<resources>
+    <string-array name="api_request_interval_entries">
+        <item>Conservative</item>
+        <item>Default</item>
+        <item>Aggressive</item>
+        <item>Fuck my battery!</item>
+    </string-array>
+
+    <string-array name="api_request_interval_values">
+        <item>30</item>
+        <item>5</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="bg_loc_request_interval_entries">
+        <item>Conservative</item>
+        <item>Default</item>
+        <item>Aggressive</item>
+        <item>Fuck my battery!</item>
+    </string-array>
+
+    <string-array name="bg_loc_request_interval_values">
+        <item>120</item>
+        <item>30</item>
+        <item>15</item>
+        <item>1</item>
+    </string-array>
+
+</resources>
