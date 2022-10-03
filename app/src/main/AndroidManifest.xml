@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
 
     <!--android:theme="@style/Theme.AppCompat.Light"-->
     <application
@@ -19,7 +20,7 @@
             android:requestLegacyExternalStorage="true"
             android:roundIcon="@drawable/where_you_at_logo1"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:usesCleartextTraffic="true"> <!-- Needed to connect to API over http (non secure connection) -->
 
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->

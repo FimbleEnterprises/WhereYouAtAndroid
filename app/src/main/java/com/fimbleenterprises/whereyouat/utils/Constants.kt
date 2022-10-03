@@ -8,7 +8,7 @@ class Constants {
         // const val BASE_URL = "http://fimtown.mynetgear.com:85/"
 
         /* GOOGLE DOMAINS URL */
-        const val BASE_URL = "http://fim.town/"
+        const val DEFAULT_BASE_URL = "http://fim.town/"
 
         /* AZURE URL */
         // const val BASE_URL = "https://apps-whereyouatcoreapi.azurewebsites.net/"

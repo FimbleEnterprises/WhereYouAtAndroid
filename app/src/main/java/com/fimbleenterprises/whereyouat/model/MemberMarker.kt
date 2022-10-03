@@ -2,10 +2,7 @@ package com.fimbleenterprises.whereyouat.model
 
 import android.util.Log
 import com.fimbleenterprises.whereyouat.WhereYouAt
-import com.google.android.gms.maps.model.Circle
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.*
 
 /**
  * Container for MemberMarker objects with utility functions.
@@ -40,7 +37,20 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
     }
 
     /**
-     * Calls unselectAll() then sets this marker's isSelected property to true and
+     * Returns the index of the selected member marker.  If no marker is selected
+     * will return -1
+     */
+    fun findSelectedIndex() : Int {
+        for (i in 0 until this.size) {
+            if (this[i].isSelected) {
+                return i
+            }
+        }
+        return -1
+    }
+
+    /**
+     * Calls unselectAll() then sets this marker's isSelected property to true,
      * finally it shows its info window on the map.
      */
     fun selectMember(memberMarker: MemberMarker) {
@@ -93,12 +103,13 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
         var locUpdate: LocUpdate,
         var polyline: Polyline?,
         var circle: Circle?,
-        var isSelected: Boolean = false
+        var isSelected: Boolean = false,
+        var avatar: BitmapDescriptor? = null
     ) {
 
         var isMe: Boolean
             get() {
-                return locUpdate.memberid == WhereYouAt.AppPreferences.memberid
+                return locUpdate.googleid == WhereYouAt.AppPreferences.googleid
             }
             set(value) {}
 

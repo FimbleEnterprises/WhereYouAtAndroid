@@ -9,16 +9,16 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fimbleenterprises.whereyouat.databinding.ActivityMainBinding
 import com.fimbleenterprises.whereyouat.model.ServiceState
@@ -61,7 +61,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHostFragment.navController
 
-        //WhereYouAt.AppPreferences.uploadMyLocWaitIntervalSeconds = 5L
+        // assigning ID of the toolbar to a variable
+        // assigning ID of the toolbar to a variable
+        val toolbar: Toolbar = binding.materialToolbar
+
+        // using toolbar as ActionBar
+
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar)
 
         MobileAds.initialize(this) {
             it.adapterStatusMap.forEach {adapterEntry ->
@@ -93,16 +100,19 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         firebaseAuth = FirebaseAuth.getInstance()
 
-        binding.signInButton.setOnClickListener {
-            Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show()
-            signInGoogle()
-        }
-
         // Add menu items without overriding methods in the Activity
         addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Add menu items here
                 menuInflater.inflate(R.menu.main_menu, menu)
+            }
+
+            override fun onPrepareMenu(menu: Menu) {
+                super.onPrepareMenu(menu)
+                menu.findItem(R.id.action_signin).isEnabled =
+                    GoogleSignIn.getLastSignedInAccount(this@MainActivity) == null
+                menu.findItem(R.id.action_signout).isEnabled =
+                    GoogleSignIn.getLastSignedInAccount(this@MainActivity) != null
             }
 
             override fun onMenuItemSelected(item: MenuItem): Boolean {
@@ -118,14 +128,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                             }
                         }
                     }
+                    R.id.action_permissions -> {
+                        goToAppSettings()
+                    }
                     R.id.action_privacy_policy -> {
                         val browserIntent =
                             Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PRIVACY_URL))
                         startActivity(browserIntent)
                     }
-                    /*R.id.action_settings -> {
-                        findNavController(R.id.nav_host_fragment).navigate(R.id.settingsFragment)
-                    }*/
+                    
                 }
                 return false
             }
@@ -136,10 +147,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     fun signInGoogle() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, Req_Code)
-    }
-
-    private fun getServerUrl() {
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -263,22 +270,29 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                         Snackbar.LENGTH_LONG
                     )
                         .setAction(R.string.settings) {
-                            // Build intent that displays the App settings screen.
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri = Uri.fromParts(
-                                "package",
-                                BuildConfig.APPLICATION_ID,
-                                null
-                            )
-                            intent.data = uri
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
+                            goToAppSettings()
                         }
                         .show()
                 }
             }
         }
+    }
+
+    private fun goToAppSettings() {
+        // Build intent that displays the App settings screen.
+/*        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+        intent.data = uri
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)*/
+
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", packageName, null)
+        )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     init { Log.i(TAG, "Initialized:MainActivity") }

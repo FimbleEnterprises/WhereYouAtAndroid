@@ -12,7 +12,7 @@ import com.fimbleenterprises.whereyouat.model.ServiceState
 // This annotation is what gets Room to actually create and maintain a single table in the database.
 @Database(
     entities = [LocUpdate::class, MyLocation::class, ServiceState::class, Message::class],
-    version =  1,
+    version =  2,
     exportSchema = false
 )
 // OPTIONAL
@@ -29,6 +29,5 @@ import com.fimbleenterprises.whereyouat.model.ServiceState
 abstract class WhereYouAtDatabase : RoomDatabase() {
     abstract fun getMemberLocationsDao() : MemberLocationsDao
     abstract fun getMyLocationDao() : MyLocationDao
-    abstract fun getServiceStatusDao(): ServiceStateDao
-    abstract fun getMessagesDao(): MessagesDao
+    abstract fun getServiceStateDao(): ServiceStateDao
 }

@@ -3,7 +3,6 @@ package com.fimbleenterprises.whereyouat.di
 import android.app.Application
 import com.fimbleenterprises.whereyouat.data.usecases.*
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModelFactory
-import com.fimbleenterprises.whereyouat.service.ServiceMessenger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,11 +21,13 @@ object ViewModelFactoryModule {
         getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
         validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
         serviceStateUseCases: ServiceStateUseCases,
-        uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
-        getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
-        serviceMessenger: ServiceMessenger,
         validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
-        validateApiServerRunningUseCase: ValidateApiServerRunningUseCase
+        validateApiServerRunningUseCase: ValidateApiServerRunningUseCase,
+        getUpdateRateFromApiUseCase: GetUpdateRateFromApiUseCase,
+        getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase,
+        saveWaypointPositionUseCase: SaveWaypointPositionUseCase,
+        getWaypointPositionUseCase: GetWaypointPositionUseCase,
+        removeWaypointPositionUseCase: RemoveWaypointPositionUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
             application,
@@ -35,11 +36,13 @@ object ViewModelFactoryModule {
             getMyLocFromDbUseCase,
             validateTripCodeAgainstApiUseCase,
             serviceStateUseCases,
-            uploadMyLocToApiUseCase,
-            getMemberLocsFromApiUseCase,
-            serviceMessenger,
             validateClientTripCodeUseCase,
-            validateApiServerRunningUseCase
+            validateApiServerRunningUseCase,
+            getUpdateRateFromApiUseCase,
+            getServerUrlFromApiUseCase,
+            saveWaypointPositionUseCase,
+            getWaypointPositionUseCase,
+            removeWaypointPositionUseCase
         )
     }
 

@@ -17,10 +17,10 @@ import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STA
 import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_STARTING
 import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_STOPPED
 import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_STOPPING
-import com.fimbleenterprises.whereyouat.service.ServiceMessenger
 import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService
 import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService.Companion.RIGOROUS_UPDATES_INTENT_EXTRA
 import com.fimbleenterprises.whereyouat.utils.Resource
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -33,11 +33,13 @@ class MainViewModel(
     private val createTripWithApiUseCase: CreateTripWithApiUseCase,
     private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
     private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
-    private val uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
-    private val getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
-    private val serviceMessenger: ServiceMessenger,
     private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
     private val validateApiServerRunning: ValidateApiServerRunningUseCase,
+    private val getUpdateRateFromApiUseCase: GetUpdateRateFromApiUseCase,
+    private val getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase,
+    private val saveWaypointPositionUseCase: SaveWaypointPositionUseCase,
+    private val getWaypointPositionUseCase: GetWaypointPositionUseCase,
+    private val removeWaypointPositionUseCase: RemoveWaypointPositionUseCase,
     val app: Application,
 ) : AndroidViewModel(app) {
 
@@ -78,6 +80,43 @@ class MainViewModel(
 
         setServiceStopping()
 
+    }
+
+    fun saveWaypoint(waypoint: Waypoints.Waypoint) {
+        saveWaypointPositionUseCase.execute(waypoint)
+    }
+
+    fun getWaypoint(): LatLng? {
+        return getWaypointPositionUseCase.execute()
+    }
+
+    fun removeWaypoint() {
+        removeWaypointPositionUseCase.execute()
+    }
+
+    fun requestUpdateIntervalsFromApi() {
+        viewModelScope.launch {
+            getUpdateRateFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server desired update rate:${it.data?.genericValue} secs =-")
+                if (it.data?.wasSuccessful == true) {
+                    val interval = it.data.genericValue as Double
+                    AppPreferences.apiRequestInterval = interval.toLong()
+                }
+            }
+        }
+    }
+
+    fun requestApiBaseUrlFromApi() {
+        viewModelScope.launch {
+            getServerUrlFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server url:${it.data?.genericValue} =-")
+                val receivedUrl = it.data?.genericValue?.toString()
+                if (it.data?.wasSuccessful == true && receivedUrl != null && receivedUrl.isNotEmpty()) {
+                    AppPreferences.baseUrl = it.data.genericValue.toString()
+                    Log.i(TAG, "-=Base URL suggested by API:${it.data.genericValue}=-")
+                }
+            }
+        }
     }
 
     /**
@@ -246,6 +285,25 @@ class MainViewModel(
         viewModelScope.launch {
             validateApiServerRunning.execute().collect {
                 Log.i(TAG, "-=Server running:${it.data?.wasSuccessful} =-")
+            }
+        }
+        viewModelScope.launch {
+            getUpdateRateFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server desired update rate:${it.data?.genericValue} secs =-")
+                if (it.data?.wasSuccessful == true) {
+                    val interval = it.data.genericValue as Double
+                    AppPreferences.apiRequestInterval = interval.toLong()
+                }
+            }
+        }
+        viewModelScope.launch {
+            getServerUrlFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server url:${it.data?.genericValue} =-")
+                val receivedUrl = it.data?.genericValue?.toString()
+                if (it.data?.wasSuccessful == true && receivedUrl != null && receivedUrl.isNotEmpty()) {
+                    AppPreferences.baseUrl = it.data.genericValue.toString()
+                    Log.i(TAG, "-=Base URL suggested by API:${it.data.genericValue}=-")
+                }
             }
         }
     }

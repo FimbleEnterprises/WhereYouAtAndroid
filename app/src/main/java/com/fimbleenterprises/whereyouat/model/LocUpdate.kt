@@ -3,6 +3,7 @@ package com.fimbleenterprises.whereyouat.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.fimbleenterprises.whereyouat.WhereYouAt
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
@@ -91,8 +92,8 @@ data class LocUpdate (
     @SerializedName("IsBg")
     val isBg: Int = 0,
 
-    @SerializedName("Misc1")
-    val misc1: String? = null
+    @SerializedName("Waypoint")
+    var waypoint: String? = null
 
 ): LocationBasics() {
     fun toJson(): String {
@@ -102,6 +103,9 @@ data class LocUpdate (
     override fun toString(): String {
         return "ID:${this.memberid} Lat/Lng:${lat}/${lon} Name: ${this.memberName} Tripcode: ${this.tripcode} "
     }
+
+    fun isMe(): Boolean = (this.memberid == WhereYouAt.AppPreferences.memberid)
+
 }
 
 /**
@@ -120,6 +124,16 @@ fun List<LocUpdate>?.containsMember(locUpdate: LocUpdate): Boolean {
 fun List<LocUpdate>?.findMember(locUpdate: LocUpdate): LocUpdate? {
     this?.forEach {
         if (it.memberid == locUpdate.memberid) { return it }
+    }
+    return null
+}
+
+/**
+ * Extension function to look for the supplied loc update in the list.
+ */
+fun List<LocUpdate>?.findMember(memberId: Long): LocUpdate? {
+    this?.forEach {
+        if (it.memberid == memberId) { return it }
     }
     return null
 }

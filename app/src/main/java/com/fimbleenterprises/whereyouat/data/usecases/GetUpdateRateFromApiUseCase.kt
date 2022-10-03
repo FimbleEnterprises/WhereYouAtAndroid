@@ -5,6 +5,8 @@ import com.fimbleenterprises.whereyouat.model.BaseApiResponse
 import com.fimbleenterprises.whereyouat.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
-class ValidateClientTripCodeUseCase() {
-    fun execute(tripcode: String?): Boolean = tripcode != null && tripcode.length >= 4
+class GetUpdateRateFromApiUseCase(private val mainRepository: MainRepository) {
+
+    suspend fun execute():
+            Flow<Resource<BaseApiResponse>> = mainRepository.retrieveUpdateRateFromApi()
 }

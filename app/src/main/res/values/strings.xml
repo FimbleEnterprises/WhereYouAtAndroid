@@ -1,4 +1,5 @@
 <resources>
+    <string name="notif_title_text">WhereYouAt is running</string>
     <string name="app_name">WhereYouAt</string>
     <string name="start_screen_main_text">Where You At</string>
     <string name="dog_image">Dog Image</string>
@@ -9,7 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btn_push_my_location">PUSH MY LOCATION</string>
-    <string name="btn_leave">LEAVE TRIP</string>
+    <string name="btn_leave">LEAVE</string>
     <string name="permission_rationale">Location permission needed for core functionality</string>
     <string name="permission_denied_explanation">Location permission was denied, but is needed for core functionality.</string>
     <string name="settings">Settings</string>
@@ -45,7 +46,7 @@
     <string name="dont_remind_me">NEVER</string>
     <string name="fix">FIX</string>
     <string name="enter_tripcode_hint">Code</string>
-    <string name="toast_code_not_valid">Trip code is not valid.  Must be non-null and 5 characters long.</string>
+    <string name="toast_code_not_valid">Trip code is not valid.</string>
     <string name="toast_trip_created">Created trip: %1$s!</string>
     <string name="toast_something_wrong">Something went wrong!</string>
     <string name="setting_up">Setting up...</string>
@@ -73,4 +74,10 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="pref_api_request_interval_title">NOT WORKING Server communication frequency</string>
     <string name="menu_privacy_policy">Privacy policy</string>
+    <string name="content_description_map_image">Map image</string>
+    <string name="velocity_textview">%1$s m/sec</string>
+    <string name="last_upload_notif_main_text">You are a member in room: %1$s</string>
+    <string name="sign_in_menu_button">Sign in</string>
+    <string name="sign_out_menu_button">Sign out</string>
+    <string name="goto_app_settings_menu_button">Permissions</string>
 </resources>

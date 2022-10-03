@@ -3,11 +3,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:title="Sign in..."
+            android:title="@string/sign_in_menu_button"
             android:id="@+id/action_signin" />
     <item
-            android:title="Sign out"
+            android:title="@string/sign_out_menu_button"
             android:id="@+id/action_signout" />
+    <item
+            android:title="@string/goto_app_settings_menu_button"
+            android:id="@+id/action_permissions" />
     <item
             android:title="@string/menu_privacy_policy"
             android:id="@+id/action_privacy_policy" />

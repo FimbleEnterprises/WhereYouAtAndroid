@@ -16,21 +16,6 @@
             android:layout_centerInParent="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabShareCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:layout_alignParentEnd="true"
-            android:layout_above="@id/fabCenterTrip"
-            app:srcCompat="@drawable/share_icon_black_512"
-            android:contentDescription="@string/share_code_button"
-            app:backgroundTint="@color/design_default_color_surface"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_alignWithParentIfMissing="false" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabCenterTrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +24,21 @@
             android:layout_alignParentEnd="true"
             android:layout_above="@id/fabCenterMe"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
+            android:contentDescription="@string/center_trip"
+            app:backgroundTint="@color/design_default_color_surface"
+            android:layout_marginStart="10dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCycleMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/cycle_members_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/fabCenterTrip"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
             android:contentDescription="@string/center_trip"
             app:backgroundTint="@color/design_default_color_surface"
             android:layout_marginStart="10dp" />
@@ -52,7 +51,7 @@
             app:srcCompat="@drawable/center_me_icon"
             android:layout_alignParentEnd="true"
             android:layout_above="@id/bottomContainer"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="35dp"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/center_me"
             app:backgroundTint="@color/design_default_color_surface" />
@@ -62,8 +61,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/topContainer"
-            android:animateLayoutChanges="true"
-            android:layout_marginTop="40dp">
+            android:animateLayoutChanges="true">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabShareCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="15dp"
+                app:srcCompat="@drawable/share_icon_black_512"
+                android:contentDescription="@string/share_code_button"
+                app:backgroundTint="@color/design_default_color_surface"
+                android:layout_alignWithParentIfMissing="false"
+                tools:ignore="RelativeOverlap" />
+
+        <TextView
+                android:id="@+id/txtDirection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@id/txtTripCode"
+                android:text="NW"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/calculator"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        <TextView
+                android:id="@+id/txtSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/txtDirection"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/calculator"
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
         <TextView
                 android:layout_width="match_parent"
@@ -74,7 +115,7 @@
                 android:fontFamily="@font/casual"
                 android:gravity="center"
                 android:textAllCaps="true"
-                android:layout_marginTop="10dp" />
+                android:foregroundGravity="center" />
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -82,7 +123,7 @@
                 android:layout_below="@id/txtTripCode"
                 android:orientation="vertical"
                 android:id="@+id/memberInfoContainer"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
             <TextView
                     android:layout_width="match_parent"
@@ -111,8 +152,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/mapContainer"
             android:layout_below="@id/topContainer"
-            android:layout_above="@id/bottomContainer"
-            android:background="@drawable/btn_glass_navy_border">
+            android:layout_above="@id/bottomContainer">
 
         <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"

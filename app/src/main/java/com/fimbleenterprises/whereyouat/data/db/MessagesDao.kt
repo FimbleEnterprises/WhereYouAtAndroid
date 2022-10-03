@@ -2,11 +2,7 @@ package com.fimbleenterprises.whereyouat.data.db
 import androidx.room.*
 import com.fimbleenterprises.whereyouat.model.Message
 import kotlinx.coroutines.flow.Flow
-
-/**
- * This interface is what Room will use to actually perform CRUD operations in the db.
- */
-@Dao // This annotation turns this interface into a magical mechanism to actually perform CRUD operations in the Room db.
+@Dao
 interface MessagesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

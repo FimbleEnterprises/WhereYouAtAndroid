@@ -11,7 +11,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -23,11 +22,11 @@ class DatabaseModule {
     fun provideTripDb(app:Application): WhereYouAtDatabase {
         return Room.databaseBuilder(app, WhereYouAtDatabase::class.java, "where_you_at_main")
             .fallbackToDestructiveMigration()
-            .setQueryCallback(
+            /*.setQueryCallback(
                 fun(sqlQuery: String, bindArgs: MutableList<Any>) {
                     println("SQL Query: $sqlQuery SQL Args: $bindArgs")
                 }, Executors.newSingleThreadExecutor()
-            )
+            )*/
             .allowMainThreadQueries()
             .build()
     }
@@ -47,7 +46,7 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideServiceStatusDAO(whereYouAtDatabase: WhereYouAtDatabase): ServiceStateDao {
-        return whereYouAtDatabase.getServiceStatusDao()
+        return whereYouAtDatabase.getServiceStateDao()
     }
 
 

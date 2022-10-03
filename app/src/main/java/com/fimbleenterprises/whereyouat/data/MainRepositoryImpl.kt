@@ -38,6 +38,18 @@ class MainRepositoryImpl
         }.flowOn(Dispatchers.IO)
     }
 
+    override suspend fun retrieveUpdateRateFromApi(): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.retrieveUpdateRateFromApi() })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun retrieveServerUrlFromApi(): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.retrieveServerUrlFromApi() })
+        }.flowOn(Dispatchers.IO)
+    }
+
     override suspend fun createTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.createTrip(memberid) })

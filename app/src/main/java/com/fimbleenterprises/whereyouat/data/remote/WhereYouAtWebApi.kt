@@ -20,6 +20,13 @@ interface WhereYouAtWebApi {
     @GET("api/trips/test")
     suspend fun isServerUp(): Response<BaseApiResponse>
 
+    @GET("api/trips/updaterate")
+    suspend fun getUpdateRate(): Response<BaseApiResponse>
+
+    @GET("api/trips/getserverurl")
+    suspend fun getServerUrl(): Response<BaseApiResponse>
+
     @POST("api/trips")
     suspend fun  performPostOperation(@Body request: ApiRequest): Response<BaseApiResponse>
+
 }

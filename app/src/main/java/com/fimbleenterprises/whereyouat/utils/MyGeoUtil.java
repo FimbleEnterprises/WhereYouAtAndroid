@@ -26,7 +26,12 @@ public class MyGeoUtil {
         return location;
     }
 
-    public static String calculateBearing(float bearing) {
+    /**
+     * Calculates a cardinal direction from a bearing (0-360)
+     * @param bearing
+     * @return
+     */
+    public static String calculateCardinalDirection(float bearing) {
 
         String prettyBearing = "";
 
@@ -70,7 +75,7 @@ public class MyGeoUtil {
      * @param radian A value between -180 to 180
      * @return N, NE, E, SE, S, SW, W, NW
      */
-    public static String calculateBearingFromRadian(float radian) {
+    public static String calculateCardinalDirectionFromRadian(float radian) {
 
         String prettyBearing = "";
 

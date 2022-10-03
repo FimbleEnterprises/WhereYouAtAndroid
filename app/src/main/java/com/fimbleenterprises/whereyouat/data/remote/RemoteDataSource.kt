@@ -12,4 +12,6 @@ interface RemoteDataSource {
     suspend fun uploadMyLocation(locUpdate: LocUpdate): Response<BaseApiResponse>
     suspend fun removeUserFromTrip(memberid: Long): Response<BaseApiResponse>
     suspend fun validateApiServerRunning(): Response<BaseApiResponse>
+    suspend fun retrieveUpdateRateFromApi(): Response<BaseApiResponse>
+    suspend fun retrieveServerUrlFromApi(): Response<BaseApiResponse>
 }

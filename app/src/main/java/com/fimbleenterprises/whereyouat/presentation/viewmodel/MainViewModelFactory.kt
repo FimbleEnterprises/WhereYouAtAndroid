@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fimbleenterprises.whereyouat.data.usecases.*
-import com.fimbleenterprises.whereyouat.service.ServiceMessenger
 import javax.inject.Singleton
 
 /**
@@ -25,11 +24,13 @@ class MainViewModelFactory(
     private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
     private val validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
     private val serviceStateUseCases: ServiceStateUseCases,
-    private val uploadMyLocToApiUseCase: UploadMyLocToApiUseCase,
-    private val getMemberLocsFromApiUseCase: GetMemberLocsFromApiUseCase,
-    private val serviceMessenger: ServiceMessenger,
     private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
-    private val validateApiServerRunningUseCase: ValidateApiServerRunningUseCase
+    private val validateApiServerRunningUseCase: ValidateApiServerRunningUseCase,
+    private val getUpdateRateFromApiUseCase: GetUpdateRateFromApiUseCase,
+    private val getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase,
+    private val saveWaypointPositionUseCase: SaveWaypointPositionUseCase,
+    private val getWaypointPositionUseCase: GetWaypointPositionUseCase,
+    private val removeWaypointPositionUseCase: RemoveWaypointPositionUseCase
 ):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -39,11 +40,13 @@ class MainViewModelFactory(
             createTripWithApiUseCase,
             getMemberLocsFromDbUseCase,
             getMyLocFromDbUseCase,
-            uploadMyLocToApiUseCase,
-            getMemberLocsFromApiUseCase,
-            serviceMessenger,
             validateClientTripCodeUseCase,
             validateApiServerRunningUseCase,
+            getUpdateRateFromApiUseCase,
+            getServerUrlFromApiUseCase,
+            saveWaypointPositionUseCase,
+            getWaypointPositionUseCase,
+            removeWaypointPositionUseCase,
             app
         ) as T
     }

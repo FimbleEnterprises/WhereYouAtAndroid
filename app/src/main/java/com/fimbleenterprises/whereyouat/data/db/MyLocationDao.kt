@@ -12,9 +12,6 @@ interface MyLocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMyLocation(myLocation: MyLocation):Long
 
-    @Update
-    suspend fun updateMyLocation(myLocation: MyLocation) : Int
-
     @Delete
     suspend fun deleteMyLocation(myLocation: MyLocation) : Int
 

@@ -122,4 +122,39 @@ class UseCaseModule {
         return RemoveMemberFromTripInApiUseCase(mainRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideGetUpdateRateFromApiUseCase(mainRepository: MainRepository):
+            GetUpdateRateFromApiUseCase{
+        return GetUpdateRateFromApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetServerUrlFromApiUseCase(mainRepository: MainRepository):
+            GetServerUrlFromApiUseCase{
+        return GetServerUrlFromApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetWaypointFromPrefsUseCase():
+            GetWaypointPositionUseCase{
+        return GetWaypointPositionUseCase()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveWaypointToPrefsUseCase():
+            SaveWaypointPositionUseCase{
+        return SaveWaypointPositionUseCase()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoveWaypointPositionFromPrefsUseCase():
+            RemoveWaypointPositionUseCase{
+        return RemoveWaypointPositionUseCase()
+    }
+
 }

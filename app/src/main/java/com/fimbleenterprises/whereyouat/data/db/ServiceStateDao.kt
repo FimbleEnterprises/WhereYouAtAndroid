@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 interface ServiceStateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveServiceStatus(serviceState: ServiceState) : Long
+    suspend fun setServiceState(serviceState: ServiceState) : Long
 
     @Query("DELETE FROM service_state")
     suspend fun delete() : Int
 
     @Query("SELECT * FROM service_state WHERE rowid = 1")
-    fun getServiceStatus(): ServiceState
+    fun getServiceState(): ServiceState
 
     @Query("SELECT * FROM service_state WHERE rowid = 1")
     fun getServiceStatusFlow(): Flow<ServiceState>
@@ -37,10 +37,10 @@ interface ServiceStateDao {
     fun setServiceRestarting(): Int
 
     /*
+        const val SERVICE_STATE_RUNNING = 0
         const val SERVICE_STATE_STARTING = 1
         const val SERVICE_STATE_STOPPING = 2
         const val SERVICE_STATE_RESTART = 3
-        const val SERVICE_STATE_RUNNING = 0
         const val SERVICE_STATE_STOPPED = 4
         const val SERVICE_STATE_IDLE = 5
     */

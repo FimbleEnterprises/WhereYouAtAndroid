@@ -60,4 +60,23 @@ data class MyLocation (
             isBg = isBg
         )
     }
+    fun toLocUpdate(): LocUpdate {
+        return LocUpdate(
+            memberid = AppPreferences.memberid,
+            memberName = AppPreferences.membername,
+            createdon = System.currentTimeMillis(),
+            elevation = elevation,
+            lat = lat,
+            lon = lon,
+            tripcode = AppPreferences.tripCode!!,
+            accuracy = accuracy,
+            bearing = bearing,
+            speed = speed,
+            googleid = AppPreferences.googleid,
+            displayName = AppPreferences.name,
+            email = AppPreferences.email,
+            avatarUrl = AppPreferences.avatarUrl,
+            isBg = isBg
+        )
+    }
 }

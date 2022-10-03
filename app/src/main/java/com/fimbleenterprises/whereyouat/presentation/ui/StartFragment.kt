@@ -47,25 +47,25 @@ class StartFragment : Fragment(), View.OnKeyListener {
     private lateinit var binding: FragmentStartBinding
     private lateinit var viewmodel: MainViewModel
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         return inflater.inflate(R.layout.fragment_start, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStartBinding.bind(view)
+        isProcessing(processing = true, showProgress = false)
         viewmodel = (activity as MainActivity).mainViewModel
     } // onViewCreated
 
     // Button onClickListeners are implemented here.
     override fun onStart() {
         super.onStart()
+
+        // materialToolbar.title = "Create, join or resume"
 
         // Create button doubles as a cancel button - check the service status
         // to decide what action to perform (create or cancel)
@@ -108,6 +108,9 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 // Try to show the keyboard (doesn't always work - device dependant?)
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.edittextTripCode, InputMethodManager.SHOW_FORCED)
+                AppPreferences.lastTripCode?.let {
+                    binding.edittextTripCode.setText(it)
+                }
             } else {
                 val proposedTripCode = binding.edittextTripCode.text.toString()
                 // isProcessing(true)
@@ -132,7 +135,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
             } // tripcode entered by user
         } // button click
 
-        // Will attempt to join the last successfully joined trip.
+/*        // Will attempt to join the last successfully joined trip.
         binding.btnResume.setOnClickListener {
 
             // Check that user is signed in
@@ -147,7 +150,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
             } else {
                 Toast.makeText(context, "No trip to resume.", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
 
         // Attach an onkeylistener to the outer-most view in the fragment (to look for back presses)
         binding.container.setOnKeyListener(this)
@@ -193,24 +196,27 @@ class StartFragment : Fragment(), View.OnKeyListener {
                             if (it.data.genericValue?.toString().toBoolean()) {
                                 // Trip code is valid according to server - we proceed.
                                 withContext(Main) {
-
                                     // Set the trip code (we'll null this out if something goes wrong below)
                                     AppPreferences.tripCode = proposedTripCode
-
                                     // Set the ServiceStatus isStarting == true
                                     viewmodel.requestTripStart()
                                 }
                             } else { // Proper response, no errors, but trip code is not valid
-
                                 // Null out trip code (it probably already is but still)
                                 AppPreferences.tripCode = null
                                 viewmodel.setServiceIdle()
-
                                 // Show toast and be done.
                                 withContext(Main) {
-                                    Toast.makeText(context,
+                                    Toast.makeText(
+                                        context,
                                         "Trip code is no longer active.",
-                                        Toast.LENGTH_SHORT).show()
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    if (proposedTripCode == AppPreferences.lastTripCode) {
+                                        AppPreferences.lastTripCode = null
+                                        binding.edittextTripCode.setText("")
+                                    }
+                                    expandTripcodeInput(false)
                                 }
                             }
                         } else { // I/O problem with API
@@ -312,9 +318,9 @@ class StartFragment : Fragment(), View.OnKeyListener {
     /**
      * Enables/Disables controls while processing.
      */
-    private fun isProcessing(processing: Boolean) {
+    private fun isProcessing(processing: Boolean, showProgress: Boolean = true) {
 
-        if (processing) {
+        if (processing && showProgress) {
             // Utils.crossFadeAnimation(binding.progressBar, binding.controls, 350)
             binding.progressBar.visibility = View.VISIBLE
         } else {
@@ -323,7 +329,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
         }
         binding.btnJoin.isEnabled = !processing
         binding.btnCreate.isEnabled = !processing
-        binding.btnResume.isEnabled = !processing
+        // binding.btnResume.isEnabled = !processing
         binding.edittextTripCode.isEnabled = !processing
     }
 
@@ -346,7 +352,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
      * lack thereof).
      */
     private fun observeServiceStatus() = CoroutineScope(Main).launch {
-        binding.btnResume.text = getString(R.string.resume_trip_button_text, AppPreferences.lastTripCode ?: "")
+        // binding.btnResume.text = getString(R.string.resume_trip_button_text, AppPreferences.lastTripCode ?: "")
         viewmodel.serviceState.observe(viewLifecycleOwner) {
             when (it.state) {
                 // This state means that the service is already running, a trip is active.  It is
@@ -357,6 +363,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
                     // map screen immediately anyway but I'm gonna leave it here anyway.
                     // binding.btnCreate.text = getString(R.string.leave_trip_button)
                     Handler(Looper.getMainLooper()).postDelayed({
+                        isProcessing(true)
                         // Navigate to the map
                         findNavController().popBackStack()
                         val navBuilder = NavOptions.Builder()
@@ -389,7 +396,6 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 ServiceState.SERVICE_STATE_STOPPED -> {
                     binding.btnCreate.text = getString(R.string.create_button)
                     isProcessing(false)
-
                 }
                 ServiceState.SERVICE_STATE_STOPPING -> {
                     binding.btnCreate.text = getString(R.string.stopping)
@@ -397,14 +403,7 @@ class StartFragment : Fragment(), View.OnKeyListener {
                 }
                 else -> {
                     binding.btnCreate.text = getString(R.string.create_button)
-                    binding.btnResume.isEnabled = AppPreferences.lastTripCode != null
-
-                    if (AppPreferences.lastTripCode != null) {
-                        binding.btnResume.text = getString(R.string.resume_trip_button_text, AppPreferences.lastTripCode)
-                    } else {
-                        binding.btnResume.text = getString(R.string.resume_button)
-                    }
-
+                    // binding.btnResume.isEnabled = AppPreferences.lastTripCode != null
                     isProcessing(false)
                 }
             }

@@ -39,6 +39,14 @@ class RemoteDataSourceImpl(private val whereYouAtWebApi: WhereYouAtWebApi): Remo
         return whereYouAtWebApi.isServerUp()
     }
 
+    override suspend fun retrieveUpdateRateFromApi(): Response<BaseApiResponse> {
+        return whereYouAtWebApi.getUpdateRate()
+    }
+
+    override suspend fun retrieveServerUrlFromApi(): Response<BaseApiResponse> {
+        return whereYouAtWebApi.getServerUrl()
+    }
+
     init { Log.i(TAG, "Initialized:RemoteDataSourceImpl") }
     companion object { private const val TAG = "FIMTOWN|RemoteDataSourceImpl" }
 }

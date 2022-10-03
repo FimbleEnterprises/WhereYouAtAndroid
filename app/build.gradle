@@ -19,7 +19,8 @@ android {
         targetSdkVersion 32
         versionCode 1
         versionName "Alpha 1.0"
-
+        // Enabling multidex support.
+        // multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,7 +32,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -57,7 +58,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:21.2.0'
     implementation 'androidx.preference:preference:1.2.0'
 
-
+    // implementation 'androidx.multidex:multidex:2.0.1'
     def coroutinesVersion = '1.6.4'
     def retrofitVersion = "2.9.0"
     def daggerHiltVersion = '2.43.2'
@@ -198,12 +199,11 @@ dependencies {
     //                        Mock Webserver
     // -----------------------------------------------------------
 //mock retrofit
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
-    testImplementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
-    implementation "com.squareup.okhttp3:mockwebserver:4.9.0"
-    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.10"
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.0"
-    androidTestImplementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.10"
+    testImplementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
+    androidTestImplementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2'
 
 
 

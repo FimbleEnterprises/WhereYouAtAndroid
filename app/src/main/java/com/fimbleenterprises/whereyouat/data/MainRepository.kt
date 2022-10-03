@@ -25,6 +25,8 @@ interface MainRepository {
     suspend fun isTripcodeActiveFromApi(tripcode: String): Flow<Resource<BaseApiResponse>>
     suspend fun removeUserFromTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>>
     suspend fun validateApiServerRunning(): Flow<Resource<BaseApiResponse>>
+    suspend fun retrieveUpdateRateFromApi(): Flow<Resource<BaseApiResponse>>
+    suspend fun retrieveServerUrlFromApi(): Flow<Resource<BaseApiResponse>>
 
     // -----------------------------------------------------------
     //                         MY LOC

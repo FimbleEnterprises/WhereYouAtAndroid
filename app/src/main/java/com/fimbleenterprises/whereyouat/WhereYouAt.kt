@@ -6,14 +6,18 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.fimbleenterprises.whereyouat.data.usecases.ServiceStateUseCases
 import com.fimbleenterprises.whereyouat.model.ServiceState
+import com.fimbleenterprises.whereyouat.service.toJson
 import com.fimbleenterprises.whereyouat.utils.Constants
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.FirebaseApp
+import com.google.gson.Gson
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @HiltAndroidApp
 class WhereYouAt : Application() {
@@ -44,8 +48,8 @@ class WhereYouAt : Application() {
 
     @Singleton
     object AppPreferences {
-        private const val NAME = "ALL_PREFS"
-        private const val MODE = Context.MODE_PRIVATE
+        const val NAME = "ALL_PREFS"
+        const val MODE = Context.MODE_PRIVATE
         private lateinit var prefs: SharedPreferences
 
         // list of preferences
@@ -62,12 +66,21 @@ class WhereYouAt : Application() {
         private const val PREF_NAME = "PREF_NAME"
         private const val PREF_TOKEN = "PREF_TOKEN"
         private const val PREF_AVATAR = "PREF_AVATAR"
-        private const val PREF_BASE_URL = "PREF_BASE_URL"
+        private const val PREF_WAYPOINT_POSITION = "PREF_WAYPOINT_POSITION"
+        const val PREF_BASE_URL = "PREF_BASE_URL"
 
         var baseUrl: String?
-            get() = prefs.getString(PREF_BASE_URL, Constants.BASE_URL)
+            get() = prefs.getString(PREF_BASE_URL, Constants.DEFAULT_BASE_URL)
             set(value) {
                 prefs.edit().putString(PREF_BASE_URL, value).apply()
+            }
+
+        var waypointPosition : LatLng?
+            get() = prefs.getString(PREF_WAYPOINT_POSITION, null)?.let {
+                Gson().fromJson(it, LatLng::class.java)
+            }
+            set(value) {
+                prefs.edit().putString(PREF_WAYPOINT_POSITION, value?.toJson()).apply()
             }
 
         var email : String?
@@ -202,8 +215,11 @@ class WhereYouAt : Application() {
                 prefs.edit().putLong(PREF_MEMBERID, value).apply()
             }
 
+        /**
+         * The value with which the two service runners send and request locations from the API
+         */
         var apiRequestInterval: Long
-            get() = prefs.getLong(PREF_API_SCAN_INTERVAL, 5L)
+            get() = prefs.getLong(PREF_API_SCAN_INTERVAL, 3L)
             set(value) {
                 prefs.edit().putLong(PREF_API_SCAN_INTERVAL, value).apply()
             }

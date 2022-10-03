@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface MemberLocationsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMemberLocation(locUpdate: LocUpdate):Long
+    suspend fun insertLocUpdate(locUpdate: LocUpdate):Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMemberLocations(locUpdates: List<LocUpdate>):List<Long>

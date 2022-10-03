@@ -28,7 +28,7 @@ class LocalDataSourceImpl(
     }
 
     override suspend fun saveMemberLocationToDB(locUpdate: LocUpdate): Long {
-        return memberLocationsDao.insertMemberLocation(locUpdate)
+        return memberLocationsDao.insertLocUpdate(locUpdate)
     }
 
     override fun getSavedMemberLocationsFromDB(): Flow<List<LocUpdate>> {
@@ -78,15 +78,11 @@ class LocalDataSourceImpl(
         return myLocationDao.deleteAll()
     }
 
-    override suspend fun updateMyLocation(myLocation: MyLocation): Int {
-        return myLocationDao.updateMyLocation(myLocation)
-    }
-
     // -----------------------------------------------------------
     //                       SERVICE STATUS
     // -----------------------------------------------------------
     override suspend fun getServiceStatus(): ServiceState {
-        return serviceStateDao.getServiceStatus()
+        return serviceStateDao.getServiceState()
     }
 
     override fun getServiceStatusFlow(): Flow<ServiceState> {
@@ -94,7 +90,7 @@ class LocalDataSourceImpl(
     }
 
     override suspend fun saveServiceStatus(serviceState: ServiceState): Long {
-        return serviceStateDao.saveServiceStatus(serviceState)
+        return serviceStateDao.setServiceState(serviceState)
     }
 
     override suspend fun deleteServiceStatus(): Int {

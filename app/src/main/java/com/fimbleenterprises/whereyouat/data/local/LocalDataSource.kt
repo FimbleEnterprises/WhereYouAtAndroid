@@ -23,7 +23,6 @@ interface LocalDataSource {
     suspend fun deleteSavedMyLocation(myLocation: MyLocation):Int
     suspend fun deleteAll():Int
     suspend fun deleteSavedMyLocation(rowid: Int): Int
-    suspend fun updateMyLocation(myLocation:MyLocation):Int
 
     // Service status
     suspend fun getServiceStatus(): ServiceState
