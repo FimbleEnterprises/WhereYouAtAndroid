@@ -2,8 +2,6 @@ package com.fimbleenterprises.whereyouat.data.usecases
 
 import com.fimbleenterprises.whereyouat.data.MainRepository
 import com.fimbleenterprises.whereyouat.model.MyLocation
-import dagger.Component
-import dagger.Provides
 import kotlinx.coroutines.flow.Flow
 
 class GetMyLocFromDbUseCase(private val mainRepository: MainRepository) {

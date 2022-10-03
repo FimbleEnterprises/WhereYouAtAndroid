@@ -1,4 +1,5 @@
 <resources>
+    <string name="notif_title_text">WhereYouAt is running</string>
     <string name="app_name">WhereYouAt</string>
     <string name="start_screen_main_text">Where You At</string>
     <string name="dog_image">Dog Image</string>
@@ -9,7 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btn_push_my_location">PUSH MY LOCATION</string>
-    <string name="btn_leave">LEAVE TRIP</string>
+    <string name="btn_leave">LEAVE</string>
     <string name="permission_rationale">Location permission needed for core functionality</string>
     <string name="permission_denied_explanation">Location permission was denied, but is needed for core functionality.</string>
     <string name="settings">Settings</string>
@@ -26,6 +27,57 @@
     <string name="no_location_text">No current location</string>
     <string name="center_trip">Center camera on trip</string>
     <string name="center_me">Center camera on me</string>
-    <string name="resume_trip_button_text">Resume (%1$s)</string>
+    <string name="resume_trip_button_text">Resume %1$s</string>
     <string name="leave_trip_button">Leave trip</string>
+    <string name="interval_manual">Manually update location</string>
+    <string name="interval_15_seconds">Update every 15 seconds (roughly)</string>
+    <string name="interval_every_minute">Update every minute or so</string>
+    <string name="interval_five_minutes">Update every 5 minutes</string>
+    <string name="requesting_member_locations_from_api">Requesting member locations...</string>
+    <string name="member_locations_received">Member locations received and updated.</string>
+    <string name="failed_to_get_member_locations">Failed to get member locations.</string>
+    <string name="resume_button">Resume</string>
+    <string name="permission_rationale_background">Background permission needed for full functionality.</string>
+    <string name="background_permission_rationale_message">In order for WhereYouAt to notify your friends where you are when in the background we need to grant that permission.\n\nClick below to be taken to the permission screen and when ready you should select \"Allow all the time\".  \n\nIt is worth mentioning that allowing this permission does not allow ANYONE to see your location unless WhereYouAt is explicitly running and you are in an active trip (notification showing).</string>
+    <string name="yes">Take me there!</string>
+    <string name="no">No thanks.</string>
+    <string name="no_thankyou">No thanks</string>
+    <string name="snack_button_never_show_again">Don\'t show me again.</string>
+    <string name="dont_remind_me">NEVER</string>
+    <string name="fix">FIX</string>
+    <string name="enter_tripcode_hint">Code</string>
+    <string name="toast_code_not_valid">Trip code is not valid.</string>
+    <string name="toast_trip_created">Created trip: %1$s!</string>
+    <string name="toast_something_wrong">Something went wrong!</string>
+    <string name="setting_up">Setting up...</string>
+    <string name="stopping">Stopping...</string>
+    <string name="playstore_url">www.google.com</string>
+    <string name="share_code_button">Share code with friends</string>
+    <string name="dismiss">DISMISS</string>
+    <string name="please_sign_in">Please sign in!</string>
+    <string name="units_away">%1$s miles away (%2$s)</string>
+    <string name="me">Me</string>
+    <string name="clicked_self_in_map">Hey that\'s me!</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="bg_scan_interval_title">NOT WORKING Background location detection speed.</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="pref_api_request_interval_title">NOT WORKING Server communication frequency</string>
+    <string name="menu_privacy_policy">Privacy policy</string>
+    <string name="content_description_map_image">Map image</string>
+    <string name="velocity_textview">%1$s m/sec</string>
+    <string name="last_upload_notif_main_text">You are a member in room: %1$s</string>
+    <string name="sign_in_menu_button">Sign in</string>
+    <string name="sign_out_menu_button">Sign out</string>
+    <string name="goto_app_settings_menu_button">Permissions</string>
 </resources>

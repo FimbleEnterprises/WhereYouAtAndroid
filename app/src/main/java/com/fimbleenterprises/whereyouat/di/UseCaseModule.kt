@@ -42,9 +42,28 @@ class UseCaseModule {
 
     @Singleton
     @Provides
+    fun provideLeaveTripWithApiUseCase(mainRepository: MainRepository): LeaveTripWithApiUseCase {
+        return LeaveTripWithApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provide(mainRepository: MainRepository): DeleteMemberLocFromDbUseCase {
+        return DeleteMemberLocFromDbUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
     fun provideClearAllMemberLocationsFromDatabaseUseCase(mainRepository: MainRepository):
             DeleteAllMemberLocsFromDbUseCase {
         return DeleteAllMemberLocsFromDbUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideValidateApiServerRunningUseCaseUseCase(mainRepository: MainRepository):
+            ValidateApiServerRunningUseCase {
+        return ValidateApiServerRunningUseCase(mainRepository)
     }
 
     @Singleton
@@ -78,29 +97,64 @@ class UseCaseModule {
     @Singleton
     @Provides
     fun provideGetTripcodeIsActiveWithApiUseCase(mainRepository: MainRepository):
-            GetTripcodeIsActiveWithApiUseCase {
-        return GetTripcodeIsActiveWithApiUseCase(mainRepository)
+            ValidateTripCodeAgainstApiUseCase {
+        return ValidateTripCodeAgainstApiUseCase(mainRepository)
     }
 
     @Singleton
     @Provides
-    fun provideDeleteServiceStatusUseCase(mainRepository: MainRepository):
-            DeleteServiceStatusUseCase {
-        return DeleteServiceStatusUseCase(mainRepository)
+    fun provideValidateClientTripCodeUseCase():
+            ValidateClientTripCodeUseCase {
+        return ValidateClientTripCodeUseCase()
     }
 
     @Singleton
     @Provides
-    fun provideSaveServiceStatusUseCase(mainRepository: MainRepository):
-            SaveServiceStatusUseCase {
-        return SaveServiceStatusUseCase(mainRepository)
+    fun provideServiceStateUseCases(mainRepository: MainRepository):
+        ServiceStateUseCases{
+        return ServiceStateUseCases(mainRepository)
     }
 
     @Singleton
     @Provides
-    fun provideGetServiceStatusUseCase(mainRepository: MainRepository):
-            GetServiceStatusUseCase {
-        return GetServiceStatusUseCase(mainRepository)
+    fun provideRemoveMemberFromTripInApiUseCase(mainRepository: MainRepository):
+            RemoveMemberFromTripInApiUseCase{
+        return RemoveMemberFromTripInApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetUpdateRateFromApiUseCase(mainRepository: MainRepository):
+            GetUpdateRateFromApiUseCase{
+        return GetUpdateRateFromApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetServerUrlFromApiUseCase(mainRepository: MainRepository):
+            GetServerUrlFromApiUseCase{
+        return GetServerUrlFromApiUseCase(mainRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetWaypointFromPrefsUseCase():
+            GetWaypointPositionUseCase{
+        return GetWaypointPositionUseCase()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveWaypointToPrefsUseCase():
+            SaveWaypointPositionUseCase{
+        return SaveWaypointPositionUseCase()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoveWaypointPositionFromPrefsUseCase():
+            RemoveWaypointPositionUseCase{
+        return RemoveWaypointPositionUseCase()
     }
 
 }

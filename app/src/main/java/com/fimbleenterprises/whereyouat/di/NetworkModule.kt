@@ -1,7 +1,11 @@
 package com.fimbleenterprises.whereyouat.di
 
-import com.fimbleenterprises.whereyouat.data.remote.TripsServiceApi
-import com.fimbleenterprises.whereyouat.utils.Constants.Companion.BASE_URL
+import android.app.Application
+import android.content.Context
+import com.fimbleenterprises.whereyouat.WhereYouAt
+import com.fimbleenterprises.whereyouat.data.remote.HostSelectionInterceptor
+import com.fimbleenterprises.whereyouat.data.remote.WhereYouAtWebApi
+import com.fimbleenterprises.whereyouat.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,17 +16,39 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    @Singleton
+/*    @Singleton
     @Provides
     fun provideHttpClient(): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient
             .Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
+            *//*.addInterceptor(interceptor)*//*
             .build()
+    }*/
+
+    @Singleton
+    @Provides
+    fun provideHttpClient(hostApplicationInterceptor: HostSelectionInterceptor): OkHttpClient {
+        val interceptor = hostApplicationInterceptor
+        return OkHttpClient
+            .Builder()
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideHostSelectionInterceptor(app: Application): HostSelectionInterceptor {
+        return HostSelectionInterceptor(app, true)
     }
 
     @Singleton
@@ -35,8 +61,9 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
+
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.DEFAULT_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -44,6 +71,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideCurrencyService(retrofit: Retrofit): TripsServiceApi = retrofit.create(TripsServiceApi::class.java)
+    fun provideWhereYouAtWebApi(retrofit: Retrofit): WhereYouAtWebApi = retrofit.create(WhereYouAtWebApi::class.java)
 
 }

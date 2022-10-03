@@ -6,41 +6,48 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.fimbleenterprises.whereyouat.WhereYouAt
+import android.widget.Toast
+import androidx.lifecycle.*
+import com.fimbleenterprises.whereyouat.WhereYouAt.AppPreferences
 import com.fimbleenterprises.whereyouat.data.MainRepositoryImpl
 import com.fimbleenterprises.whereyouat.data.usecases.*
 import com.fimbleenterprises.whereyouat.model.*
+import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_IDLE
+import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_RUNNING
+import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_STARTING
+import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_STOPPED
+import com.fimbleenterprises.whereyouat.model.ServiceState.Companion.SERVICE_STATE_STOPPING
 import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService
+import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService.Companion.RIGOROUS_UPDATES_INTENT_EXTRA
 import com.fimbleenterprises.whereyouat.utils.Resource
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+
 class MainViewModel(
-    private val saveServiceStatusUseCase: SaveServiceStatusUseCase,
-    private val getServiceStatusUseCase: GetServiceStatusUseCase,
-    private val getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
+    private val serviceStateUseCases: ServiceStateUseCases,
+    private val validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
     private val createTripWithApiUseCase: CreateTripWithApiUseCase,
-    private val deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
     private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
     private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
-    val app: Application
+    private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
+    private val validateApiServerRunning: ValidateApiServerRunningUseCase,
+    private val getUpdateRateFromApiUseCase: GetUpdateRateFromApiUseCase,
+    private val getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase,
+    private val saveWaypointPositionUseCase: SaveWaypointPositionUseCase,
+    private val getWaypointPositionUseCase: GetWaypointPositionUseCase,
+    private val removeWaypointPositionUseCase: RemoveWaypointPositionUseCase,
+    val app: Application,
 ) : AndroidViewModel(app) {
 
-    private val _memberLocationsApiResponse: MutableLiveData<Resource<MemberLocationsApiResponse>> = MutableLiveData()
-    val memberLocationsApiResponse: LiveData<Resource<MemberLocationsApiResponse>> = _memberLocationsApiResponse
+    private val _shareCodeAction: MutableLiveData<ShareCodeAction> = MutableLiveData()
+    val shareCodeAction: LiveData<ShareCodeAction> = _shareCodeAction
 
-    private val _createTripApiResponse: MutableLiveData<Resource<BaseApiResponse>> = MutableLiveData()
-    val createTripApiResponse: LiveData<Resource<BaseApiResponse>> = _createTripApiResponse
+    private val _apiEvent: MutableLiveData<ApiEvent?> = MutableLiveData()
+    val apiEvent: LiveData<ApiEvent?> = _apiEvent
 
     private val _memberLocations: MutableLiveData<List<LocUpdate>> = MutableLiveData()
     val memberLocations: LiveData<List<LocUpdate>> = _memberLocations
@@ -51,14 +58,8 @@ class MainViewModel(
     private val _downloadResponse: MutableLiveData<Boolean> = MutableLiveData()
     val downloadResponse = _downloadResponse
 
-    private val _isTripcodeActive: MutableLiveData<Resource<BaseApiResponse>> = MutableLiveData()
-    val isTripcodeActive: LiveData<Resource<BaseApiResponse>> = _isTripcodeActive
-
-    private val _serviceStatus: MutableLiveData<ServiceStatus> = MutableLiveData()
-    val serviceStatus: LiveData<ServiceStatus> = _serviceStatus
-
-    private val _serviceStatusFlow: MutableLiveData<ServiceStatus> = MutableLiveData()
-    val serviceStatusFlow: LiveData<ServiceStatus> = _serviceStatusFlow
+    private val _serviceState: MutableLiveData<ServiceState> = MutableLiveData()
+    val serviceState: LiveData<ServiceState> = _serviceState
 
     @Inject
     lateinit var repository: MainRepositoryImpl
@@ -66,25 +67,149 @@ class MainViewModel(
     @Inject
     lateinit var s1: SaveMemberLocsToDbUseCase
 
-    suspend fun setServiceStatus(serviceStatus: ServiceStatus) {
-        saveServiceStatusUseCase.execute(serviceStatus)
-        withContext(Main) {
-            _serviceStatus.value = getServiceStatusUseCase.execute()
+    fun shareTripcode(tripcode: String) {
+        val action = ShareCodeAction(
+            tripcode = tripcode,
+            message = "\n\nHere's my WhereYouAt code:\n\n$tripcode\n\nGet WhereYouAt here: www.google.com",
+            intentTag = TRIPCODE_INTENT_EXTRA_TAG
+        )
+        _shareCodeAction.value = action
+    }
+
+    fun requestServiceStop() {
+
+        setServiceStopping()
+
+    }
+
+    fun saveWaypoint(waypoint: Waypoints.Waypoint) {
+        saveWaypointPositionUseCase.execute(waypoint)
+    }
+
+    fun getWaypoint(): LatLng? {
+        return getWaypointPositionUseCase.execute()
+    }
+
+    fun removeWaypoint() {
+        removeWaypointPositionUseCase.execute()
+    }
+
+    fun requestUpdateIntervalsFromApi() {
+        viewModelScope.launch {
+            getUpdateRateFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server desired update rate:${it.data?.genericValue} secs =-")
+                if (it.data?.wasSuccessful == true) {
+                    val interval = it.data.genericValue as Double
+                    AppPreferences.apiRequestInterval = interval.toLong()
+                }
+            }
         }
     }
 
+    fun requestApiBaseUrlFromApi() {
+        viewModelScope.launch {
+            getServerUrlFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server url:${it.data?.genericValue} =-")
+                val receivedUrl = it.data?.genericValue?.toString()
+                if (it.data?.wasSuccessful == true && receivedUrl != null && receivedUrl.isNotEmpty()) {
+                    AppPreferences.baseUrl = it.data.genericValue.toString()
+                    Log.i(TAG, "-=Base URL suggested by API:${it.data.genericValue}=-")
+                }
+            }
+        }
+    }
+
+    /**
+     * Simply saves the ServiceStatus to isStarting in the db.
+     */
+    fun requestTripStart() {
+        setServiceStarting()
+    }
+
+    fun setServiceStarting() {
+        viewModelScope.launch(IO) {
+            Log.e(TAG2, "-= Setting:STARTING... =-")
+            serviceStateUseCases.setServiceStarting()
+        }
+    }
+
+    fun setServiceStopping() {
+        viewModelScope.launch(IO) {
+            Log.e(TAG2, "-= Setting:STOPPING... =-")
+            serviceStateUseCases.setServiceStopping()
+        }
+    }
+    
+    fun setServiceIdle() {
+        viewModelScope.launch(IO) {
+            Log.e(TAG2, "-= Setting:IDLE... =-")
+            serviceStateUseCases.setServiceState(
+                ServiceState(
+                    state = SERVICE_STATE_IDLE
+                )
+            )
+        }
+    }
+
+    /**
+     * Informs the service to either begin or cease rigorous updating.  When NOT rigorous the service
+     * will send/receive locs according to its internal runners.  When rigorous, the service will
+     * still use the runners but also send/receive any time the user's location has changed.
+     */
+    fun requestVigorousUpdates(boolean: Boolean) {
+        val rigorousRequestIntent = Intent(app, TripUsersLocationManagementService::class.java)
+        rigorousRequestIntent.putExtra(RIGOROUS_UPDATES_INTENT_EXTRA, boolean)
+        app.startService(rigorousRequestIntent)
+    }
+
+    fun tripcodeIsValidClientside(tripcode: String) = validateClientTripCodeUseCase.execute(tripcode)
+
+    suspend fun validateCode(tripcode: String) = validateTripCodeAgainstApiUseCase.execute(tripcode)
+
     fun createTrip(memberid: Long) = viewModelScope.launch {
         createTripWithApiUseCase.execute(memberid).collect { apiResponse ->
-            withContext(Main) {
-                _createTripApiResponse.value = apiResponse
-                when(createTripApiResponse.value) {
+            withContext(IO) {
+                when(apiResponse) {
                     is Resource.Success -> {
-                        WhereYouAt.AppPreferences.tripcode = apiResponse.data?.genericValue ?: ""
-                        Log.i(TAG, "-=MainViewModel:createTrip ${apiResponse.data?.genericValue ?: "no code!"} =-")
+                        if (apiResponse.data?.wasSuccessful == true) {
+                            // We know that the API will return the tripcode as a string using
+                            // the GenericValue property.
+                            AppPreferences.tripCode = apiResponse.data.genericValue.toString()
+                            if (AppPreferences.tripCode != null) {
+                                withContext(Main) {
+                                    _apiEvent.value = ApiEvent(ApiEvent.Event.REQUEST_SUCCEEDED)
+                                    serviceStateUseCases.setServiceStarting()
+                                }
+                            } else {
+                                Toast.makeText(app, "Failed to create trip!", Toast.LENGTH_SHORT).show()
+                                withContext(Main) {
+                                    _apiEvent.value = ApiEvent(
+                                        ApiEvent.Event.REQUEST_FAILED,
+                                        apiResponse.data.genericValue?.toString()
+                                    )
+                                    _apiEvent.value = null
+                                }
+                            }
+                            Log.i(TAG, "-=MainViewModel:createTrip ${ apiResponse.data.genericValue } =-")
+                        } else {
+                            withContext(Main) {
+                                _apiEvent.value = ApiEvent(
+                                    ApiEvent.Event.REQUEST_FAILED,
+                                    apiResponse.data?.genericValue?.toString()
+                                )
+                                _apiEvent.value = null
+                            }
+                        }
                     }
                     is Resource.Loading -> { }
-                    is Resource.Error -> { }
-                    else -> {}
+                    is Resource.Error -> {
+                        withContext(Main) {
+                            _apiEvent.value = ApiEvent(
+                                ApiEvent.Event.REQUEST_FAILED
+                            )
+                            _apiEvent.value = null
+                        }
+                    }
                 }
             }
         }
@@ -109,46 +234,86 @@ class MainViewModel(
         }
     }
 
-    fun stopService() {
-        CoroutineScope(IO).launch {
-            setServiceStatus(
-                ServiceStatus(
-                    isStarting = false,
-                    isRunning = false,
-                    WhereYouAt.AppPreferences.tripcode
-                )
-            )
-            val cancelIntent = Intent(getApplication(), TripUsersLocationManagementService::class.java)
-            cancelIntent.putExtra(TripUsersLocationManagementService.EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION, true)
-            app.startService(cancelIntent)
-        }
-    }
-
     // -----------------------------------------------------------
     //                       INITIALIZE
     // -----------------------------------------------------------
     init {
         Log.i(TAG, "Initialized:MainViewModel")
-
-
         viewModelScope.launch {
-            getServiceStatusUseCase.executeFlow().collect() {
-                _serviceStatusFlow.value = it
+            // Continuously monitor the service status table.
+            serviceStateUseCases.getServiceStateAsFlow().collect {
+                _serviceState.value = it
+                
+                when (it.state) {
+                    SERVICE_STATE_STARTING -> {
+                        Log.e(TAG2, "-= viewmodel.collect.serviceState:STARTING =-")        
+                    }
+                    SERVICE_STATE_RUNNING -> {
+                        Log.e(TAG2, "-= viewmodel.collect.serviceState:RUNNING =-")
+                    }
+                    SERVICE_STATE_STOPPING -> {
+                        Log.e(TAG2, "-= viewmodel.collect.serviceState:STOPPING =-")
+                    }
+                    SERVICE_STATE_STOPPED -> {
+                        setServiceIdle()
+                        Log.e(TAG2, "-= viewmodel.collect.serviceState:STOPPED =-")
+                    }
+                    SERVICE_STATE_IDLE -> {
+                        Log.e(TAG2, "-= viewmodel.collect.serviceState:IDLE =-")
+                    }
+                    else -> {
+                        Log.e(TAG2, "-=viewmodel.collect.serviceState: $it =-")
+                    }
+                }
+                
             }
         }
         viewModelScope.launch {
             // Continuously monitor the member_locations table.
-            getMemberLocsFromDbUseCase.execute().collect {
+            getMemberLocsFromDbUseCase.executeAsFlow().collect {
                 _memberLocations.value = it
+                Log.i("TAG4", "-=VIEWMODEL OBSERVES ${it.size} MEMBERS=-")
             }
         }
         viewModelScope.launch {
             // Continuously monitor the my_location table.
             getMyLocFromDbUseCase.execute().collect {
                 _myLocation.value = it
+                Log.d(TAG1, "-= MyLocation changed in database!: =-")
+            }
+        }
+        viewModelScope.launch {
+            validateApiServerRunning.execute().collect {
+                Log.i(TAG, "-=Server running:${it.data?.wasSuccessful} =-")
+            }
+        }
+        viewModelScope.launch {
+            getUpdateRateFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server desired update rate:${it.data?.genericValue} secs =-")
+                if (it.data?.wasSuccessful == true) {
+                    val interval = it.data.genericValue as Double
+                    AppPreferences.apiRequestInterval = interval.toLong()
+                }
+            }
+        }
+        viewModelScope.launch {
+            getServerUrlFromApiUseCase.execute().collect {
+                Log.i(TAG, "-=Server url:${it.data?.genericValue} =-")
+                val receivedUrl = it.data?.genericValue?.toString()
+                if (it.data?.wasSuccessful == true && receivedUrl != null && receivedUrl.isNotEmpty()) {
+                    AppPreferences.baseUrl = it.data.genericValue.toString()
+                    Log.i(TAG, "-=Base URL suggested by API:${it.data.genericValue}=-")
+                }
             }
         }
     }
-    companion object { private const val TAG = "FIMTOWN|MainViewModel" }
+
+
+    companion object {
+        private const val TAG = "FIMTOWN|MainViewModel"
+        private const val TAG1 = "DATABASEOBSERVER"
+        private const val TAG2 = "SERVICESTATE"
+        const val TRIPCODE_INTENT_EXTRA_TAG = "com.fimbleenterprises.whereyouat.tripcode"
+    }
 
 }

@@ -2,10 +2,10 @@ package com.fimbleenterprises.whereyouat.data.local
 
 import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
 import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
-import com.fimbleenterprises.whereyouat.data.db.ServiceStatusDao
+import com.fimbleenterprises.whereyouat.data.db.ServiceStateDao
 import com.fimbleenterprises.whereyouat.model.LocUpdate
 import com.fimbleenterprises.whereyouat.model.MyLocation
-import com.fimbleenterprises.whereyouat.model.ServiceStatus
+import com.fimbleenterprises.whereyouat.model.ServiceState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 class LocalDataSourceImpl(
     private val memberLocationsDao: MemberLocationsDao,
     private val myLocationDao: MyLocationDao,
-    private val serviceStatusDao: ServiceStatusDao
+    private val serviceStateDao: ServiceStateDao
 )
 : LocalDataSource {
 
@@ -28,11 +28,15 @@ class LocalDataSourceImpl(
     }
 
     override suspend fun saveMemberLocationToDB(locUpdate: LocUpdate): Long {
-        return memberLocationsDao.insertMemberLocation(locUpdate)
+        return memberLocationsDao.insertLocUpdate(locUpdate)
     }
 
     override fun getSavedMemberLocationsFromDB(): Flow<List<LocUpdate>> {
         return memberLocationsDao.getAllMemberLocations()
+    }
+
+    override suspend fun getSavedMemberLocationsFromDBOneTime(): List<LocUpdate> {
+        return memberLocationsDao.getAllMemberLocationsOneTime()
     }
 
     override fun getSavedMemberLocationFromDB(memberid: Long): Flow<LocUpdate> {
@@ -74,27 +78,43 @@ class LocalDataSourceImpl(
         return myLocationDao.deleteAll()
     }
 
-    override suspend fun updateMyLocation(myLocation: MyLocation): Int {
-        return myLocationDao.updateMyLocation(myLocation)
-    }
-
     // -----------------------------------------------------------
     //                       SERVICE STATUS
     // -----------------------------------------------------------
-    override suspend fun getServiceStatus(): ServiceStatus {
-        return serviceStatusDao.getServiceStatus()
+    override suspend fun getServiceStatus(): ServiceState {
+        return serviceStateDao.getServiceState()
     }
 
-    override fun getServiceStatusFlow(): Flow<ServiceStatus> {
-        TODO("Not yet implemented")
+    override fun getServiceStatusFlow(): Flow<ServiceState> {
+        return serviceStateDao.getServiceStatusFlow()
     }
 
-    override suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long {
-        return serviceStatusDao.insertServiceStatus(serviceStatus)
+    override suspend fun saveServiceStatus(serviceState: ServiceState): Long {
+        return serviceStateDao.setServiceState(serviceState)
     }
 
     override suspend fun deleteServiceStatus(): Int {
-        return serviceStatusDao.delete()
+        return serviceStateDao.delete()
+    }
+
+    override suspend fun setServiceRunning(): Int {
+        return serviceStateDao.setServiceRunning()
+    }
+
+    override suspend fun setServiceStarting(): Int {
+        return serviceStateDao.setServiceStarting()
+    }
+
+    override suspend fun setServiceStopping(): Int {
+        return serviceStateDao.setServiceStopping()
+    }
+
+    override suspend fun setServiceStopped(): Int {
+        return serviceStateDao.setServiceStopped()
+    }
+
+    override suspend fun setServiceRestarting(): Int {
+        return serviceStateDao.setServiceRestarting()
     }
 
 

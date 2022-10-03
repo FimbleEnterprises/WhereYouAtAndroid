@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.room.Room
 import com.fimbleenterprises.whereyouat.data.db.MyLocationDao
 import com.fimbleenterprises.whereyouat.data.db.MemberLocationsDao
-import com.fimbleenterprises.whereyouat.data.db.ServiceStatusDao
+import com.fimbleenterprises.whereyouat.data.db.ServiceStateDao
 import com.fimbleenterprises.whereyouat.data.db.WhereYouAtDatabase
 import dagger.Module
 import dagger.Provides
@@ -45,8 +45,8 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideServiceStatusDAO(whereYouAtDatabase: WhereYouAtDatabase): ServiceStatusDao {
-        return whereYouAtDatabase.getServiceStatusDao()
+    fun provideServiceStatusDAO(whereYouAtDatabase: WhereYouAtDatabase): ServiceStateDao {
+        return whereYouAtDatabase.getServiceStateDao()
     }
 
 

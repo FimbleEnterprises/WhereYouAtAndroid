@@ -7,15 +7,38 @@
         tools:context=".MainActivity"
         android:padding="5dp">
 
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/progressBar"
+            android:layout_alignParentBottom="false"
+            android:layout_centerInParent="true" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabCenterTrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             app:srcCompat="@drawable/route_icon_1"
-            android:layout_alignParentEnd="false"
-            android:layout_above="@id/bottomContainer"
-            android:layout_marginBottom="80dp"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/fabCenterMe"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:contentDescription="@string/center_trip"
+            app:backgroundTint="@color/design_default_color_surface"
+            android:layout_marginStart="10dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCycleMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/cycle_members_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/fabCenterTrip"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
             android:contentDescription="@string/center_trip"
             app:backgroundTint="@color/design_default_color_surface"
             android:layout_marginStart="10dp" />
@@ -26,45 +49,102 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             app:srcCompat="@drawable/center_me_icon"
-            android:layout_alignParentEnd="false"
+            android:layout_alignParentEnd="true"
             android:layout_above="@id/bottomContainer"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginEnd="10dp"
             android:contentDescription="@string/center_me"
             app:backgroundTint="@color/design_default_color_surface" />
 
-    <LinearLayout
+    <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/topContainer">
+            android:id="@+id/topContainer"
+            android:animateLayoutChanges="true">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabShareCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="15dp"
+                app:srcCompat="@drawable/share_icon_black_512"
+                android:contentDescription="@string/share_code_button"
+                app:backgroundTint="@color/design_default_color_surface"
+                android:layout_alignWithParentIfMissing="false"
+                tools:ignore="RelativeOverlap" />
 
         <TextView
-                android:text="GGGHHH"
+                android:id="@+id/txtDirection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@id/txtTripCode"
+                android:text="NW"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/calculator"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        <TextView
+                android:id="@+id/txtSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/txtDirection"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/calculator"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTripCode"
-                android:textSize="55sp"
+                android:textSize="65sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/calculator"
-                android:gravity="center"
-                android:textAllCaps="true" />
-
-        <Button
-                android:text="@string/btn_push_my_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_glass_gray_orange_border"
-                android:id="@+id/btnPushUpdate"
                 android:fontFamily="@font/casual"
+                android:gravity="center"
                 android:textAllCaps="true"
-                android:textStyle="bold" />
+                android:foregroundGravity="center" />
 
-        <TextView
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtInfo1" />
-    </LinearLayout>
+                android:layout_below="@id/txtTripCode"
+                android:orientation="vertical"
+                android:id="@+id/memberInfoContainer"
+                tools:visibility="visible">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMemberInfo1"
+                    android:fontFamily="@font/casual" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMemberInfo3"
+                    android:fontFamily="@font/casual" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMemberInfo4"
+                    android:fontFamily="@font/casual" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
             android:orientation="vertical"
@@ -72,8 +152,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/mapContainer"
             android:layout_below="@id/topContainer"
-            android:layout_above="@id/bottomContainer"
-            android:background="@drawable/btn_glass_navy_border">
+            android:layout_above="@id/bottomContainer">
 
         <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
@@ -91,19 +170,24 @@
             android:layout_height="wrap_content"
             android:id="@+id/bottomContainer"
             app:layout_constraintHorizontal_bias="0.0"
-            android:layout_alignParentBottom="true">
+            android:layout_above="@id/adContainer">
 
         <TextView
-                android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView3" />
+                android:id="@+id/textView3"
+                android:text="Waiting..."
+                android:gravity="center"
+                android:fontFamily="@font/casual"
+                tools:visibility="gone" />
 
-        <TextView
-                android:text="TextView"
+        <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView4" />
+                android:id="@+id/textView4"
+                android:text="Waiting..."
+                android:gravity="center"
+                tools:visibility="gone" />-->
 
         <Button
                 android:text="@string/btn_leave"
@@ -113,7 +197,28 @@
                 android:id="@+id/btnLeave"
                 android:fontFamily="@font/casual"
                 android:textAllCaps="true"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/adContainer"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_alignParentBottom="true">
+
+        <!-- TEST ADD ID: ca-app-pub-3940256099942544/6300978111 -->
+        <!-- ACTUAL ADD ID: ca-app-pub-4244925080834893/2038189298 -->
+        <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                ads:adSize="BANNER"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.fimbleenterprises.whereyouat.data
 
+import android.util.Log
 import com.fimbleenterprises.whereyouat.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,6 +41,7 @@ abstract class BaseApiCaller {
             } catch (e: IOException) {
                 // Returning no internet message
                 // wrapped in Resource.Error
+                Log.e(TAG, "safeApiCall: ${e.message}")
                 Resource.Error("Please check your network connection")
             } catch (e: Exception) {
                 // Returning 'Something went wrong' in case
@@ -48,5 +50,6 @@ abstract class BaseApiCaller {
             }
         }
     }
-
+init { Log.i(TAG, "Initialized:BaseApiCaller") }
+companion object { private const val TAG = "FIMTOWN|BaseApiCaller" }
 }

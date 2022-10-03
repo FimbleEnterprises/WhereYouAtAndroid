@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class GetMemberLocsFromDbUseCase(private val mainRepository: MainRepository) {
 
-    fun execute(): Flow<List<LocUpdate>> = mainRepository.getAllMemberLocsFromDatabase()
+    fun executeAsFlow(): Flow<List<LocUpdate>> = mainRepository.getAllMemberLocsFromDatabase()
+    suspend fun executeOneTime(): List<LocUpdate> = mainRepository.getAllMemberLocsFromDatabaseOneTime()
 
 }

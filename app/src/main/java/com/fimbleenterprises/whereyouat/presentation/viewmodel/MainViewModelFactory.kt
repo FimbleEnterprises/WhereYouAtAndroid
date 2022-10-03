@@ -20,23 +20,33 @@ import javax.inject.Singleton
 class MainViewModelFactory(
     private val app:Application,
     private val createTripWithApiUseCase: CreateTripWithApiUseCase,
-    private val deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
     private val getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
     private val getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
-    private val getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
-    private val getServiceStatusUseCase: GetServiceStatusUseCase,
-    private val saveServiceStatusUseCase: SaveServiceStatusUseCase
+    private val validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
+    private val serviceStateUseCases: ServiceStateUseCases,
+    private val validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
+    private val validateApiServerRunningUseCase: ValidateApiServerRunningUseCase,
+    private val getUpdateRateFromApiUseCase: GetUpdateRateFromApiUseCase,
+    private val getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase,
+    private val saveWaypointPositionUseCase: SaveWaypointPositionUseCase,
+    private val getWaypointPositionUseCase: GetWaypointPositionUseCase,
+    private val removeWaypointPositionUseCase: RemoveWaypointPositionUseCase
 ):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(
-            saveServiceStatusUseCase,
-            getServiceStatusUseCase,
-            getTripcodeIsActiveWithApiUseCase,
+            serviceStateUseCases,
+            validateTripCodeAgainstApiUseCase,
             createTripWithApiUseCase,
-            deleteAllMemberLocsFromDbUseCase,
             getMemberLocsFromDbUseCase,
             getMyLocFromDbUseCase,
+            validateClientTripCodeUseCase,
+            validateApiServerRunningUseCase,
+            getUpdateRateFromApiUseCase,
+            getServerUrlFromApiUseCase,
+            saveWaypointPositionUseCase,
+            getWaypointPositionUseCase,
+            removeWaypointPositionUseCase,
             app
         ) as T
     }

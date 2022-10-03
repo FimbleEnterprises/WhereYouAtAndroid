@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 class CreateTripWithApiUseCase(private val mainRepository: MainRepository) {
 
     suspend fun execute(memberid: Long):
-            Flow<Resource<BaseApiResponse>> = mainRepository.createInApiTrip(memberid)
+            Flow<Resource<BaseApiResponse>> = mainRepository.createTripInApi(memberid)
 
 }

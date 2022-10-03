@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light" >
+        <item name="android:fontFamily">@font/casual</item>
+    </style>
+
+
+
+</resources>

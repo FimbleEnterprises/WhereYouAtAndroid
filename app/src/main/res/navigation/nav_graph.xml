@@ -11,7 +11,13 @@
             android:label="StartFragment" >
         <action
                 android:id="@+id/action_startFragment_to_mapFragment"
-                app:destination="@id/mapFragment" />
+                app:destination="@id/mapFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/nav_graph"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/slide_in_left"
+                app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
             android:id="@+id/mapFragment"
@@ -20,6 +26,16 @@
             tools:layout="@layout/fragment_map" >
         <action
                 android:id="@+id/action_mapFragment_to_startFragment"
-                app:destination="@id/startFragment" />
+                app:destination="@id/startFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/mapFragment"
+                app:enterAnim="@android:anim/fade_in"
+                app:exitAnim="@android:anim/fade_out"
+                app:popEnterAnim="@android:anim/slide_in_left"
+                app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.fimbleenterprises.whereyouat.presentation.ui.SettingsFragment"
+            android:label="SettingsFragment" />
 </navigation>

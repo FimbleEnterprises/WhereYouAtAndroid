@@ -17,22 +17,32 @@ object ViewModelFactoryModule {
     fun provideViewModelFactory(
         application: Application,
         createTripWithApiUseCase: CreateTripWithApiUseCase,
-        deleteAllMemberLocsFromDbUseCase: DeleteAllMemberLocsFromDbUseCase,
         getMemberLocsFromDbUseCase: GetMemberLocsFromDbUseCase,
         getMyLocFromDbUseCase: GetMyLocFromDbUseCase,
-        getTripcodeIsActiveWithApiUseCase: GetTripcodeIsActiveWithApiUseCase,
-        getServiceStatusUseCase: GetServiceStatusUseCase,
-        saveServiceStatusUseCase: SaveServiceStatusUseCase
+        validateTripCodeAgainstApiUseCase: ValidateTripCodeAgainstApiUseCase,
+        serviceStateUseCases: ServiceStateUseCases,
+        validateClientTripCodeUseCase: ValidateClientTripCodeUseCase,
+        validateApiServerRunningUseCase: ValidateApiServerRunningUseCase,
+        getUpdateRateFromApiUseCase: GetUpdateRateFromApiUseCase,
+        getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase,
+        saveWaypointPositionUseCase: SaveWaypointPositionUseCase,
+        getWaypointPositionUseCase: GetWaypointPositionUseCase,
+        removeWaypointPositionUseCase: RemoveWaypointPositionUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
             application,
             createTripWithApiUseCase,
-            deleteAllMemberLocsFromDbUseCase,
             getMemberLocsFromDbUseCase,
             getMyLocFromDbUseCase,
-            getTripcodeIsActiveWithApiUseCase,
-            getServiceStatusUseCase,
-            saveServiceStatusUseCase
+            validateTripCodeAgainstApiUseCase,
+            serviceStateUseCases,
+            validateClientTripCodeUseCase,
+            validateApiServerRunningUseCase,
+            getUpdateRateFromApiUseCase,
+            getServerUrlFromApiUseCase,
+            saveWaypointPositionUseCase,
+            getWaypointPositionUseCase,
+            removeWaypointPositionUseCase
         )
     }
 

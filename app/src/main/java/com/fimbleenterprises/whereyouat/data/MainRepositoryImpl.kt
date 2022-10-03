@@ -26,7 +26,31 @@ class MainRepositoryImpl
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun createInApiTrip(memberid: Long): Flow<Resource<BaseApiResponse>> {
+    override suspend fun removeUserFromTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.removeUserFromTrip(memberid) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun validateApiServerRunning(): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.validateApiServerRunning() })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun retrieveUpdateRateFromApi(): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.retrieveUpdateRateFromApi() })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun retrieveServerUrlFromApi(): Flow<Resource<BaseApiResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.retrieveServerUrlFromApi() })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun createTripInApi(memberid: Long): Flow<Resource<BaseApiResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.createTrip(memberid) })
         }.flowOn(Dispatchers.IO)
@@ -54,8 +78,16 @@ class MainRepositoryImpl
         return localDataSource.deleteSavedMemberLocations()
     }
 
+    override suspend fun deleteLocFromDatabase(locUpdate: LocUpdate): Int {
+        return localDataSource.deleteSavedMemberLocation(locUpdate)
+    }
+
     override fun getAllMemberLocsFromDatabase(): Flow<List<LocUpdate>> {
         return localDataSource.getSavedMemberLocationsFromDB()
+    }
+
+    override suspend fun getAllMemberLocsFromDatabaseOneTime(): List<LocUpdate> {
+        return localDataSource.getSavedMemberLocationsFromDBOneTime()
     }
 
     // -----------------------------------------------------------
@@ -92,20 +124,40 @@ class MainRepositoryImpl
     //                       SERVICE STATUS
     // -----------------------------------------------------------
 
-    override suspend fun getServiceStatus(): ServiceStatus {
+    override suspend fun getServiceState(): ServiceState {
         return localDataSource.getServiceStatus()
     }
 
-    override suspend fun getServiceStatusFlow(): Flow<ServiceStatus> {
+    override fun getServiceStateAsFlow(): Flow<ServiceState> {
         return localDataSource.getServiceStatusFlow()
     }
 
-    override suspend fun deleteServiceStatus(): Int {
+    override suspend fun deleteServiceState(): Int {
         return localDataSource.deleteServiceStatus()
     }
 
-    override suspend fun insertServiceStatus(serviceStatus: ServiceStatus): Long {
-        return localDataSource.insertServiceStatus(serviceStatus)
+    override suspend fun saveServiceState(serviceState: ServiceState): Long {
+        return localDataSource.saveServiceStatus(serviceState)
+    }
+
+    override suspend fun setServiceRunning(): Int {
+        return localDataSource.setServiceRunning()
+    }
+
+    override suspend fun setServiceStarting(): Int {
+        return localDataSource.setServiceStarting()
+    }
+
+    override suspend fun setServiceStopping(): Int {
+        return localDataSource.setServiceStopping()
+    }
+
+    override suspend fun setServiceStopped(): Int {
+        return localDataSource.setServiceStopped()
+    }
+
+    override suspend fun setServiceRestarting(): Int {
+        return localDataSource.setServiceRestarting()
     }
 
     init { Log.i(TAG, "Initialized:TripRepositoryImpl") }
