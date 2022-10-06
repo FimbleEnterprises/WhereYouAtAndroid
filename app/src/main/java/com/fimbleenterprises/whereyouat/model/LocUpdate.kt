@@ -111,9 +111,9 @@ data class LocUpdate (
 /**
  * Extension function to look for specific loc updates in the list
  */
-fun List<LocUpdate>?.containsMember(locUpdate: LocUpdate): Boolean {
+fun List<LocUpdate>?.containsMember(memberId: Long): Boolean {
     this?.forEach {
-        if (it.memberid == locUpdate.memberid) { return true }
+        if (it.memberid == memberId) { return true }
     }
     return false
 }
@@ -121,7 +121,7 @@ fun List<LocUpdate>?.containsMember(locUpdate: LocUpdate): Boolean {
 /**
  * Extension function to look for the supplied loc update in the list.
  */
-fun List<LocUpdate>?.findMember(locUpdate: LocUpdate): LocUpdate? {
+fun List<LocUpdate>?.findMarker(locUpdate: LocUpdate): LocUpdate? {
     this?.forEach {
         if (it.memberid == locUpdate.memberid) { return it }
     }
@@ -131,7 +131,7 @@ fun List<LocUpdate>?.findMember(locUpdate: LocUpdate): LocUpdate? {
 /**
  * Extension function to look for the supplied loc update in the list.
  */
-fun List<LocUpdate>?.findMember(memberId: Long): LocUpdate? {
+fun List<LocUpdate>?.findMarker(memberId: Long): LocUpdate? {
     this?.forEach {
         if (it.memberid == memberId) { return it }
     }

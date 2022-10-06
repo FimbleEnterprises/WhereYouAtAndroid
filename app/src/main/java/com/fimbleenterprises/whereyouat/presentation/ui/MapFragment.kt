@@ -41,7 +41,7 @@ import com.fimbleenterprises.whereyouat.R.drawable.*
 import com.fimbleenterprises.whereyouat.WhereYouAt.AppPreferences
 import com.fimbleenterprises.whereyouat.databinding.FragmentMapBinding
 import com.fimbleenterprises.whereyouat.model.*
-import com.fimbleenterprises.whereyouat.model.MemberMarkers.MemberMarker
+import com.fimbleenterprises.whereyouat.model.MapMarkers.MapMarker
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
 import com.fimbleenterprises.whereyouat.service.SharedPreferenceUtil
 import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService
@@ -71,9 +71,10 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private lateinit var viewmodel: MainViewModel
     private lateinit var map: GoogleMap
     private lateinit var mLifecycleOwner: LifecycleOwner
-    private val selectedMember: MutableLiveData<MemberMarker?> = MutableLiveData()
+    private val selectedMember: MutableLiveData<MapMarker?> = MutableLiveData()
     private var cameraLockedOnMe = true
     private var cameraLockedOnParty = false
+    private var cameraIncludeWaypoints = true
     private var cameraLockedOnMember = false
     private var cameraLocked = true
     private lateinit var mAdView : AdView
@@ -88,22 +89,18 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     /**
      * A container to represent us on the map
      */
-    private lateinit var myMapMarker: MemberMarker
+    private lateinit var myMapMarker: MapMarker
     /**
      * A container to represent our fellows on the map.
      */
-    private val memberMarkers = MemberMarkers()
+    private val mapMarkers = MapMarkers()
     private val waypoints = Waypoints()
-
     // Listens for location broadcasts from ForegroundOnlyLocationService.
     private lateinit var foregroundOnlyBroadcastReceiver: ForegroundOnlyBroadcastReceiver
-
     private lateinit var sharedPreferences: SharedPreferences
-
     // Handler and runner for clearing the info textview.
     private var myLogMsgHandler1: Handler = Handler(Looper.myLooper()!!)
     private var logMessageRunner1: Runnable? = null
-
     private var myCameraLockedHandler: Handler = Handler(Looper.myLooper()!!)
     private var myCameraLockedRunner: Runnable? = null
 
@@ -223,6 +220,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             cameraLockedOnParty = true
             cameraLockedOnMe = false
             cameraLockedOnMember = false
+            cameraIncludeWaypoints = !cameraIncludeWaypoints
+            Log.d(TAG, "onStart: Include waypoints in camera: $cameraIncludeWaypoints")
             moveCameraContextually()
         }
 
@@ -230,14 +229,15 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
             // Cycles through members and selects them assuming they are not
             // already selected or are me (ngl, I think this was pretty clever).
-            var nextMember: MemberMarker? = null
-            memberMarkers.forEach {
+            var nextMember: MapMarker? = null
+            mapMarkers.forEach {
                 if (!it.isMe && !it.isSelected && nextMember == null) {
                     nextMember = it
                 }
             }
+
             nextMember?.let {
-                memberMarkers.selectMember(it)
+                mapMarkers.selectMember(it)
                 selectedMember.value = it
             }
         }
@@ -327,20 +327,22 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         startObservingMyLocation()
         startObservingServiceState()
         startObservingServiceStatus()
+        startObservingSelectedMember()
 
         map.uiSettings.isMapToolbarEnabled = true
 
         map.setOnMarkerClickListener { marker ->
 
             // Try to find the member by their map marker.
-            val memberMarker = memberMarkers.findMember(marker)
+            val memberMarker = mapMarkers.findMarker(marker)
             memberMarker?.let { clickedMemberMarker ->
+
                 if (clickedMemberMarker.isSelected) {
                     unselectMember()
                 } else {
                     clickedMemberMarker.marker = marker
                     if (!clickedMemberMarker.isMe) {
-                        memberMarkers.selectMember(clickedMemberMarker)
+                        mapMarkers.selectMember(clickedMemberMarker)
                         selectedMember.value = clickedMemberMarker
                         // Tell the service to begin rigorous updates.
                         viewmodel.requestVigorousUpdates(true)
@@ -423,7 +425,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             } else {
                 myMapMarker.locUpdate.displayName?.let {name ->
                     putWaypointOnMap(position, name, isMe = true)?.let { marker ->
-                        val newWaypoint = Waypoints.Waypoint(marker, AppPreferences.memberid)
+                        val newWaypoint = Waypoints.Waypoint(marker, myMapMarker.locUpdate)
                         waypoints.addOrUpdate(newWaypoint)
                         viewmodel.saveWaypoint(newWaypoint)
                     }
@@ -436,8 +438,6 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 requestBackgroundPermissions()
             }
         }
-
-        startObservingSelectedMember()
 
         // If we rely solely on the livedata we can end up in a weird position from time to time.
         moveCameraContextually()
@@ -532,7 +532,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                         .icon(BitmapDescriptorFactory.fromResource(my_map_icon_mini))
 
                     // Create a MemberMarker object to hold our location
-                    myMapMarker = MemberMarker(
+                    myMapMarker = MapMarker(
                         map.addMarker(markerOptions)!!,
                         myLocation.toLocUpdate(AppPreferences.tripCode!!),
                         null,
@@ -544,7 +544,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 myMapMarker.marker.position = position
 
                 // Update all polylines
-                memberMarkers.forEach { memberMarker ->
+                mapMarkers.forEach { memberMarker ->
                     if (memberMarker.polyline != null) {
                         memberMarker.polyline?.remove()
                         memberMarker.polyline = drawPolyFromTo(myLocation.toLatLng(), memberMarker.locUpdate.toLatLng())
@@ -686,10 +686,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         selectedMember.observe(viewLifecycleOwner) { selectedMember ->
             if (selectedMember != null) {
                 displayDistanceAndDirectionToSelectedMember()
-                // binding.memberInfoContainer.visibility = View.VISIBLE
                 binding.memberInfoContainer.slideVisibility(true, 750)
             } else {
-                // binding.memberInfoContainer.visibility = View.GONE
                 binding.memberInfoContainer.slideVisibility(false, 750)
             }
             moveCameraContextually()
@@ -699,7 +697,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private fun drawMembersOnMap(memberList: List<LocUpdate>) {
 
         // Remove existing accuracy circles - they'll be recreated below.
-        memberMarkers.removeAllCircles()
+        mapMarkers.removeAllCircles()
 
         // Loop through all member locations.
         memberList.forEach { memberLoc ->
@@ -708,7 +706,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             removeZombieMarkers(memberList)
 
             // See if we already have a marker for this member
-            when (val existingMarker = memberMarkers.findMember(memberLoc)) {
+            when (val existingMarker = mapMarkers.findMarker(memberLoc)) {
                 null -> { // Member does not have a marker yet.
 
                     // Prepare an accuracy circle if the member loc has an accuracy value.
@@ -731,15 +729,15 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                     // It is possible to get a null marker when calling .addMarker so we check
                     actualMapMarker?.let {
                         // Build and add this marker to our member markers array
-                        val marker = MemberMarker(
+                        val marker = MapMarker(
                             it,
                             locUpdate = memberLoc,
                             polyline = null,
-                            circle,
-                            false,
-                            bmap
+                            circle = circle,
+                            isSelected = false,
+                            avatar =  bmap
                         )
-                        memberMarkers.add(marker)
+                        mapMarkers.add(marker)
 
                         // Asyncronously get and set the membermarker's avatar
                         setAvatarUsingGlide(marker)
@@ -750,11 +748,13 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                     existingMarker.locUpdate = memberLoc
                     if (memberLoc.isBg == 1) {
                         // Member is in background so show a boring, gray marker.
-                        existingMarker.marker.setIcon(BitmapDescriptorFactory.fromResource(marker_gray))
+                        existingMarker.marker.setIcon(BitmapDescriptorFactory.fromResource(
+                            marker_gray))
                     } else {
                         // Member is in foreground, use Glide to build a marker using their profile's avatar url.
                         if (existingMarker.avatar == null) {
-                            existingMarker.marker.setIcon(BitmapDescriptorFactory.fromResource(marker_maroon))
+                            existingMarker.marker.setIcon(BitmapDescriptorFactory.fromResource(
+                                marker_maroon))
                             // Asyncronously retrieve the member's avatar and set it in their member marker.
                             // It should then be available next time we get here.
                             setAvatarUsingGlide(existingMarker)
@@ -776,7 +776,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 if (existingWaypoint == null) { // This is the first time we are seeing this waypoint.
                     memberLoc.displayName?.let { name ->
                         putWaypointOnMap(memberLoc.toLatLng(), name, isMe = memberLoc.isMe())?.let { marker ->
-                            val waypoint = Waypoints.Waypoint(marker, memberLoc.memberid)
+                            val waypoint = Waypoints.Waypoint(marker, memberLoc)
                             waypoints.addOrUpdate(waypoint)
                         }
                     }
@@ -800,7 +800,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             // If a waypoint is an orphan, remove it from the waypoints array.
             val toBeRemoved = ArrayList<Waypoints.Waypoint>()
             waypoints.forEach { waypoint ->
-                val existingMember = memberList.findMember(waypoint.creator)
+                val existingMember = memberList.findMarker(waypoint.locUpdate.memberid)
                 if (existingMember == null) {
                     toBeRemoved.add(waypoint)
                 }
@@ -819,15 +819,15 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
      */
     private fun removeZombieMarkers(memberList: List<LocUpdate>) {
         // Create a bucket to hold any zombie markers from users that have left the party
-        val toBeRemoved = ArrayList<MemberMarker>() // A list of the condemned
+        val toBeRemoved = ArrayList<MapMarker>() // A list of the condemned
         // See if a marker lacks an actual active member
-        memberMarkers.forEach {
-            if (!memberList.containsMember(it.locUpdate)) {
+        mapMarkers.forEach {
+            if (!memberList.containsMember(it.locUpdate.memberid)) {
                 toBeRemoved.add(it)
             }
         }
         // Remove them from memberMarkers array (to avoid concurrency errors)
-        toBeRemoved.forEach { memberMarkers.removeMarker(it) }
+        toBeRemoved.forEach { mapMarkers.removeMarker(it) }
     }
 
     /**
@@ -857,7 +857,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
      * applies it to the supplied marker.  Not doing any of our own caching, trusting Glide to
      * handle it instead.
      */
-    private fun setAvatarUsingGlide(marker: MemberMarker) {
+    private fun setAvatarUsingGlide(marker: MapMarker) {
 
         Glide.with(this).load(marker.locUpdate.avatarUrl).listener(object : RequestListener<Drawable?> {
             override fun onLoadFailed(
@@ -1196,7 +1196,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
         // Move camera based on context
         if (cameraLockedOnParty) {
-            moveCameraToShowParty()
+            moveCameraToShowPartyAndWaypoints()
         } else {
             moveCameraToShowMe()
         }
@@ -1204,7 +1204,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     /** Moves the camera to a position such that both the start and end map markers are viewable on screen.  */
-    private fun moveCameraToShowParty() {
+    private fun moveCameraToShowPartyAndWaypoints() {
 
         if (viewmodel.memberLocations.value.isNullOrEmpty()) {
             return
@@ -1217,6 +1217,12 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         val builder = LatLngBounds.Builder()
         viewmodel.memberLocations.value?.forEach {
             builder.include(it.toLatLng())
+            // Include waypoint if present if camera settings allow it
+            if (cameraIncludeWaypoints) {
+                it.waypoint?.let { waypoint ->
+                    builder.include(LatLng(waypoint))
+                }
+            }
         }
 
         // Include our real-time location as well as all of the API supplied locations
@@ -1330,9 +1336,9 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             return
         }
 
-        val clickedMemberMarker = memberMarkers.findMember(selectedMember.value!!.locUpdate)
+        val clickedMemberMarker = mapMarkers.findMarker(selectedMember.value!!.locUpdate)
         clickedMemberMarker?.removePolyline()
-        memberMarkers.unselectAll()
+        mapMarkers.unselectAll()
         selectedMember.value = null
 
         // Tell the service to cease rigorous updates.

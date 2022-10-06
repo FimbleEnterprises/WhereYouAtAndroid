@@ -3,7 +3,7 @@ package com.fimbleenterprises.whereyouat.model
 import com.fimbleenterprises.whereyouat.WhereYouAt
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.gson.Gson
+import com.google.android.gms.maps.model.Polyline
 
 class Waypoints(): ArrayList<Waypoints.Waypoint>() {
 
@@ -20,7 +20,7 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
      * the existing waypoint in the array with the same creator value.
      */
     fun addOrUpdate(waypoint: Waypoint) {
-        var existing = find(waypoint.creator)
+        var existing = find(waypoint.locUpdate.memberid)
         if (existing != null) {
             existing = waypoint
         } else {
@@ -35,13 +35,19 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
         this.forEach { it.marker.remove() }
     }
 
+    fun clearAllPolylines() {
+        this.forEach {
+            it.polyline?.remove()
+        }
+    }
+
     /**
      * Finds a waypoint in the array by comparing memberid
      */
     fun find(creator: Long): Waypoint? {
         var waypoint: Waypoint? = null
         this.forEach {
-            if (it.creator == creator) { waypoint = it }
+            if (it.locUpdate.memberid == creator) { waypoint = it }
         }
         return waypoint
     }
@@ -59,7 +65,8 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
 
     data class Waypoint(
         var marker: Marker,
-        var creator: Long
+        var locUpdate: LocUpdate,
+        var polyline: Polyline? = null
     ) {
 
         fun setPosition(position: LatLng) {
@@ -71,7 +78,16 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
         }
 
         fun isMine(): Boolean {
-            return this.creator == WhereYouAt.AppPreferences.memberid
+            return this.locUpdate.memberid == WhereYouAt.AppPreferences.memberid
+        }
+
+        /**
+         * Calls the Polyline's remove() method to remove it from the map and nulls
+         * out the polyline property of this class.
+         */
+        fun removePolyline() {
+            this.polyline?.remove()
+            this.polyline = null
         }
 
     }

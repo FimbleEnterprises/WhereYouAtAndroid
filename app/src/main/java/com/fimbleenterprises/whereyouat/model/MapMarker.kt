@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.*
 /**
  * Container for MemberMarker objects with utility functions.
  */
-class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
+class MapMarkers : ArrayList<MapMarkers.MapMarker>() {
 
     init { Log.i(TAG, "Initialized:MemberMarkers") }
     companion object { private const val TAG = "FIMTOWN|MemberMarkers" }
@@ -15,7 +15,7 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
     /**
      * Iterates over this array returning the matching marker.  Returns null if not found.
      */
-    fun findMember(locUpdate: LocUpdate): MemberMarker? {
+    fun findMarker(locUpdate: LocUpdate): MapMarker? {
         this.forEach {
             if (locUpdate.memberid == it.locUpdate.memberid) {
                 return it
@@ -27,9 +27,21 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
     /**
      * Iterates over this array returning the matching marker.  Returns null if not found.
      */
-    fun findMember(marker: Marker): MemberMarker? {
+    fun findMarker(marker: Marker): MapMarker? {
         this.forEach {
             if (marker.id == it.marker.id) {
+                return it
+            }
+        }
+        return null
+    }
+
+    /**
+     * Iterates over this array returning the matching marker.  Returns null if not found.
+     */
+    fun findMarker(memberid: Long): MapMarker? {
+        this.forEach {
+            if (memberid == it.locUpdate.memberid) {
                 return it
             }
         }
@@ -53,10 +65,10 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
      * Calls unselectAll() then sets this marker's isSelected property to true,
      * finally it shows its info window on the map.
      */
-    fun selectMember(memberMarker: MemberMarker) {
+    fun selectMember(mapMarker: MapMarker) {
         unselectAll()
         this.forEach {
-            if (it == memberMarker) {
+            if (it == mapMarker) {
                 it.isSelected = true
                 it.marker.showInfoWindow()
             } else {
@@ -90,7 +102,7 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
      * Calls the Marker class' remove() method to remove it from the map, then calls the
      * ArrayList's remove() method.
      */
-    fun removeMarker(marker: MemberMarker) {
+    fun removeMarker(marker: MapMarker) {
         marker.marker.remove()
         this.remove(marker)
     }
@@ -98,13 +110,13 @@ class MemberMarkers : ArrayList<MemberMarkers.MemberMarker>() {
     /**
      * Class to tightly correlate map markers to loc updates.
      */
-    data class MemberMarker(
+    data class MapMarker(
         var marker: Marker,
         var locUpdate: LocUpdate,
         var polyline: Polyline?,
         var circle: Circle?,
         var isSelected: Boolean = false,
-        var avatar: BitmapDescriptor? = null
+        var avatar: BitmapDescriptor? = null,
     ) {
 
         var isMe: Boolean

@@ -2,6 +2,7 @@ package com.fimbleenterprises.whereyouat.model
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.ktx.oAuthProvider
 
 /**
  * Contract for classes that represent a location while providing some additional utility.
@@ -68,5 +69,12 @@ abstract class LocationBasics {
      */
     fun bearingTo(target: Location) : Float {
         return toLocation().bearingTo(target)
+    }
+
+    fun bearingTo(target: LatLng) : Float {
+        val loc = Location("GPS")
+        loc.latitude = target.latitude
+        loc.longitude = target.longitude
+        return toLocation().bearingTo(loc)
     }
 }
