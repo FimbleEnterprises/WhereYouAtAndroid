@@ -5,22 +5,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.Polyline
 
-class Waypoints(): ArrayList<Waypoints.Waypoint>() {
-
-    // Removes the marker from the map and array.
-    fun removeAll() {
-        this.forEach {
-            it.marker.remove()
-            it.remove()
-        }
-    }
+class Waypoints: ArrayList<Waypoints.Waypoint>() {
 
     /**
      * Adds the supplied waypoint as a new item in the array or updates
      * the existing waypoint in the array with the same creator value.
      */
     fun addOrUpdate(waypoint: Waypoint) {
-        var existing = find(waypoint.locUpdate.memberid)
+        var existing = find(waypoint.owner)
         if (existing != null) {
             existing = waypoint
         } else {
@@ -47,7 +39,7 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
     fun find(creator: Long): Waypoint? {
         var waypoint: Waypoint? = null
         this.forEach {
-            if (it.locUpdate.memberid == creator) { waypoint = it }
+            if (it.owner == creator) { waypoint = it }
         }
         return waypoint
     }
@@ -65,7 +57,7 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
 
     data class Waypoint(
         var marker: Marker,
-        var locUpdate: LocUpdate,
+        var owner: Long,
         var polyline: Polyline? = null
     ) {
 
@@ -78,7 +70,7 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
         }
 
         fun isMine(): Boolean {
-            return this.locUpdate.memberid == WhereYouAt.AppPreferences.memberid
+            return this.owner == WhereYouAt.AppPreferences.memberid
         }
 
         /**
@@ -88,6 +80,37 @@ class Waypoints(): ArrayList<Waypoints.Waypoint>() {
         fun removePolyline() {
             this.polyline?.remove()
             this.polyline = null
+        }
+
+        fun toMapMarker(): MapMarkers.MapMarker {
+
+            val locUpdate = LocUpdate(
+                memberid = owner,
+                speed = 0f,
+                bearing = 0f,
+                accuracy = 0f,
+                elevation = 0.0,
+                lat = marker.position.latitude,
+                lon = marker.position.longitude,
+                memberName = null,
+                createdon = System.currentTimeMillis(),
+                tripcode = WhereYouAt.AppPreferences.tripCode!!,
+                displayName = null,
+                googleid = null,
+                avatarUrl = null,
+                email = null,
+                isBg = 0,
+                waypoint = null
+            )
+
+            return MapMarkers.MapMarker(
+                marker = this.marker,
+                locUpdate = locUpdate,
+                polyline = polyline,
+                circle = null,
+                isSelected = false,
+                avatar = null
+            )
         }
 
     }

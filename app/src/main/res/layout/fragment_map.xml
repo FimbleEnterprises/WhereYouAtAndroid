@@ -5,7 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="#FFFFFF">
 
     <ProgressBar
             style="?android:attr/progressBarStyle"
@@ -23,6 +24,20 @@
             app:srcCompat="@drawable/route_icon_1"
             android:layout_alignParentEnd="true"
             android:layout_above="@id/fabCenterMe"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:contentDescription="@string/center_trip"
+            app:backgroundTint="@color/design_default_color_surface"
+            android:layout_marginStart="10dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMapStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/map_style"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/fabCycleMembers"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="15dp"
             android:contentDescription="@string/center_trip"
@@ -60,8 +75,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/topContainer"
-            android:animateLayoutChanges="true">
+            android:id="@+id/topContainer">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabShareCode"
@@ -110,12 +124,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTripCode"
-                android:textSize="65sp"
+                android:textSize="85sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/casual"
+                android:fontFamily="@font/calculator"
                 android:gravity="center"
                 android:textAllCaps="true"
-                android:foregroundGravity="center" />
+                android:foregroundGravity="center"
+                android:text="033L" />
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -175,7 +190,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView3"
+                android:id="@+id/txtServiceStatus"
                 android:text="Waiting..."
                 android:gravity="center"
                 android:fontFamily="@font/casual"
@@ -212,13 +227,12 @@
 
         <!-- TEST ADD ID: ca-app-pub-3940256099942544/6300978111 -->
         <!-- ACTUAL ADD ID: ca-app-pub-4244925080834893/2038189298 -->
-        <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-                ads:adSize="BANNER"/>
+                ads:adSize="BANNER" />
     </LinearLayout>
 
 </RelativeLayout>

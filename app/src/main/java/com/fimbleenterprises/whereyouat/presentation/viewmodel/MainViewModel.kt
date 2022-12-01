@@ -67,10 +67,10 @@ class MainViewModel(
     @Inject
     lateinit var s1: SaveMemberLocsToDbUseCase
 
-    fun shareTripcode(tripcode: String) {
+    fun shareTripcode() {
         val action = ShareCodeAction(
-            tripcode = tripcode,
-            message = "\n\nHere's my WhereYouAt code:\n\n$tripcode\n\nGet WhereYouAt here: www.google.com",
+            tripcode = AppPreferences.tripCode!!,
+            message = "\n\nHere's my WhereYouAt code:\n\n${AppPreferences.tripCode}\n\nGet WhereYouAt here: www.google.com",
             intentTag = TRIPCODE_INTENT_EXTRA_TAG
         )
         _shareCodeAction.value = action
@@ -108,14 +108,7 @@ class MainViewModel(
 
     fun requestApiBaseUrlFromApi() {
         viewModelScope.launch {
-            getServerUrlFromApiUseCase.execute().collect {
-                Log.i(TAG, "-=Server url:${it.data?.genericValue} =-")
-                val receivedUrl = it.data?.genericValue?.toString()
-                if (it.data?.wasSuccessful == true && receivedUrl != null && receivedUrl.isNotEmpty()) {
-                    AppPreferences.baseUrl = it.data.genericValue.toString()
-                    Log.i(TAG, "-=Base URL suggested by API:${it.data.genericValue}=-")
-                }
-            }
+            AppPreferences.baseUrl = getServerUrlFromApiUseCase.execute()
         }
     }
 
@@ -234,6 +227,17 @@ class MainViewModel(
         }
     }
 
+    fun memberExists(locUpdate: LocUpdate): Boolean {
+        memberLocations.value.let { members ->
+            members?.forEach {
+                if (locUpdate.memberid == it.memberid) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
     // -----------------------------------------------------------
     //                       INITIALIZE
     // -----------------------------------------------------------
@@ -297,17 +301,9 @@ class MainViewModel(
             }
         }
         viewModelScope.launch {
-            getServerUrlFromApiUseCase.execute().collect {
-                Log.i(TAG, "-=Server url:${it.data?.genericValue} =-")
-                val receivedUrl = it.data?.genericValue?.toString()
-                if (it.data?.wasSuccessful == true && receivedUrl != null && receivedUrl.isNotEmpty()) {
-                    AppPreferences.baseUrl = it.data.genericValue.toString()
-                    Log.i(TAG, "-=Base URL suggested by API:${it.data.genericValue}=-")
-                }
-            }
+            AppPreferences.baseUrl = getServerUrlFromApiUseCase.execute()
         }
     }
-
 
     companion object {
         private const val TAG = "FIMTOWN|MainViewModel"

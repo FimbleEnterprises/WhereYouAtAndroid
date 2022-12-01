@@ -18,7 +18,7 @@
     <string name="nav_intent">http://maps.google.com/maps?saddr=$%1$s,$%2$s&amp;daddr=$%3$s,$%4$s&amp;z=14</string>
 
     <string name="start_location_updates_button_text">Start receiving location updates</string>
-    <string name="leave_trip_notification_button">Leave trip</string>
+    <string name="share_trip_notification_button">Share code</string>
     <string name="launch_activity">Launch activity</string>
 
     <string name="location_updated">Location Updated: %1$s</string>
@@ -55,7 +55,7 @@
     <string name="share_code_button">Share code with friends</string>
     <string name="dismiss">DISMISS</string>
     <string name="please_sign_in">Please sign in!</string>
-    <string name="units_away">%1$s miles away (%2$s)</string>
+    <string name="units_away">%1$s miles away (%2$s) - %3$s</string>
     <string name="me">Me</string>
     <string name="clicked_self_in_map">Hey that\'s me!</string>
     <!-- Preference Titles -->

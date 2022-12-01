@@ -67,12 +67,17 @@ class WhereYouAt : Application() {
         private const val PREF_TOKEN = "PREF_TOKEN"
         private const val PREF_AVATAR = "PREF_AVATAR"
         private const val PREF_WAYPOINT_POSITION = "PREF_WAYPOINT_POSITION"
+        private const val DEFAULT_BASE_URL = "http://fim.town/"
         const val PREF_BASE_URL = "PREF_BASE_URL"
 
         var baseUrl: String?
             get() = prefs.getString(PREF_BASE_URL, Constants.DEFAULT_BASE_URL)
             set(value) {
-                prefs.edit().putString(PREF_BASE_URL, value).apply()
+                if (value == null) {
+                    prefs.edit().putString(PREF_BASE_URL, DEFAULT_BASE_URL).apply()
+                } else {
+                    prefs.edit().putString(PREF_BASE_URL, value).apply()
+                }
             }
 
         var waypointPosition : LatLng?

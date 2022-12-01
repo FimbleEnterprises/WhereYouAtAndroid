@@ -108,6 +108,13 @@ class MapMarkers : ArrayList<MapMarkers.MapMarker>() {
     }
 
     /**
+     * Calls removePolyline() on all markers in the array.
+     */
+    fun removeAllLines() {
+        this.forEach { it.removePolyline() }
+    }
+
+    /**
      * Class to tightly correlate map markers to loc updates.
      */
     data class MapMarker(

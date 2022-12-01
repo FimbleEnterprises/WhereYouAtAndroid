@@ -5,28 +5,26 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.location.Location
 import android.net.Uri
 import android.os.*
 import android.provider.Settings
-import android.transition.Slide
-import android.transition.TransitionManager
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.Interpolator
+import android.view.animation.Transformation
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
+import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -45,7 +43,6 @@ import com.fimbleenterprises.whereyouat.model.MapMarkers.MapMarker
 import com.fimbleenterprises.whereyouat.presentation.viewmodel.MainViewModel
 import com.fimbleenterprises.whereyouat.service.SharedPreferenceUtil
 import com.fimbleenterprises.whereyouat.service.TripUsersLocationManagementService
-import com.fimbleenterprises.whereyouat.service.toText
 import com.fimbleenterprises.whereyouat.utils.Helpers
 import com.fimbleenterprises.whereyouat.utils.MyGeoUtil
 import com.fimbleenterprises.whereyouat.utils.SphericalUtil
@@ -67,6 +64,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var cameraIsMoving = false
+    private var mapIsReady = false
     private lateinit var binding: FragmentMapBinding
     private lateinit var viewmodel: MainViewModel
     private lateinit var map: GoogleMap
@@ -96,7 +94,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private val mapMarkers = MapMarkers()
     private val waypoints = Waypoints()
     // Listens for location broadcasts from ForegroundOnlyLocationService.
-    private lateinit var foregroundOnlyBroadcastReceiver: ForegroundOnlyBroadcastReceiver
+    // private lateinit var foregroundOnlyBroadcastReceiver: ForegroundOnlyBroadcastReceiver
     private lateinit var sharedPreferences: SharedPreferences
     // Handler and runner for clearing the info textview.
     private var myLogMsgHandler1: Handler = Handler(Looper.myLooper()!!)
@@ -149,7 +147,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        foregroundOnlyBroadcastReceiver = ForegroundOnlyBroadcastReceiver()
+        //foregroundOnlyBroadcastReceiver = ForegroundOnlyBroadcastReceiver()
         sharedPreferences = requireContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         binding = FragmentMapBinding.bind(view)
@@ -158,7 +156,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(onMapReadyCallback)
 
-        binding.memberInfoContainer.slideVisibility(false, 0)
+        binding.memberInfoContainer.visibility = View.GONE
+        // collapse(binding.memberInfoContainer)
 
         mAdView = binding.adView
         val adRequest = AdRequest.Builder().build()
@@ -197,7 +196,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 Log.i(TAG, "-=onAdOpened: =-")
             }
         }
-        mAdView.visibility = View.GONE
+        mAdView.visibility = View.VISIBLE
     }
 
     override fun onStart() {
@@ -210,6 +209,17 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             Handler(Looper.getMainLooper()).postDelayed({
                 viewmodel.requestServiceStop()
             }, 250)
+        }
+
+        binding.fabMapStyle.setOnClickListener {
+            if (mapIsReady) {
+                if (map.mapType < 4) {
+                    Log.i(TAG, "-=onStart:MapType:${map.mapType} =-")
+                    map.mapType++
+                } else {
+                    map.mapType = 1
+                }
+            }
         }
 
         binding.fabCenterTrip.setOnClickListener {
@@ -253,7 +263,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
         binding.fabShareCode.setOnClickListener {
             if (AppPreferences.tripCode != null) {
-                viewmodel.shareTripcode(AppPreferences.tripCode!!)
+                viewmodel.shareTripcode()
             }
         }
 
@@ -273,11 +283,11 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
+        /*LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
             foregroundOnlyBroadcastReceiver,
             IntentFilter(
                 TripUsersLocationManagementService.ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST)
-        )
+        )*/
 
         // Just a due-dilligence request for server-side guidance on update rate and base url.
         viewmodel.requestUpdateIntervalsFromApi()
@@ -293,9 +303,9 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(
+        /*LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(
             foregroundOnlyBroadcastReceiver
-        )
+        )*/
         super.onPause()
     }
 
@@ -312,6 +322,9 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
      * Fires when the Google map is ready and rendered.
      */
     private val onMapReadyCallback = OnMapReadyCallback { googleMap ->
+
+        mapIsReady = true
+
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -360,30 +373,11 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
         map.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
 
-            override fun onMarkerDrag(marker: Marker) {
-                // Super expensive from a CPU point of view but it prevents the marker from
-                // briefly flashing back to the pre-dragged position if the user is taking a
-                // long time to settle on where to drop.
-                waypoints.find(AppPreferences.memberid)?.let {
-                    it.marker.position = marker.position
-                    viewmodel.saveWaypoint(it)
-                }
-            }
+            override fun onMarkerDrag(marker: Marker) {  }
 
-            override fun onMarkerDragEnd(marker: Marker) {
-                waypoints.find(AppPreferences.memberid)?.let {
-                    it.marker.position = marker.position
-                    viewmodel.saveWaypoint(it)
-                }
-            }
+            override fun onMarkerDragEnd(marker: Marker) { }
 
-            override fun onMarkerDragStart(marker: Marker) {
-                waypoints.find(AppPreferences.memberid)?.let {
-                    if (!it.isMine()) {
-                        marker.isDraggable = false
-                    }
-                }
-            }
+            override fun onMarkerDragStart(marker: Marker) { }
         })
 
         map.setOnCameraMoveStartedListener {
@@ -416,27 +410,45 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             cameraIsMoving = false
         }
 
+        map.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
+            override fun onMarkerClick(googleMarker: Marker): Boolean {
+
+                val myWaypoint = waypoints.find(AppPreferences.memberid)
+                myWaypoint.let {
+                    viewmodel.removeWaypoint()
+                    it!!.remove()
+                }
+                return true
+            }
+        })
+
         map.setOnMapLongClickListener { position ->
             Log.d(TAG, "-=:${AppPreferences.googleid} =-")
             val waypoint = waypoints.find(AppPreferences.memberid)
+
+            Log.i(TAG, "-=waypoint count:${waypoints.size}=-")
+
             if (waypoint != null) {
+
                 waypoint.marker.position = position
                 viewmodel.saveWaypoint(waypoint)
             } else {
-                myMapMarker.locUpdate.displayName?.let {name ->
-                    putWaypointOnMap(position, name, isMe = true)?.let { marker ->
-                        val newWaypoint = Waypoints.Waypoint(marker, myMapMarker.locUpdate)
-                        waypoints.addOrUpdate(newWaypoint)
-                        viewmodel.saveWaypoint(newWaypoint)
-                    }
+                var name = "Waypoint"
+                myMapMarker.locUpdate.displayName?.let {
+                    name = it
+                }
+                putWaypointOnMap(position, name, isMe = true)?.let { marker ->
+                    val newWaypoint = Waypoints.Waypoint(marker, myMapMarker.locUpdate.memberid)
+                    waypoints.addOrUpdate(newWaypoint)
+                    viewmodel.saveWaypoint(newWaypoint)
                 }
             }
         }
 
         if (!backgroundPermissionApproved()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 requestBackgroundPermissions()
-            }
+            }*/
         }
 
         // If we rely solely on the livedata we can end up in a weird position from time to time.
@@ -645,7 +657,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     private fun startObservingServiceStatus() {
         TripUsersLocationManagementService.serviceStatus.observe(viewLifecycleOwner) {
-            binding.textView3.text = it.log1
+            binding.txtServiceStatus.text = it.log1
             startDelayWipeOfLogMsg1()
         }
     }
@@ -676,7 +688,6 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 }
                 else -> {
                     binding.txtTripCode.text = AppPreferences.tripCode
-                    startDelayWipeOfLogMsg1()
                 }
             }
         }
@@ -686,12 +697,78 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         selectedMember.observe(viewLifecycleOwner) { selectedMember ->
             if (selectedMember != null) {
                 displayDistanceAndDirectionToSelectedMember()
-                binding.memberInfoContainer.slideVisibility(true, 750)
+                // expand(binding.memberInfoContainer)
+                // binding.memberInfoContainer.slideVisibility(true, 1000)
+                // binding.memberInfoContainer.visibility = View.VISIBLE
+                expand(binding.memberInfoContainer)
             } else {
-                binding.memberInfoContainer.slideVisibility(false, 750)
+                // collapse(binding.memberInfoContainer)
+                // binding.memberInfoContainer.slideVisibility(false, 1000)
+                unselectMember()
+                binding.memberInfoContainer.visibility = View.GONE
+                collapse(binding.memberInfoContainer)
             }
             moveCameraContextually()
         }
+    }
+
+    private var easeInOutQuart: Interpolator = PathInterpolatorCompat.create(0.77f, 0f, 0.175f, 1f)
+
+    private fun expand(view: View): Animation {
+        val matchParentMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec((view.parent as View).width, View.MeasureSpec.EXACTLY)
+        val wrapContentMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.measure(matchParentMeasureSpec, wrapContentMeasureSpec)
+        val targetHeight = view.measuredHeight
+
+        // Older versions of android (pre API 21) cancel animations for views with a height of 0 so use 1 instead.
+        view.layoutParams.height = 1
+        view.visibility = View.VISIBLE
+        val animation: Animation = object : Animation() {
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+                view.layoutParams.height =
+                    if (interpolatedTime == .5f) ViewGroup.LayoutParams.WRAP_CONTENT else (targetHeight * interpolatedTime).toInt()
+                view.requestLayout()
+            }
+
+            override fun willChangeBounds(): Boolean {
+                return true
+            }
+        }
+        animation.interpolator = easeInOutQuart
+        animation.duration = computeDurationFromHeight(view).toLong()
+        view.startAnimation(animation)
+        return animation
+    }
+
+    private fun collapse(view: View): Animation {
+        val initialHeight = view.measuredHeight
+        val a: Animation = object : Animation() {
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+                if (interpolatedTime == .5f) {
+                    view.visibility = View.GONE
+                } else {
+                    view.layoutParams.height =
+                        initialHeight - (initialHeight * interpolatedTime).toInt()
+                    view.requestLayout()
+                }
+            }
+
+            override fun willChangeBounds(): Boolean {
+                return true
+            }
+        }
+        a.interpolator = easeInOutQuart
+        val durationMillis = computeDurationFromHeight(view)
+        a.duration = durationMillis.toLong()
+        view.startAnimation(a)
+        return a
+    }
+
+    private fun computeDurationFromHeight(view: View): Int {
+        // 1dp/ms * multiplier
+        return (view.measuredHeight / view.context.resources.displayMetrics.density).toInt()
     }
 
     private fun drawMembersOnMap(memberList: List<LocUpdate>) {
@@ -776,7 +853,7 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 if (existingWaypoint == null) { // This is the first time we are seeing this waypoint.
                     memberLoc.displayName?.let { name ->
                         putWaypointOnMap(memberLoc.toLatLng(), name, isMe = memberLoc.isMe())?.let { marker ->
-                            val waypoint = Waypoints.Waypoint(marker, memberLoc)
+                            val waypoint = Waypoints.Waypoint(marker, memberLoc.memberid)
                             waypoints.addOrUpdate(waypoint)
                         }
                     }
@@ -799,12 +876,14 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             // Loop through the waypoints array and match waypoints to existing members.
             // If a waypoint is an orphan, remove it from the waypoints array.
             val toBeRemoved = ArrayList<Waypoints.Waypoint>()
+
             waypoints.forEach { waypoint ->
-                val existingMember = memberList.findMarker(waypoint.locUpdate.memberid)
+                val existingMember = memberList.findMarker(waypoint.owner)
                 if (existingMember == null) {
                     toBeRemoved.add(waypoint)
                 }
             }
+
             // If there are waypoints to be removed, remove them.
             toBeRemoved.forEach {
                 waypoints.remove(it)
@@ -889,24 +968,16 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     /**
-     * Extension function to expand/contract a view (designed with layouts in mind)
-     */
-    private fun View.slideVisibility(visibility: Boolean, durationTime: Long) {
-        val transition = Slide(Gravity.BOTTOM)
-        transition.apply {
-            duration = durationTime
-            addTarget(this@slideVisibility)
-        }
-        TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
-        this.isVisible = visibility
-    }
-
-    /**
      * Shows the selected member's name, distance and cardinal direction.
      */
     private fun displayDistanceAndDirectionToSelectedMember() {
 
         selectedMember.value?.let { selectedMember ->
+
+            if (!viewmodel.memberExists(selectedMember.locUpdate)) {
+                unselectMember()
+                return@let
+            }
 
             // My location scope
             viewmodel.myLocation.value?.let { myLocation ->
@@ -921,13 +992,16 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                     selectedMember.locUpdate.toLatLng()
                 )
                 val milesAway = MyGeoUtil.convertMetersToMiles(metersAway, 2)
+                var speed = "0 mph"
+                selectedMember.locUpdate.speed?.let { speed = "${MyGeoUtil.getSpeedInMph(it, 2)} mph" }
                 val radian = (myLocation.bearingTo(selectedMember.locUpdate))
 
                 // Display distance and direction to the selected user.
                 binding.txtMemberInfo3.text = getString(
                     R.string.units_away,
                     milesAway.toString(),
-                    MyGeoUtil.calculateCardinalDirectionFromRadian(radian)
+                    MyGeoUtil.calculateCardinalDirectionFromRadian(radian),
+                    speed
                 )
             } // my location scope
 
@@ -962,7 +1036,8 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
             )
         } else {
-            TODO("VERSION.SDK_INT < Q")
+            // TODO find a better solution
+            return true
         }
     }
 
@@ -1100,12 +1175,11 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
         logMessageRunner1 = Runnable {
             // What runs each time
-
-            myLogMsgHandler1.postDelayed(logMessageRunner1!!, 3000)
+            binding.txtServiceStatus.text = ""
         }
 
         // Starts it up initially
-        myLogMsgHandler1.postDelayed(logMessageRunner1!!, 750)
+        myLogMsgHandler1.postDelayed(logMessageRunner1!!, 2500)
     }
 
     /**
@@ -1331,15 +1405,16 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         // binding.txtMemberInfo2.text = null
         binding.txtMemberInfo3.text = null
         binding.txtMemberInfo4.text = null
+        mapMarkers.unselectAll()
+        mapMarkers.removeAllLines()
 
         if (selectedMember.value == null) {
             return
+        } else {
+            selectedMember.value!!.removePolyline()
+            selectedMember.value!!.removeCircle()
+            selectedMember.value = null
         }
-
-        val clickedMemberMarker = mapMarkers.findMarker(selectedMember.value!!.locUpdate)
-        clickedMemberMarker?.removePolyline()
-        mapMarkers.unselectAll()
-        selectedMember.value = null
 
         // Tell the service to cease rigorous updates.
         viewmodel.requestVigorousUpdates(false)
@@ -1397,20 +1472,6 @@ class MapFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             result = context.resources.getDimensionPixelSize(resourceId)
         }
         return result
-    }
-
-    /**
-     * Receiver for location broadcasts from [TripUsersLocationManagementService].
-     */
-    inner class ForegroundOnlyBroadcastReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val location = intent.getParcelableExtra<Location>(
-                TripUsersLocationManagementService.EXTRA_LOCATION
-            )
-            if (location != null) {
-                Log.d(TAG, "-=onReceive|Foreground location: ${location.toText()} =-")
-            }
-        }
     }
 
     init { Log.i(TAG, "Initialized:MapFragment") }

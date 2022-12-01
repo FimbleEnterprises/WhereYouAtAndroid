@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.*
@@ -17,8 +19,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fimbleenterprises.whereyouat.databinding.ActivityMainBinding
 import com.fimbleenterprises.whereyouat.model.ServiceState
@@ -33,7 +33,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.BuildConfig
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,12 +44,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
-
     private lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
     lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
 
+    /**
+     * This is used to prevent a double share dialog show when reacting to an intent from the
+     * notification.  Sometimes/Some devices will get the intent in onStart and in onNewIntent.
+     * When we get a valid intent we set this to true and then reset it to false after a short
+     * delay.  It's hacky and I don't like it but here we are.
+     */
+    private var isSharingSpamHelper = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,7 +151,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     fun signInGoogle() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, Req_Code)
+        startActivityForResult(signInIntent, reqcode)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -164,13 +169,49 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         if (GoogleSignIn.getLastSignedInAccount(this) == null) {
             signInGoogle()
         }
+
+        /* This intent will only contain the extras/action passed from the notification if the app
+           was not in the stack (like if you fully backed out or killed the activity).  I don't
+           fully understand why sometimes this is called and other times it's onNewIntent and
+           sometimes it's BOTH (which is why the [isSharingSpamHelper] check exists.
+         https://stackoverflow.com/questions/8619883/onnewintent-lifecycle-and-registered-listeners
+         https://stackoverflow.com/questions/8357200/how-we-can-use-onnewintent-in-any-activity */
+        if (intent != null && intent.action == ACTION_SHARE_CODE_FROM_NOTIFICATION) {
+            // Check if we have a double share intent.
+            if (!isSharingSpamHelper) {
+                isSharingSpamHelper = true
+                mainViewModel.shareTripcode()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    isSharingSpamHelper = false
+                }, 500)
+            }
+        }
+
+    }
+
+    /* This is called if the activity is pulled from the stack on notification action click.  If
+       the activity is NOT in the stack you must use getIntent from within onStart.
+       https://stackoverflow.com/questions/8619883/onnewintent-lifecycle-and-registered-listeners
+       https://stackoverflow.com/questions/8357200/how-we-can-use-onnewintent-in-any-activity */
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null && intent.action == ACTION_SHARE_CODE_FROM_NOTIFICATION) {
+            if (!isSharingSpamHelper) {
+                isSharingSpamHelper = true
+                mainViewModel.shareTripcode()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    isSharingSpamHelper = false
+                }, 500)
+            }
+        }
     }
 
     // onActivityResult() function : this is where
     // we provide the task and data for the Google Account
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Req_Code) {
+        if (requestCode == reqcode) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
         }
@@ -181,15 +222,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                WhereYouAt.AppPreferences.email = account.email.toString()
-                WhereYouAt.AppPreferences.googleid = account.id
-                WhereYouAt.AppPreferences.token = account.idToken
-                WhereYouAt.AppPreferences.name = account.displayName
-                WhereYouAt.AppPreferences.avatarUrl = account.photoUrl.toString()
-                /*val intent = Intent(this, DashboardActivity::class.java)
-                startActivity(intent)
-                finish()*/
-            }
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show()
+            } else { /* Do we care? */ }
         }
     }
 
@@ -197,6 +231,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
+                WhereYouAt.AppPreferences.email = account.email.toString()
+                WhereYouAt.AppPreferences.googleid = account.id
+                WhereYouAt.AppPreferences.token = account.idToken
+                WhereYouAt.AppPreferences.name = account.displayName
+                WhereYouAt.AppPreferences.avatarUrl = account.photoUrl.toString()
                 updateUI(account)
             }
         } catch (e: ApiException) {
@@ -300,7 +339,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         private const val TAG = "FIMTOWN|MainActivity"
         private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
         private const val BACK_PRESSED = "BACK_PRESSED"
-        val Req_Code: Int = 123
+        private const val PACKAGE_NAME = "com.fimbleenterprises.whereyouat"
+        const val ACTION_SHARE_CODE_FROM_NOTIFICATION =
+            "${PACKAGE_NAME}.extra.EXTRA_SHARE_CODE_FROM_NOTIFICATION"
+        const val reqcode: Int = 123
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

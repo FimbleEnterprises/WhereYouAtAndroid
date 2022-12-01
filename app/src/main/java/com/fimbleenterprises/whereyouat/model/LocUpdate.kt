@@ -121,16 +121,6 @@ fun List<LocUpdate>?.containsMember(memberId: Long): Boolean {
 /**
  * Extension function to look for the supplied loc update in the list.
  */
-fun List<LocUpdate>?.findMarker(locUpdate: LocUpdate): LocUpdate? {
-    this?.forEach {
-        if (it.memberid == locUpdate.memberid) { return it }
-    }
-    return null
-}
-
-/**
- * Extension function to look for the supplied loc update in the list.
- */
 fun List<LocUpdate>?.findMarker(memberId: Long): LocUpdate? {
     this?.forEach {
         if (it.memberid == memberId) { return it }

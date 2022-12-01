@@ -20,6 +20,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fimbleenterprises.whereyouat.MainActivity
+import com.fimbleenterprises.whereyouat.MainActivity.Companion.ACTION_SHARE_CODE_FROM_NOTIFICATION
 import com.fimbleenterprises.whereyouat.R
 import com.fimbleenterprises.whereyouat.WhereYouAt.AppPreferences
 import com.fimbleenterprises.whereyouat.data.usecases.*
@@ -40,6 +41,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.first
 import java.lang.Runnable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -62,6 +64,10 @@ class TripUsersLocationManagementService : LifecycleService() {
     // Handler and runner for continuously requesting member locations.
     private var locationClientMonitorHandler: Handler = Handler(Looper.myLooper()!!)
     private var locationClientMonitorRunner: Runnable? = null
+
+    // Handler and runner for continuously monitoring the desired server URL.
+    private var serverUrlMonitorHandler: Handler = Handler(Looper.myLooper()!!)
+    private var serverUrlMonitorRunner: Runnable? = null
 
     // -----------------------------------------------------------
     //                      FIREBASE ANALYTICS
@@ -184,6 +190,9 @@ class TripUsersLocationManagementService : LifecycleService() {
     @Inject
     lateinit var getWaypointPositionUseCase: GetWaypointPositionUseCase
 
+    @Inject
+    lateinit var getServerUrlFromApiUseCase: GetServerUrlFromApiUseCase
+
     // endregion
 
     init {
@@ -253,7 +262,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         Log.d(TAG, "onStartCommand()")
 
         val cancellationRequest =
-            intent?.getBooleanExtra(EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION, false)
+            intent?.getBooleanExtra(ACTION_SHARE_CODE_FROM_NOTIFICATION, false)
 
         val fastUpdatesRequest =
             intent?.getBooleanExtra(RIGOROUS_UPDATES_INTENT_EXTRA, false)
@@ -287,6 +296,9 @@ class TripUsersLocationManagementService : LifecycleService() {
                     // Start the runner for uploading our location
                     startMyLocationUploadRunner()
 
+                    // Start the runner for ensuring we are using the correct server url
+                    startServerUrlMonitorRunner()
+
                     postServiceStatus()
 
                     monitorLastLocationClientLocationReceived()
@@ -306,6 +318,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         isRunning = false
         stopRequestingMemberLocations()
         stopMyLocationUploadRunner()
+        stopServerUrlMonitorRunner()
         unsubscribeToLocationUpdates(false)
 
         CoroutineScope(IO).launch {
@@ -361,6 +374,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         if (isRunning) {
             startMyLocationUploadRunner()
             startRequestingMemberLocations()
+            startServerUrlMonitorRunner()
         }
         stopForeground(true)
         serviceRunningInForeground = false
@@ -376,6 +390,7 @@ class TripUsersLocationManagementService : LifecycleService() {
             uploadMyLocation()
             startMyLocationUploadRunner()
             startRequestingMemberLocations()
+            startServerUrlMonitorRunner()
         }
         stopForeground(true)
         serviceRunningInForeground = false
@@ -411,6 +426,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         }*/
         stopMyLocationUploadRunner()
         stopRequestingMemberLocations()
+        stopServerUrlMonitorRunner()
         Log.d(TAG, "Start foreground service")
 
         // TODO I DON'T FUCKING KNOW, BRO
@@ -423,6 +439,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         if (serviceState.state == ServiceState.SERVICE_STATE_RUNNING) {
             startMyLocationUploadRunner()
             startRequestingMemberLocations()
+            startServerUrlMonitorRunner()
             val notification = generateNotification()
             try {
                 unsubscribeToLocationUpdates(true)
@@ -675,11 +692,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         val titleText = getString(
             R.string.notif_title_text
         )
-        val mainNotificationText = "${lastKnownLocation?.lat} / ${lastKnownLocation?.lon}"
-        /*val mainNotificationText = getString(
-            R.string.last_upload_notif_main_text,
-            tripcode
-        )*/
+        val mainNotificationText = "Code: ${AppPreferences.tripCode}"
 
         // 1. Create Notification Channel for O+ and beyond devices (26+).
         val notificationChannel = NotificationChannel(
@@ -696,14 +709,11 @@ class TripUsersLocationManagementService : LifecycleService() {
             .setBigContentTitle(titleText)
 
         // 3. Set up main Intent/Pending Intents for notification.
-        val launchActivityIntent = Intent(this, MainActivity::class.java)
+        val launchActivityIntent = Intent(applicationContext, MainActivity::class.java)
+        val shareIntent = Intent(applicationContext, MainActivity::class.java)
+        shareIntent.action = ACTION_SHARE_CODE_FROM_NOTIFICATION
 
-        val cancelIntent = Intent(this, TripUsersLocationManagementService::class.java)
-        cancelIntent.putExtra(EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION, true)
-
-        /*val servicePendingIntent = PendingIntent.getService(
-            this, 0, cancelIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)*/
-
+        val shareCodePendingIntent = PendingIntent.getActivity(applicationContext, 0, shareIntent,PendingIntent.FLAG_IMMUTABLE or  PendingIntent.FLAG_UPDATE_CURRENT)
         val activityPendingIntent = PendingIntent.getActivity(
             this, 0, launchActivityIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -712,6 +722,9 @@ class TripUsersLocationManagementService : LifecycleService() {
         val notificationCompatBuilder =
             NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
 
+        // Changed setOngoing to false as there is a bug that will cause the service/frag binding
+        // to get screwed up and the notification to remain despite not being in a trip.  This is
+        // a stop-gap that at least allows the user to swipe away the notification.
         return notificationCompatBuilder
             .setStyle(bigTextStyle)
             .setContentTitle(titleText)
@@ -719,14 +732,14 @@ class TripUsersLocationManagementService : LifecycleService() {
             .setSmallIcon(R.drawable.map_icon1)
             .setSilent(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setOngoing(true)
+            .setOngoing(false)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setContentIntent(activityPendingIntent)
-            /*.addAction(
-                R.drawable.ic_cancel,
-                getString(R.string.leave_trip_notification_button),
-                servicePendingIntent
-            )*/
+            .addAction(
+                R.drawable.share_icon_black_128,
+                getString(R.string.share_trip_notification_button),
+                shareCodePendingIntent
+            )
             .build()
     }
 
@@ -801,6 +814,49 @@ class TripUsersLocationManagementService : LifecycleService() {
 
         // Starts it up initially
         myLocationUploadHandler.postDelayed(myLocationUploadRunner!!, 0)
+    }
+
+    /**
+     * Starts a runner that repeatedly checks the desired server url.  At least in testing this url
+     * is in flux and if this ever got popular may be necessary to switch urls too.
+     */
+    private fun startServerUrlMonitorRunner() {
+
+        // Null check etc.
+        if (serverUrlMonitorRunner != null) {
+            try {
+                serverUrlMonitorHandler.removeCallbacks(serverUrlMonitorRunner!!)
+                serverUrlMonitorHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // What runs each time
+        serverUrlMonitorRunner = Runnable {
+            Log.d(TAG, "startServerUrlMonitorRunner: Checking server url...")
+            CoroutineScope(IO).launch {
+                AppPreferences.baseUrl = getServerUrlFromApiUseCase.execute()
+            }
+
+            serverUrlMonitorHandler.postDelayed(
+                serverUrlMonitorRunner!!, TimeUnit.SECONDS.toMillis(BASE_URL_CHECK_INTERVAL)
+            )
+        }
+
+        // Starts it up initially
+        serverUrlMonitorHandler.postDelayed(serverUrlMonitorRunner!!, 0)
+    }
+
+    private fun stopServerUrlMonitorRunner() {
+        if (serverUrlMonitorRunner != null) {
+            try {
+                serverUrlMonitorHandler.removeCallbacks(serverUrlMonitorRunner!!)
+                serverUrlMonitorHandler.removeCallbacksAndMessages(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     /**
@@ -974,6 +1030,7 @@ class TripUsersLocationManagementService : LifecycleService() {
         // If the tripcode is null here something has gone horribly wrong.
         if (AppPreferences.tripCode == null) {
             stopRequestingMemberLocations()
+            stopServerUrlMonitorRunner()
             unsubscribeToLocationUpdates(false)
             return@launch
         }
@@ -1086,19 +1143,11 @@ class TripUsersLocationManagementService : LifecycleService() {
         private const val LOCATION_REQUEST_INTERVAL_DEFAULT = 1L
         private const val LOCATION_REQUEST_INTERVAL_RIGOROUS = 1L
 
-        private const val PACKAGE_NAME = "com.example.android.whileinuselocation"
-
-        internal const val ACTION_FOREGROUND_ONLY_LOCATION_BROADCAST =
-            "$PACKAGE_NAME.action.FOREGROUND_ONLY_LOCATION_BROADCAST"
-
-        internal const val EXTRA_LOCATION = "$PACKAGE_NAME.extra.LOCATION"
-
-        const val EXTRA_CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION =
-            "$PACKAGE_NAME.extra.CANCEL_LOCATION_TRACKING_FROM_NOTIFICATION"
-
         const val RIGOROUS_UPDATES_INTENT_EXTRA = "RIGOROUS_UPDATES_INTENT_EXTRA"
 
         private const val NOTIFICATION_ID = 12345678
+
+        private const val BASE_URL_CHECK_INTERVAL = 5L
 
         private const val NOTIFICATION_CHANNEL_ID = "while_in_use_channel_01"
 

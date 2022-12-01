@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.fimbleenterprises.whereyouat">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.fimbleenterprises.whereyouat">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+               <!-- For now, I am opting to NOT do background locations -->
+     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
 
-    <!--android:theme="@style/Theme.AppCompat.Light"-->
     <application
             android:name=".WhereYouAt"
             android:allowBackup="true"
@@ -20,7 +19,7 @@
             android:requestLegacyExternalStorage="true"
             android:roundIcon="@drawable/where_you_at_logo1"
             android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:usesCleartextTraffic="true"> <!-- Needed to connect to API over http (non secure connection) -->
 
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->

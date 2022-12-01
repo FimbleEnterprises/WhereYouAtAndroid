@@ -9,9 +9,11 @@ class Constants {
 
         /* GOOGLE DOMAINS URL */
         const val DEFAULT_BASE_URL = "http://fim.town/"
+        const val HOME_BASE_URL = "http://fim.town/"
 
         /* AZURE URL */
         // const val BASE_URL = "https://apps-whereyouatcoreapi.azurewebsites.net/"
+        const val AZURE_BASE_URL = "https://apps-whereyouatcoreapi.azurewebsites.net/"
 
         /* Debug url - this lets me debug actual requests from remote clients in Visual Studio */
         // const val BASE_URL = "https://longorangebook12.conveyor.cloud/"
